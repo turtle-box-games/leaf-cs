@@ -1,12 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Leaf.Types
 {
-    class Point4
+    /// <summary>
+    /// Storage for a four-dimensional point or size.
+    /// The values are integers.
+    /// This type has an X, Y, Z, and W value.
+    /// </summary>
+    public struct Point4
     {
+        /// <summary>
+        /// Offset along the x-axis.
+        /// </summary>
+        public int X { get; set; }
+
+        /// <summary>
+        /// Offset along the y-axis.
+        /// </summary>
+        public int Y { get; set; }
+
+        /// <summary>
+        /// Offset along the z-axis.
+        /// </summary>
+        public int Z { get; set; }
+
+        /// <summary>
+        /// Offset along the w-axis.
+        /// </summary>
+        public int W { get; set; }
+
+        /// <summary>
+        /// Creates a four-dimensional point setting all properties.
+        /// </summary>
+        /// <param name="x">Offset along the x-axis.</param>
+        /// <param name="y">Offset along the y-axis.</param>
+        /// <param name="z">Offset along the z-axis.</param>
+        /// <param name="w">Offset along the w-axis.</param>
+        public Point4(int x, int y, int z, int w)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
