@@ -9,12 +9,14 @@ namespace Leaf.Types
     /// </summary>
     public struct Point4
     {
+        private readonly int _x, _y, _z, _w;
+
         /// <summary>
         /// Offset along the x-axis.
         /// </summary>
         public int X
         {
-            get { throw new NotImplementedException(); }
+            get { return _x; }
         }
 
         /// <summary>
@@ -22,7 +24,7 @@ namespace Leaf.Types
         /// </summary>
         public int Y
         {
-            get { throw new NotImplementedException(); }
+            get { return _y; }
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace Leaf.Types
         /// </summary>
         public int Z
         {
-            get { throw new NotImplementedException(); }
+            get { return _z; }
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace Leaf.Types
         /// </summary>
         public int W
         {
-            get { throw new NotImplementedException(); }
+            get { return _w; }
         }
 
         /// <summary>
@@ -50,7 +52,10 @@ namespace Leaf.Types
         /// <param name="w">Offset along the w-axis.</param>
         public Point4(int x, int y, int z, int w)
         {
-            throw new NotImplementedException();
+            _x = x;
+            _y = y;
+            _z = z;
+            _w = w;
         }
     }
 }
