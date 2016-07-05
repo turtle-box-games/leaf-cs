@@ -12,32 +12,50 @@ namespace Leaf.Types
         /// <summary>
         /// Offset along the x-axis of the bounding container.
         /// </summary>
-        public float X { get; set; }
+        public float X
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the y-axis of the bounding container.
         /// </summary>
-        public float Y { get; set; }
+        public float Y
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the z-axis of the bounding container.
         /// </summary>
-        public float Z { get; set; }
+        public float Z
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the bounding container spans along the x-axis.
         /// </summary>
-        public float Width { get; set; }
+        public float Width
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the bounding container spans along the y-axis.
         /// </summary>
-        public float Height { get; set; }
+        public float Height
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the bounding container spans along the z-axis.
         /// </summary>
-        public float Depth { get; set; }
+        public float Depth
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Determines whether the size is 0.

@@ -12,22 +12,34 @@ namespace Leaf.Types
         /// <summary>
         /// Offset along the x-axis.
         /// </summary>
-        public int X { get; set; }
+        public int X
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the y-axis.
         /// </summary>
-        public int Y { get; set; }
+        public int Y
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the z-axis.
         /// </summary>
-        public int Z { get; set; }
+        public int Z
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the w-axis.
         /// </summary>
-        public int W { get; set; }
+        public int W
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Creates a four-dimensional point setting all properties.

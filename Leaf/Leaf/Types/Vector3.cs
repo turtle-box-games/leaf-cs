@@ -12,17 +12,26 @@ namespace Leaf.Types
         /// <summary>
         /// Magnitude of the x-axis.
         /// </summary>
-        public float X { get; set; }
+        public float X
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Magnitude of the y-axis.
         /// </summary>
-        public float Y { get; set; }
+        public float Y
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Magnitude of the z-axis.
         /// </summary>
-        public float Z { get; set; }
+        public float Z
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Creates a three-dimensional vector setting all properties.

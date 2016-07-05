@@ -13,17 +13,26 @@ namespace Leaf.Types
         /// <summary>
         /// Distance the region spans along the x-axis.
         /// </summary>
-        public int Width { get; set; }
+        public int Width
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the region spans along the y-axis.
         /// </summary>
-        public int Height { get; set; }
+        public int Height
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the region spans along the z-axis.
         /// </summary>
-        public int Depth { get; set; }
+        public int Depth
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Determines whether the size is 0.

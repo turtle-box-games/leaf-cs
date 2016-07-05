@@ -12,32 +12,50 @@ namespace Leaf.Types
         /// <summary>
         /// Offset along the x-axis of the region.
         /// </summary>
-        public int X { get; set; }
+        public int X
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the y-axis of the region.
         /// </summary>
-        public int Y { get; set; }
+        public int Y
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Offset along the z-axis of the region.
         /// </summary>
-        public int Z { get; set; }
+        public int Z
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the region spans along the x-axis.
         /// </summary>
-        public int Width { get; set; }
+        public int Width
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the region spans along the y-axis.
         /// </summary>
-        public int Height { get; set; }
+        public int Height
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Distance the region spans along the z-axis.
         /// </summary>
-        public int Depth { get; set; }
+        public int Depth
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Determines whether the size is 0.
