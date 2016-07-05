@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Leaf.Types
+﻿namespace Leaf.Types
 {
     /// <summary>
     /// Storage for a three-dimensional point or size.
@@ -9,12 +7,14 @@ namespace Leaf.Types
     /// </summary>
     public struct Point3
     {
+        private readonly int _x, _y, _z;
+
         /// <summary>
         /// Offset along the x-axis.
         /// </summary>
         public int X
         {
-            get { throw new NotImplementedException(); }
+            get { return _x; }
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Leaf.Types
         /// </summary>
         public int Y
         {
-            get { throw new NotImplementedException(); }
+            get { return _y; }
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Leaf.Types
         /// </summary>
         public int Z
         {
-            get { throw new NotImplementedException(); }
+            get { return _z; }
         }
 
         /// <summary>
@@ -41,7 +41,9 @@ namespace Leaf.Types
         /// <param name="z">Offset along the z-axis.</param>
         public Point3(int x, int y, int z)
         {
-            throw new NotImplementedException();
+            _x = x;
+            _y = y;
+            _z = z;
         }
     }
 }
