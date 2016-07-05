@@ -4,7 +4,7 @@ using Leaf.Types;
 namespace Leaf.Tests.Unit.Types
 {
     [TestFixture]
-    public class Point3Test
+    public class Point3Tests
     {
         /// <summary>
         /// Test that the X property's getter returns the correct value.
