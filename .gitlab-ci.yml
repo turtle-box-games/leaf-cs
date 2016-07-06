@@ -19,3 +19,4 @@ linux-test:
   artifacts:
     paths:
     - Leaf/Leaf.Tests/bin/Release/
+    - TestResult.xml
