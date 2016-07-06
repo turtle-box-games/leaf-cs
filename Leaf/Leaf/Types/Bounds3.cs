@@ -58,14 +58,6 @@ namespace Leaf.Types
         }
 
         /// <summary>
-        /// Determines whether the size is 0.
-        /// </summary>
-        public bool IsEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
         /// Creates a new three-dimensional bounds setting all properties.
         /// </summary>
         /// <param name="x">Offset along the x-axis.</param>

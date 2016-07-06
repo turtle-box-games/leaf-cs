@@ -35,14 +35,6 @@ namespace Leaf.Types
         }
 
         /// <summary>
-        /// Determines whether the size is 0.
-        /// </summary>
-        public bool IsEmpty
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
         /// Creates a new three-dimensional rectangle setting the all of the properties.
         /// </summary>
         /// <param name="width">Distance spanned on the x-axis.</param>
