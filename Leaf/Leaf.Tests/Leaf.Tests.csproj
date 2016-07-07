@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Types\Bounds3Tests.cs" />
+    <Compile Include="Unit\Types\Vector4Tests.cs" />
     <Compile Include="Unit\Types\Vector3Tests.cs" />
     <Compile Include="Unit\Types\Rect3Tests.cs" />
     <Compile Include="Unit\Types\Point4Tests.cs" />
