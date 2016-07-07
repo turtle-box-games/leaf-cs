@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Leaf.Types
+﻿namespace Leaf.Types
 {
     /// <summary>
     /// Storage for a three-dimensional position and size.
@@ -9,12 +7,14 @@ namespace Leaf.Types
     /// </summary>
     public struct Bounds3
     {
+        private readonly float _x, _y, _z, _w, _h, _d;
+
         /// <summary>
         /// Offset along the x-axis of the bounding container.
         /// </summary>
         public float X
         {
-            get { throw new NotImplementedException(); }
+            get { return _x; }
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Leaf.Types
         /// </summary>
         public float Y
         {
-            get { throw new NotImplementedException(); }
+            get { return _y; }
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Leaf.Types
         /// </summary>
         public float Z
         {
-            get { throw new NotImplementedException(); }
+            get { return _z; }
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Leaf.Types
         /// </summary>
         public float Width
         {
-            get { throw new NotImplementedException(); }
+            get { return _w; }
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Leaf.Types
         /// </summary>
         public float Height
         {
-            get { throw new NotImplementedException(); }
+            get { return _h; }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Leaf.Types
         /// </summary>
         public float Depth
         {
-            get { throw new NotImplementedException(); }
+            get { return _d; }
         }
 
         /// <summary>
@@ -68,7 +68,12 @@ namespace Leaf.Types
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Bounds3(float x, float y, float z, float width, float height, float depth)
         {
-            throw new NotImplementedException();
+            _x = x;
+            _y = y;
+            _z = z;
+            _w = width;
+            _h = height;
+            _d = depth;
         }
 
         /// <summary>
@@ -79,7 +84,12 @@ namespace Leaf.Types
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Bounds3(float width, float height, float depth)
         {
-            throw new NotImplementedException();
+            _x = 0f;
+            _y = 0f;
+            _z = 0f;
+            _w = width;
+            _h = height;
+            _d = depth;
         }
 
         /// <summary>
@@ -89,7 +99,12 @@ namespace Leaf.Types
         /// <param name="size">Distance the bounds extend.</param>
         public Bounds3(Vector3 position, Vector3 size)
         {
-            throw new NotImplementedException();
+            _x = position.X;
+            _y = position.Y;
+            _z = position.Z;
+            _w = size.X;
+            _h = size.Y;
+            _d = size.Z;
         }
     }
 }
