@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Leaf.Types
+﻿namespace Leaf.Types
 {
     /// <summary>
     /// Storage for a three-dimensional position and size.
@@ -9,12 +7,14 @@ namespace Leaf.Types
     /// </summary>
     public struct Rect3
     {
+        private readonly int _x, _y, _z, _w, _h, _d;
+
         /// <summary>
         /// Offset along the x-axis of the region.
         /// </summary>
         public int X
         {
-            get { throw new NotImplementedException(); }
+            get { return _x; }
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Leaf.Types
         /// </summary>
         public int Y
         {
-            get { throw new NotImplementedException(); }
+            get { return _y; }
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Leaf.Types
         /// </summary>
         public int Z
         {
-            get { throw new NotImplementedException(); }
+            get { return _z; }
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Leaf.Types
         /// </summary>
         public int Width
         {
-            get { throw new NotImplementedException(); }
+            get { return _w; }
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Leaf.Types
         /// </summary>
         public int Height
         {
-            get { throw new NotImplementedException(); }
+            get { return _h; }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Leaf.Types
         /// </summary>
         public int Depth
         {
-            get { throw new NotImplementedException(); }
+            get { return _d; }
         }
 
         /// <summary>
@@ -68,7 +68,12 @@ namespace Leaf.Types
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Rect3(int x, int y, int z, int width, int height, int depth)
         {
-            throw new NotImplementedException();
+            _x = x;
+            _y = y;
+            _z = z;
+            _w = width;
+            _h = height;
+            _d = depth;
         }
 
         /// <summary>
@@ -79,7 +84,12 @@ namespace Leaf.Types
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Rect3(int width, int height, int depth)
         {
-            throw new NotImplementedException();
+            _x = 0;
+            _y = 0;
+            _z = 0;
+            _w = width;
+            _h = height;
+            _d = depth;
         }
 
         /// <summary>
@@ -89,7 +99,12 @@ namespace Leaf.Types
         /// <param name="size">Distance the bounds extend.</param>
         public Rect3(Point3 position, Point3 size)
         {
-            throw new NotImplementedException();
+            _x = position.X;
+            _y = position.Y;
+            _z = position.Z;
+            _w = size.X;
+            _h = size.Y;
+            _d = size.Z;
         }
     }
 }
