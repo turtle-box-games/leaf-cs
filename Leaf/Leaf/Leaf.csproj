@@ -44,7 +44,6 @@
     <Compile Include="Types\Point3.cs" />
     <Compile Include="Types\Point4.cs" />
     <Compile Include="Types\Rect3.cs" />
-    <Compile Include="Types\Size3.cs" />
     <Compile Include="Types\Vector3.cs" />
     <Compile Include="Types\Vector4.cs" />
   </ItemGroup>
