@@ -6,15 +6,20 @@ namespace Leaf.Tests.Unit.Types
     [TestFixture]
     public class Vector4Tests
     {
+        private static Vector4 create(float x = 3f, float y = 4f, float z = 5f, float w = 6f)
+        {
+            return new Vector4(x, y, z, w);
+        }
+
         /// <summary>
         /// Test that the X property's getter returns the correct value.
         /// </summary>
         [Test]
         public void TestXGetter()
         {
-            const float x = 3f, y = 4f, z = 5f, w = 6f;
-            var vector = new Vector4(x, y, z, w);
-            Assert.AreEqual(x, vector.X);
+            const float v = 20f;
+            var vector = create(x: v);
+            Assert.AreEqual(v, vector.X);
         }
 
         /// <summary>
@@ -23,9 +28,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestYGetter()
         {
-            const float x = 3f, y = 4f, z = 5f, w = 6f;
-            var vector = new Vector4(x, y, z, w);
-            Assert.AreEqual(y, vector.Y);
+            const float v = 20f;
+            var vector = create(y: v);
+            Assert.AreEqual(v, vector.Y);
         }
 
         /// <summary>
@@ -34,9 +39,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestZGetter()
         {
-            const float x = 3f, y = 4f, z = 5f, w = 6f;
-            var vector = new Vector4(x, y, z, w);
-            Assert.AreEqual(z, vector.Z);
+            const float v = 20f;
+            var vector = create(z: v);
+            Assert.AreEqual(v, vector.Z);
         }
 
         /// <summary>
@@ -45,9 +50,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestWGetter()
         {
-            const float x = 3f, y = 4f, z = 5f, w = 6f;
-            var vector = new Vector4(x, y, z, w);
-            Assert.AreEqual(w, vector.W);
+            const float v = 20f;
+            var vector = create(w: v);
+            Assert.AreEqual(v, vector.W);
         }
     }
 }

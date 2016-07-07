@@ -6,15 +6,32 @@ namespace Leaf.Tests.Unit.Types
     [TestFixture]
     public class Rect3Tests
     {
+        private static Rect3 create(int x = 3, int y = 4, int z = 5, int w = 6, int h = 7, int d = 8)
+        {
+            return new Rect3(x, y, z, w, h, d);
+        }
+
+        private static Rect3 createOrigin(int w = 3, int h = 4, int d = 5)
+        {
+            return new Rect3(w, h, d);
+        }
+
+        private static Rect3 createStruct(int x = 3, int y = 4, int z = 5, int w = 6, int h = 7, int d = 8)
+        {
+            var position = new Point3(x, y, z);
+            var size     = new Point3(w, h, d);
+            return new Rect3(position, size);
+        }
+
         /// <summary>
         /// Test that the X property's getter returns the correct value.
         /// </summary>
         [Test]
         public void TestXGetter()
         {
-            const int x = 3, y = 4, z = 5, w = 6, h = 7, d = 8;
-            var rect = new Rect3(x, y, z, w, h, d);
-            Assert.AreEqual(x, rect.X);
+            const int v = 20;
+            var rect = create(x: v);
+            Assert.AreEqual(v, rect.X);
         }
 
         /// <summary>
@@ -23,9 +40,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestYGetter()
         {
-            const int x = 3, y = 4, z = 5, w = 6, h = 7, d = 8;
-            var rect = new Rect3(x, y, z, w, h, d);
-            Assert.AreEqual(y, rect.Y);
+            const int v = 20;
+            var rect = create(y: v);
+            Assert.AreEqual(v, rect.Y);
         }
 
         /// <summary>
@@ -34,9 +51,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestZGetter()
         {
-            const int x = 3, y = 4, z = 5, w = 6, h = 7, d = 8;
-            var rect = new Rect3(x, y, z, w, h, d);
-            Assert.AreEqual(z, rect.Z);
+            const int v = 20;
+            var rect = create(z: v);
+            Assert.AreEqual(v, rect.Z);
         }
 
         /// <summary>
@@ -45,9 +62,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestWidthGetter()
         {
-            const int x = 3, y = 4, z = 5, w = 6, h = 7, d = 8;
-            var rect = new Rect3(x, y, z, w, h, d);
-            Assert.AreEqual(w, rect.Width);
+            const int v = 20;
+            var rect = create(w: v);
+            Assert.AreEqual(v, rect.Width);
         }
 
         /// <summary>
@@ -56,9 +73,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestHeightGetter()
         {
-            const int x = 3, y = 4, z = 5, w = 6, h = 7, d = 8;
-            var rect = new Rect3(x, y, z, w, h, d);
-            Assert.AreEqual(h, rect.Height);
+            const int v = 20;
+            var rect = create(h: v);
+            Assert.AreEqual(v, rect.Height);
         }
 
         /// <summary>
@@ -67,9 +84,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestDepthGetter()
         {
-            const int x = 3, y = 4, z = 5, w = 6, h = 7, d = 8;
-            var rect = new Rect3(x, y, z, w, h, d);
-            Assert.AreEqual(d, rect.Depth);
+            const int v = 20;
+            var rect = create(d: v);
+            Assert.AreEqual(v, rect.Depth);
         }
 
         /// <summary>
@@ -78,9 +95,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestOriginWidth()
         {
-            const int w = 3, h = 4, d = 5;
-            var rect = new Rect3(w, h, d);
-            Assert.AreEqual(w, rect.Width);
+            const int v = 20;
+            var rect = createOrigin(w: v);
+            Assert.AreEqual(v, rect.Width);
         }
 
         /// <summary>
@@ -89,9 +106,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestOriginHeight()
         {
-            const int w = 3, h = 4, d = 5;
-            var rect = new Rect3(w, h, d);
-            Assert.AreEqual(h, rect.Height);
+            const int v = 20;
+            var rect = createOrigin(h: v);
+            Assert.AreEqual(v, rect.Height);
         }
 
         /// <summary>
@@ -100,9 +117,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestOriginDepth()
         {
-            const int w = 3, h = 4, d = 5;
-            var rect = new Rect3(w, h, d);
-            Assert.AreEqual(d, rect.Depth);
+            const int v = 20;
+            var rect = createOrigin(d: v);
+            Assert.AreEqual(v, rect.Depth);
         }
 
         /// <summary>
@@ -111,8 +128,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestOriginX()
         {
-            const int w = 3, h = 4, d = 5;
-            var rect = new Rect3(w, h, d);
+            var rect = createOrigin();
             Assert.AreEqual(0, rect.X);
         }
 
@@ -122,8 +138,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestOriginY()
         {
-            const int w = 3, h = 4, d = 5;
-            var rect = new Rect3(w, h, d);
+            var rect = createOrigin();
             Assert.AreEqual(0, rect.Y);
         }
 
@@ -133,8 +148,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestOriginZ()
         {
-            const int w = 3, h = 4, d = 5;
-            var rect = new Rect3(w, h, d);
+            var rect = createOrigin();
             Assert.AreEqual(0, rect.Z);
         }
 
@@ -144,10 +158,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructX()
         {
-            var position = new Point3(3, 4, 5);
-            var size     = new Point3(6, 7, 8);
-            var rect     = new Rect3(position, size);
-            Assert.AreEqual(position.X, rect.X);
+            const int v = 20;
+            var rect = createStruct(x: v);
+            Assert.AreEqual(v, rect.X);
         }
 
         /// <summary>
@@ -156,10 +169,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructY()
         {
-            var position = new Point3(3, 4, 5);
-            var size     = new Point3(6, 7, 8);
-            var rect     = new Rect3(position, size);
-            Assert.AreEqual(position.Y, rect.Y);
+            const int v = 20;
+            var rect = createStruct(y: v);
+            Assert.AreEqual(v, rect.Y);
         }
 
         /// <summary>
@@ -168,10 +180,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructZ()
         {
-            var position = new Point3(3, 4, 5);
-            var size     = new Point3(6, 7, 8);
-            var rect     = new Rect3(position, size);
-            Assert.AreEqual(position.Z, rect.Z);
+            const int v = 20;
+            var rect = createStruct(z: v);
+            Assert.AreEqual(v, rect.Z);
         }
 
         /// <summary>
@@ -180,10 +191,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructWidth()
         {
-            var position = new Point3(3, 4, 5);
-            var size     = new Point3(6, 7, 8);
-            var rect     = new Rect3(position, size);
-            Assert.AreEqual(size.X, rect.Width);
+            const int v = 20;
+            var rect = createStruct(w: v);
+            Assert.AreEqual(v, rect.Width);
         }
 
         /// <summary>
@@ -192,10 +202,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructHeight()
         {
-            var position = new Point3(3, 4, 5);
-            var size     = new Point3(6, 7, 8);
-            var rect     = new Rect3(position, size);
-            Assert.AreEqual(size.Y, rect.Height);
+            const int v = 20;
+            var rect = createStruct(h: v);
+            Assert.AreEqual(v, rect.Height);
         }
 
         /// <summary>
@@ -204,10 +213,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructDepth()
         {
-            var position = new Point3(3, 4, 5);
-            var size     = new Point3(6, 7, 8);
-            var rect     = new Rect3(position, size);
-            Assert.AreEqual(size.Z, rect.Depth);
+            const int v = 20;
+            var rect = createStruct(d: v);
+            Assert.AreEqual(v, rect.Depth);
         }
     }
 }
