@@ -144,9 +144,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructX()
         {
-            var position = new Point3(3, 4, 5);
-            var size = new Vector3(6, 7, 8);
-            var bounds = new Bounds3(position, size);
+            var position = new Vector3(3, 4, 5);
+            var size     = new Vector3(6, 7, 8);
+            var bounds   = new Bounds3(position, size);
             Assert.AreEqual(position.X, bounds.X);
         }
 
@@ -156,7 +156,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructY()
         {
-            var position = new Point3(3, 4, 5);
+            var position = new Vector3(3, 4, 5);
             var size     = new Vector3(6, 7, 8);
             var bounds   = new Bounds3(position, size);
             Assert.AreEqual(position.Y, bounds.Y);
@@ -168,7 +168,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructZ()
         {
-            var position = new Point3(3, 4, 5);
+            var position = new Vector3(3, 4, 5);
             var size     = new Vector3(6, 7, 8);
             var bounds   = new Bounds3(position, size);
             Assert.AreEqual(position.Z, bounds.Z);
@@ -180,7 +180,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructWidth()
         {
-            var position = new Point3(3, 4, 5);
+            var position = new Vector3(3, 4, 5);
             var size     = new Vector3(6, 7, 8);
             var bounds   = new Bounds3(position, size);
             Assert.AreEqual(size.X, bounds.Width);
@@ -192,7 +192,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructHeight()
         {
-            var position = new Point3(3, 4, 5);
+            var position = new Vector3(3, 4, 5);
             var size     = new Vector3(6, 7, 8);
             var bounds   = new Bounds3(position, size);
             Assert.AreEqual(size.Y, bounds.Height);
@@ -204,7 +204,7 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestStructDepth()
         {
-            var position = new Point3(3, 4, 5);
+            var position = new Vector3(3, 4, 5);
             var size     = new Vector3(6, 7, 8);
             var bounds   = new Bounds3(position, size);
             Assert.AreEqual(size.Z, bounds.Depth);

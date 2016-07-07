@@ -87,7 +87,7 @@ namespace Leaf.Types
         /// </summary>
         /// <param name="position">Location of the bounds.</param>
         /// <param name="size">Distance the bounds extend.</param>
-        public Bounds3(Point3 position, Vector3 size)
+        public Bounds3(Vector3 position, Vector3 size)
         {
             throw new NotImplementedException();
         }
