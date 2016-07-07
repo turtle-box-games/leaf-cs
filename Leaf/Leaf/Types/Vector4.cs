@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Leaf.Types
+﻿namespace Leaf.Types
 {
     /// <summary>
     /// Storage for a four-dimensional position, direction, size, or etc.
@@ -9,12 +7,14 @@ namespace Leaf.Types
     /// </summary>
     public struct Vector4
     {
+        private readonly float _x, _y, _z, _w;
+
         /// <summary>
         /// Magnitude of the x-axis.
         /// </summary>
         public float X
         {
-            get { throw new NotImplementedException(); }
+            get { return _x; }
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Leaf.Types
         /// </summary>
         public float Y
         {
-            get { throw new NotImplementedException(); }
+            get { return _y; }
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Leaf.Types
         /// </summary>
         public float Z
         {
-            get { throw new NotImplementedException(); }
+            get { return _z; }
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Leaf.Types
         /// </summary>
         public float W
         {
-            get { throw new NotImplementedException(); }
+            get { return _w; }
         }
 
         /// <summary>
@@ -50,7 +50,10 @@ namespace Leaf.Types
         /// <param name="w">Magnitude of the w-axis.</param>
         public Vector4(float x, float y, float z, float w)
         {
-            throw new NotImplementedException();
+            _x = x;
+            _y = y;
+            _z = z;
+            _w = w;
         }
     }
 }
