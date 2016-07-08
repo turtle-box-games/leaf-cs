@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\EndianAwareBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryReader.cs" />
     <Compile Include="NodeId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
