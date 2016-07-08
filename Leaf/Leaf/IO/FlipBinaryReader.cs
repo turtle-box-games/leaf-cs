@@ -8,6 +8,9 @@ namespace Leaf.IO
     /// Specialized binary reader that flips the byte order of multi-byte values.
     /// This effectively changes big-endian to little-endian and vice-versa.
     /// </summary>
+    /// <remarks>Strings and characters are not handled by this class.
+    /// If you need to flip the byte order for a text encoding, use the flipped version of encoding.
+    /// For instance, use <see cref="Encoding.BigEndianUnicode"/> if you're reading big-endian on a little-endian system.</remarks>
     internal class FlipBinaryReader : BinaryReader
     {
         /// <summary>
@@ -51,75 +54,6 @@ namespace Leaf.IO
 
         // Only methods that read multi-byte values are overridden.
         // Single-byte and byte array operations are identical and don't need to be overridden.
-
-        /// <summary>
-        /// Retrieves the next character from the stream without advancing the position in the stream.
-        /// </summary>
-        /// <returns>Next character from the stream.</returns>
-        /// <exception cref="IOException">An I/O error occurred.</exception>
-        /// <exception cref="ArgumentException">The current character cannot be decoded.</exception>
-        public override int PeekChar()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Reads the next character from the stream and advances the position.
-        /// </summary>
-        /// <returns>Next character in the stream or -1 if the end of the stream has been reached.</returns>
-        /// <exception cref="IOException">An I/O error occurred.</exception>
-        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
-        public override int Read()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Reads a specified number of characters from the stream.
-        /// </summary>
-        /// <param name="buffer">Array to store the read character into.</param>
-        /// <param name="index">Index in <paramref name="buffer"/> to start storing characters at.</param>
-        /// <param name="count">Number of characters to try to read from the stream.</param>
-        /// <returns>Actual number of characters read from the stream.
-        /// This can be less than <paramref name="count"/> when there are fewer characters available.</returns>
-        /// <exception cref="ArgumentException">The length of <paramref name="buffer"/> minus the <paramref name="index"/> is less than <paramref name="count"/>.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> or <paramref name="count"/> is negative.</exception>
-        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
-        /// <exception cref="IOException">An I/O error occurred.</exception>
-        public override int Read(char[] buffer, int index, int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Reads a character from the stream and advances a number of bytes based on the encoding.
-        /// </summary>
-        /// <returns>Next character from the stream.</returns>
-        /// <exception cref="EndOfStreamException">The end of the stream has been reached and a character can't be read.</exception>
-        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
-        /// <exception cref="IOException">An I/O error occurred.</exception>
-        /// <exception cref="ArgumentException">A surrogate character was read.</exception>
-        public override char ReadChar()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Reads a specified number of characters from the stream and returns them as an array.
-        /// The position in the stream is advanced based on the character encoding.
-        /// </summary>
-        /// <param name="count">Number of characters to read.</param>
-        /// <returns>Array of characters read from the stream.
-        /// The length may be less than <paramref name="count"/> if the end of the stream was reached.</returns>
-        /// <exception cref="ArgumentException">A surrogate character was read.</exception>
-        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
-        /// <exception cref="IOException">An I/O error occurred.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is negative.</exception>
-        public override char[] ReadChars(int count)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Reads a decimal value from the stream and advances the position in the stream by 16 bytes.
@@ -189,18 +123,6 @@ namespace Leaf.IO
         /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override float ReadSingle()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Reads a string from the stream that has a prefixed length.
-        /// </summary>
-        /// <returns>String read from the stream.</returns>
-        /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
-        /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
-        /// <exception cref="IOException">An I/O error occurred.</exception>
-        public override string ReadString()
         {
             throw new NotImplementedException();
         }
