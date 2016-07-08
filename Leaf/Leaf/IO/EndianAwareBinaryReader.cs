@@ -11,6 +11,12 @@ namespace Leaf.IO
     public class EndianAwareBinaryReader : BinaryReader
     {
         /// <summary>
+        /// Underlying implementation.
+        /// Set by the constructors to use a <see cref="BinaryReader"/> or <see cref="FlipBinaryReader"/> based on chosen endian.
+        /// </summary>
+        private readonly BinaryReader _implementation;
+
+        /// <summary>
         /// Creates a new binary reader with UTF-8 encoding for characters.
         /// </summary>
         /// <param name="input">Input stream to read from.</param>
@@ -20,7 +26,14 @@ namespace Leaf.IO
         public EndianAwareBinaryReader(Stream input, bool bigEndian)
             : base(input)
         {
-            throw new NotImplementedException();
+            if(bigEndian)
+                _implementation = BitConverter.IsLittleEndian
+                    ? new FlipBinaryReader(input) // Big -> little
+                    : new BinaryReader(input); // Bit -> big
+            else
+                _implementation = BitConverter.IsLittleEndian
+                    ? new BinaryReader(input) // Little -> little
+                    : new FlipBinaryReader(input); // Little -> big
         }
 
         /// <summary>
@@ -36,7 +49,14 @@ namespace Leaf.IO
         public EndianAwareBinaryReader(Stream input, bool bigEndian, Encoding encoding)
             : base(input, encoding)
         {
-            throw new NotImplementedException();
+            if(bigEndian)
+                _implementation = BitConverter.IsLittleEndian
+                    ? new FlipBinaryReader(input, encoding) // Big -> little
+                    : new BinaryReader(input, encoding); // Bit -> big
+            else
+                _implementation = BitConverter.IsLittleEndian
+                    ? new BinaryReader(input, encoding) // Little -> little
+                    : new FlipBinaryReader(input, encoding); // Little -> big
         }
 
         /// <summary>
@@ -53,7 +73,14 @@ namespace Leaf.IO
         public EndianAwareBinaryReader(Stream input, bool bigEndian, Encoding encoding, bool leaveOpen)
             : base(input, encoding, leaveOpen)
         {
-            throw new NotImplementedException();
+            if(bigEndian)
+                _implementation = BitConverter.IsLittleEndian
+                    ? new FlipBinaryReader(input, encoding, leaveOpen) // Big -> little
+                    : new BinaryReader(input, encoding, leaveOpen); // Bit -> big
+            else
+                _implementation = BitConverter.IsLittleEndian
+                    ? new BinaryReader(input, encoding, leaveOpen) // Little -> little
+                    : new FlipBinaryReader(input, encoding, leaveOpen); // Little -> big
         }
 
         // Only methods that read multi-byte values are overridden.
@@ -68,7 +95,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override decimal ReadDecimal()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadDecimal();
         }
 
         /// <summary>
@@ -80,7 +107,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override double ReadDouble()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadDouble();
         }
 
         /// <summary>
@@ -92,7 +119,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override short ReadInt16()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadInt16();
         }
 
         /// <summary>
@@ -104,7 +131,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override int ReadInt32()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadInt32();
         }
 
         /// <summary>
@@ -116,7 +143,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override long ReadInt64()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadInt64();
         }
 
         /// <summary>
@@ -128,7 +155,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override float ReadSingle()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadSingle();
         }
 
         /// <summary>
@@ -140,7 +167,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override ushort ReadUInt16()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadUInt16();
         }
 
         /// <summary>
@@ -152,7 +179,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override uint ReadUInt32()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadUInt32();
         }
 
         /// <summary>
@@ -164,7 +191,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override ulong ReadUInt64()
         {
-            throw new NotImplementedException();
+            return _implementation.ReadUInt64();
         }
     }
 }
