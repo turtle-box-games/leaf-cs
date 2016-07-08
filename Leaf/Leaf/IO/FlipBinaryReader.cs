@@ -14,7 +14,8 @@ namespace Leaf.IO
         /// Creates a new binary reader with UTF-8 encoding for characters.
         /// </summary>
         /// <param name="input">Input stream to read from.</param>
-        /// <exception cref="ArgumentException">The <paramref name="input"/> stream does not support reading, is <c>null</c>, or is already closed.</exception>
+        /// <exception cref="ArgumentException">The <paramref name="input"/> stream does not support reading or is already closed.</exception>
+        /// <exception cref="ArgumentNullException">The <paramref name="input"/> stream is <c>null</c>.</exception>
         public FlipBinaryReader(Stream input)
             : base(input)
         {
@@ -27,7 +28,7 @@ namespace Leaf.IO
         /// <param name="input">Input stream to read from.</param>
         /// <param name="encoding">Character encoding used to translate bytes to characters.</param>
         /// <exception cref="ArgumentException">The <paramref name="input"/> stream does not support reading, is <c>null</c>, or is already closed.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">The <paramref name="input"/> stream or <paramref name="encoding"/> is <c>null</c>.</exception>
         public FlipBinaryReader(Stream input, Encoding encoding)
             : base(input, encoding)
         {
@@ -41,7 +42,7 @@ namespace Leaf.IO
         /// <param name="encoding">Character encoding used to translate bytes to characters.</param>
         /// <param name="leaveOpen">Flag indicating whether the stream should be left open after this reader is destroyed.</param>
         /// <exception cref="ArgumentException">The <paramref name="input"/> stream does not support reading, is <c>null</c>, or is already closed.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="encoding"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">The <paramref name="input"/> stream or <paramref name="encoding"/> is <c>null</c>.</exception>
         public FlipBinaryReader(Stream input, Encoding encoding, bool leaveOpen)
             : base(input, encoding, leaveOpen)
         {
