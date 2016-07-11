@@ -22,7 +22,7 @@ namespace Leaf.IO
         public FlipBinaryReader(Stream input)
             : base(input)
         {
-            throw new NotImplementedException();
+            // ...
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Leaf.IO
         public FlipBinaryReader(Stream input, Encoding encoding)
             : base(input, encoding)
         {
-            throw new NotImplementedException();
+            // ...
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Leaf.IO
         public FlipBinaryReader(Stream input, Encoding encoding, bool leaveOpen)
             : base(input, encoding, leaveOpen)
         {
-            throw new NotImplementedException();
+            // ...
         }
 
         // Only methods that read multi-byte values are overridden.
@@ -64,7 +64,12 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override decimal ReadDecimal()
         {
-            throw new NotImplementedException();
+            var bits  = new int[4];
+            var bytes = ReadBytes(sizeof(decimal));
+            flipBytes(bytes);
+            for(var i = 0; i < bits.Length; ++i)
+                bits[i] = BitConverter.ToInt32(bytes, sizeof(int) * i);
+            return new decimal(bits);
         }
 
         /// <summary>
@@ -76,7 +81,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override double ReadDouble()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(double));
+            flipBytes(bytes);
+            return BitConverter.ToDouble(bytes, 0);
         }
 
         /// <summary>
@@ -88,7 +95,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override short ReadInt16()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(short));
+            flipBytes(bytes);
+            return BitConverter.ToInt16(bytes, 0);
         }
 
         /// <summary>
@@ -100,7 +109,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override int ReadInt32()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(int));
+            flipBytes(bytes);
+            return BitConverter.ToInt32(bytes, 0);
         }
 
         /// <summary>
@@ -112,7 +123,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override long ReadInt64()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(long));
+            flipBytes(bytes);
+            return BitConverter.ToInt64(bytes, 0);
         }
 
         /// <summary>
@@ -124,7 +137,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override float ReadSingle()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(float));
+            flipBytes(bytes);
+            return BitConverter.ToSingle(bytes, 0);
         }
 
         /// <summary>
@@ -136,7 +151,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override ushort ReadUInt16()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(ushort));
+            flipBytes(bytes);
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
         /// <summary>
@@ -148,7 +165,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override uint ReadUInt32()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(uint));
+            flipBytes(bytes);
+            return BitConverter.ToUInt32(bytes, 0);
         }
 
         /// <summary>
@@ -160,7 +179,24 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override ulong ReadUInt64()
         {
-            throw new NotImplementedException();
+            var bytes = ReadBytes(sizeof(ulong));
+            flipBytes(bytes);
+            return BitConverter.ToUInt64(bytes, 0);
+        }
+
+        /// <summary>
+        /// Swaps the ordering of bytes in an array.
+        /// </summary>
+        /// <param name="bytes">Array of bytes to flip.</param>
+        private static void flipBytes(byte[] bytes)
+        {
+            var mid = bytes.Length / 2;
+            for(int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)
+            {
+                var b    = bytes[i];
+                bytes[i] = bytes[j];
+                bytes[j] = b;
+            }
         }
     }
 }
