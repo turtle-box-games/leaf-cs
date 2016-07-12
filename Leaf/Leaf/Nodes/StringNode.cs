@@ -11,6 +11,16 @@ namespace Leaf.Nodes
     public class StringNode : Node
     {
         /// <summary>
+        /// Retrieve the ID for the type of node.
+        /// This can be used to identify, serialize, and cast a node to its type.
+        /// The value returned by this property is <see cref="NodeId.String"/>.
+        /// </summary>
+        public override NodeId TypeId
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
         public string Value
