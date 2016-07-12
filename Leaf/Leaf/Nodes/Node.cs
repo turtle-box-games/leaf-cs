@@ -11,6 +11,6 @@ namespace Leaf.Nodes
         /// Writes the data of the node to a stream.
         /// </summary>
         /// <param name="writer">Writer to use for putting data in the stream.</param>
-        public abstract void Write(BinaryWriter writer);
+        internal abstract void Write(BinaryWriter writer);
     }
 }
