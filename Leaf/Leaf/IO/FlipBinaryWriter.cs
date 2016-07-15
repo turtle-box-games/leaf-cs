@@ -22,7 +22,7 @@ namespace Leaf.IO
         public FlipBinaryWriter(Stream output)
             : base(output)
         {
-            throw new NotImplementedException();
+            // ...
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Leaf.IO
         public FlipBinaryWriter(Stream output, Encoding encoding)
             : base(output, encoding)
         {
-            throw new NotImplementedException();
+            // ...
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Leaf.IO
         public FlipBinaryWriter(Stream output, Encoding encoding, bool leaveOpen)
             : base(output, encoding, leaveOpen)
         {
-            throw new NotImplementedException();
+            // ...
         }
 
         // Only methods that write multi-byte values are overridden.
@@ -63,7 +63,15 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(decimal value)
         {
-            throw new NotImplementedException();
+            var bits  = decimal.GetBits(value);
+            var bytes = new byte[sizeof(decimal)];
+            for(var i = 0; i < bits.Length; ++i)
+            {
+                var bitBytes = BitConverter.GetBytes(bits[i]);
+                for(var j = 0; j < bitBytes.Length; ++j)
+                    bytes[i * sizeof(int) + j] = bitBytes[sizeof(int) - j - 1];
+            }
+            Write(bytes);
         }
 
         /// <summary>
@@ -74,7 +82,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(double value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -85,7 +95,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(short value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -96,7 +108,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(int value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -107,7 +121,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(long value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -118,7 +134,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(float value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -129,7 +147,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(ushort value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -140,7 +160,9 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(uint value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
         }
 
         /// <summary>
@@ -151,7 +173,24 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(ulong value)
         {
-            throw new NotImplementedException();
+            var bytes = BitConverter.GetBytes(value);
+            flipBytes(bytes);
+            Write(bytes);
+        }
+
+        /// <summary>
+        /// Swaps the ordering of bytes in an array.
+        /// </summary>
+        /// <param name="bytes">Array of bytes to flip.</param>
+        private static void flipBytes(byte[] bytes)
+        {
+            var mid = bytes.Length / 2;
+            for (int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)
+            {
+                var b = bytes[i];
+                bytes[i] = bytes[j];
+                bytes[j] = b;
+            }
         }
     }
 }
