@@ -11,6 +11,12 @@ namespace Leaf.IO
     public class EndianAwareBinaryWriter : BinaryWriter
     {
         /// <summary>
+        /// Underlying implementation.
+        /// Set by the constructors to use a <see cref="BinaryWriter"/> or <see cref="FlipBinaryWriter"/> based on chosen endian.
+        /// </summary>
+        private readonly BinaryWriter _implementation;
+
+        /// <summary>
         /// Creates a new binary writer with UTF-8 encoding for characters.
         /// </summary>
         /// <param name="output">Output stream to write to.</param>
@@ -20,7 +26,14 @@ namespace Leaf.IO
         public EndianAwareBinaryWriter(Stream output, bool bigEndian)
             : base(output)
         {
-            throw new NotImplementedException();
+            if(bigEndian)
+                _implementation = BitConverter.IsLittleEndian
+                    ? new FlipBinaryWriter(output) // Big -> little
+                    : new BinaryWriter(output); // Bit -> big
+            else
+                _implementation = BitConverter.IsLittleEndian
+                    ? new BinaryWriter(output) // Little -> little
+                    : new FlipBinaryWriter(output); // Little -> big
         }
 
         /// <summary>
@@ -36,7 +49,14 @@ namespace Leaf.IO
         public EndianAwareBinaryWriter(Stream output, bool bigEndian, Encoding encoding)
             : base(output, encoding)
         {
-            throw new NotImplementedException();
+            if(bigEndian)
+                _implementation = BitConverter.IsLittleEndian
+                    ? new FlipBinaryWriter(output, encoding) // Big -> little
+                    : new BinaryWriter(output, encoding); // Bit -> big
+            else
+                _implementation = BitConverter.IsLittleEndian
+                    ? new BinaryWriter(output, encoding) // Little -> little
+                    : new FlipBinaryWriter(output, encoding); // Little -> big
         }
 
         /// <summary>
@@ -53,7 +73,14 @@ namespace Leaf.IO
         public EndianAwareBinaryWriter(Stream output, bool bigEndian, Encoding encoding, bool leaveOpen)
             : base(output, encoding, leaveOpen)
         {
-            throw new NotImplementedException();
+            if(bigEndian)
+                _implementation = BitConverter.IsLittleEndian
+                    ? new FlipBinaryWriter(output, encoding, leaveOpen) // Big -> little
+                    : new BinaryWriter(output, encoding, leaveOpen); // Bit -> big
+            else
+                _implementation = BitConverter.IsLittleEndian
+                    ? new BinaryWriter(output, encoding, leaveOpen) // Little -> little
+                    : new FlipBinaryWriter(output, encoding, leaveOpen); // Little -> big
         }
 
         // Only methods that write multi-byte values are overridden.
@@ -67,7 +94,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(decimal value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -78,7 +105,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(double value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -89,7 +116,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(short value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -100,7 +127,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(int value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -111,7 +138,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(long value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -122,7 +149,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(float value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -133,7 +160,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(ushort value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -144,7 +171,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(uint value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
 
         /// <summary>
@@ -155,7 +182,7 @@ namespace Leaf.IO
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(ulong value)
         {
-            throw new NotImplementedException();
+            _implementation.Write(value);
         }
     }
 }
