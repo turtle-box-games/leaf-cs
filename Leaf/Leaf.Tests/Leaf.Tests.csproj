@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unit\IO\EndianAwareBinaryWriterTests.cs" />
     <Compile Include="Unit\IO\EndianAwareBinaryReaderTests.cs" />
     <Compile Include="Unit\Types\Bounds3Tests.cs" />
     <Compile Include="Unit\Types\Vector4Tests.cs" />
