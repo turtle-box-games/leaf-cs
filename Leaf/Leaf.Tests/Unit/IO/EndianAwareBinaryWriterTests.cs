@@ -207,7 +207,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const decimal value = 1234567890m;
             var bytes = getDecimalBytes(value);
-            using(var output = new MemoryStream(bytes, true))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -223,11 +223,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const decimal value = 1234567890m;
             var bytes = getDecimalBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(decimal), output.Position);
+                    Assert.AreEqual(sizeof(decimal), output.Position);
+                }
             }
         }
 
@@ -240,7 +242,7 @@ namespace Leaf.Tests.Unit.IO
             const decimal value = 1234567890m;
             var bytes = getDecimalBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -257,11 +259,13 @@ namespace Leaf.Tests.Unit.IO
             const decimal value = 1234567890m;
             var bytes = getDecimalBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(decimal), output.Position);
+                    Assert.AreEqual(sizeof(decimal), output.Position);
+                }
             }
         }
 
@@ -273,7 +277,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -289,11 +293,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(float), output.Position);
+                    Assert.AreEqual(sizeof(float), output.Position);
+                }
             }
         }
 
@@ -306,7 +312,7 @@ namespace Leaf.Tests.Unit.IO
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -323,11 +329,13 @@ namespace Leaf.Tests.Unit.IO
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(float), output.Position);
+                    Assert.AreEqual(sizeof(float), output.Position);
+                }
             }
         }
 
@@ -339,7 +347,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -355,11 +363,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(double), output.Position);
+                    Assert.AreEqual(sizeof(double), output.Position);
+                }
             }
         }
 
@@ -372,7 +382,7 @@ namespace Leaf.Tests.Unit.IO
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -389,11 +399,13 @@ namespace Leaf.Tests.Unit.IO
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(double), output.Position);
+                    Assert.AreEqual(sizeof(double), output.Position);
+                }
             }
         }
 
@@ -405,7 +417,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -421,11 +433,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(short), output.Position);
+                    Assert.AreEqual(sizeof(short), output.Position);
+                }
             }
         }
 
@@ -438,7 +452,7 @@ namespace Leaf.Tests.Unit.IO
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -455,11 +469,13 @@ namespace Leaf.Tests.Unit.IO
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(short), output.Position);
+                    Assert.AreEqual(sizeof(short), output.Position);
+                }
             }
         }
 
@@ -471,7 +487,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -487,11 +503,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(int), output.Position);
+                    Assert.AreEqual(sizeof(int), output.Position);
+                }
             }
         }
 
@@ -504,7 +522,7 @@ namespace Leaf.Tests.Unit.IO
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -521,11 +539,13 @@ namespace Leaf.Tests.Unit.IO
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(int), output.Position);
+                    Assert.AreEqual(sizeof(int), output.Position);
+                }
             }
         }
 
@@ -537,7 +557,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -553,11 +573,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(long), output.Position);
+                    Assert.AreEqual(sizeof(long), output.Position);
+                }
             }
         }
 
@@ -570,7 +592,7 @@ namespace Leaf.Tests.Unit.IO
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -587,11 +609,13 @@ namespace Leaf.Tests.Unit.IO
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(long), output.Position);
+                    Assert.AreEqual(sizeof(long), output.Position);
+                }
             }
         }
 
@@ -603,7 +627,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -619,11 +643,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(ushort), output.Position);
+                    Assert.AreEqual(sizeof(ushort), output.Position);
+                }
             }
         }
 
@@ -636,7 +662,7 @@ namespace Leaf.Tests.Unit.IO
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -653,11 +679,13 @@ namespace Leaf.Tests.Unit.IO
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(ushort), output.Position);
+                    Assert.AreEqual(sizeof(ushort), output.Position);
+                }
             }
         }
 
@@ -669,7 +697,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -685,11 +713,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(uint), output.Position);
+                    Assert.AreEqual(sizeof(uint), output.Position);
+                }
             }
         }
 
@@ -702,7 +732,7 @@ namespace Leaf.Tests.Unit.IO
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -719,11 +749,13 @@ namespace Leaf.Tests.Unit.IO
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(uint), output.Position);
+                    Assert.AreEqual(sizeof(uint), output.Position);
+                }
             }
         }
 
@@ -735,7 +767,7 @@ namespace Leaf.Tests.Unit.IO
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -751,11 +783,13 @@ namespace Leaf.Tests.Unit.IO
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(ulong), output.Position);
+                    Assert.AreEqual(sizeof(ulong), output.Position);
+                }
             }
         }
 
@@ -768,7 +802,7 @@ namespace Leaf.Tests.Unit.IO
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
@@ -785,11 +819,13 @@ namespace Leaf.Tests.Unit.IO
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
             flipByteArray(bytes);
-            using(var output = new MemoryStream(bytes, false))
+            using(var output = new MemoryStream(bytes))
             {
                 using(var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
+                {
                     writer.Write(value);
-                Assert.AreEqual(sizeof(ulong), output.Position);
+                    Assert.AreEqual(sizeof(ulong), output.Position);
+                }
             }
         }
     }
