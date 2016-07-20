@@ -36,6 +36,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nodes\BlobNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\IO\EndianAwareBinaryWriterTests.cs" />
     <Compile Include="Unit\IO\EndianAwareBinaryReaderTests.cs" />
