@@ -9,6 +9,8 @@ namespace Leaf.Nodes
     /// </summary>
     public class BlobNode : Node
     {
+        private byte[] _bytes;
+
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
@@ -16,7 +18,7 @@ namespace Leaf.Nodes
         /// </summary>
         public override NodeId TypeId
         {
-            get { throw new NotImplementedException(); }
+            get { return NodeId.Blob; }
         }
 
         /// <summary>
@@ -24,8 +26,13 @@ namespace Leaf.Nodes
         /// </summary>
         public byte[] Bytes
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return _bytes; }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException();
+                _bytes = value;
+            }
         }
 
         /// <summary>
@@ -34,7 +41,9 @@ namespace Leaf.Nodes
         /// <param name="bytes">Byte array of the data to store in the node.</param>
         public BlobNode(byte[] bytes)
         {
-            throw new NotImplementedException();
+            if(bytes == null)
+                throw new ArgumentNullException("bytes");
+            _bytes = bytes;
         }
 
         /// <summary>
