@@ -22,8 +22,9 @@ namespace Leaf.Nodes
         }
 
         /// <summary>
-        /// Gets and sets the value of the node.
+        /// Gets and sets the bytes of the node.
         /// </summary>
+        /// <exception cref="ArgumentNullException">The byte array being set is <c>null</c>.</exception>
         public byte[] Bytes
         {
             get { return _bytes; }
@@ -39,6 +40,7 @@ namespace Leaf.Nodes
         /// Creates a new node.
         /// </summary>
         /// <param name="bytes">Byte array of the data to store in the node.</param>
+        /// <exception cref="ArgumentNullException">The array of <paramref name="bytes"/> is <c>null</c>.</exception>
         public BlobNode(byte[] bytes)
         {
             if(bytes == null)

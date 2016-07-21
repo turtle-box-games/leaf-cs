@@ -8,6 +8,7 @@ namespace Leaf.Nodes
     /// This type is suitable for short and medium length text.
     /// The text is encoded with UTF-8.
     /// </summary>
+    /// <remarks>Strings cannot be <c>null</c>.</remarks>
     public class StringNode : Node
     {
         private string _value;
@@ -25,6 +26,7 @@ namespace Leaf.Nodes
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
+        /// <exception cref="ArgumentNullException">The value being set is <c>null</c>.</exception>
         public string Value
         {
             get { return _value; }
@@ -40,6 +42,7 @@ namespace Leaf.Nodes
         /// Creates a new node.
         /// </summary>
         /// <param name="value">Value of the node.</param>
+        /// <exception cref="ArgumentNullException">The <paramref name="value"/> is <c>null</c>.</exception>
         public StringNode(string value)
         {
             if(value == null)
