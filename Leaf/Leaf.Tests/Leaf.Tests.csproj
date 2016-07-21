@@ -37,6 +37,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Nodes\BlobNodeTests.cs" />
+    <Compile Include="Nodes\ByteNodeTests.cs" />
+    <Compile Include="Nodes\DoubleNodeTests.cs" />
+    <Compile Include="Nodes\FlagNodeTests.cs" />
+    <Compile Include="Nodes\FloatNodeTests.cs" />
+    <Compile Include="Nodes\IntNodeTests.cs" />
+    <Compile Include="Nodes\LongNodeTests.cs" />
+    <Compile Include="Nodes\StringNodeTests.cs" />
+    <Compile Include="Nodes\TimeNodeTests.cs" />
+    <Compile Include="Nodes\UuidNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\IO\EndianAwareBinaryWriterTests.cs" />
     <Compile Include="Unit\IO\EndianAwareBinaryReaderTests.cs" />
