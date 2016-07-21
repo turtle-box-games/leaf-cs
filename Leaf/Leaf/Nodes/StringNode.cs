@@ -28,7 +28,12 @@ namespace Leaf.Nodes
         public string Value
         {
             get { return _value; }
-            set { _value = value; }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException();
+                _value = value;
+            }
         }
 
         /// <summary>
@@ -37,6 +42,8 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public StringNode(string value)
         {
+            if(value == null)
+                throw new ArgumentNullException("value");
             _value = value;
         }
 

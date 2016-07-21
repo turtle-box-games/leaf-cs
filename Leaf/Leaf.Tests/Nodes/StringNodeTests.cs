@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
@@ -14,6 +15,18 @@ namespace Leaf.Tests.Nodes
         {
             var node = new StringNode("foobar");
             Assert.AreEqual(NodeId.String, node.TypeId);
+        }
+
+        /// <summary>
+        /// Verify that the constructor throws an exception for a null value.
+        /// </summary>
+        [Test]
+        public void TestNullValue()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                new StringNode(null);
+            });
         }
 
         /// <summary>
@@ -37,6 +50,19 @@ namespace Leaf.Tests.Nodes
             var node = new StringNode(value);
             node.Value = newValue;
             Assert.AreEqual(newValue, node.Value);
+        }
+
+        /// <summary>
+        /// Verify that the Value setter throws an exception for a null value.
+        /// </summary>
+        [Test]
+        public void TestValueSetterNull()
+        {
+            var node = new StringNode("foobar");
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                node.Value = null;
+            });
         }
     }
 }
