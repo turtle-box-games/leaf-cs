@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.IO;
+using Leaf.Nodes;
 
 namespace Leaf
 {
@@ -13,17 +14,23 @@ namespace Leaf
         public abstract int Version { get; }
 
         /// <summary>
-        /// Header containing information on how the nodes are structured.
+        /// Create a header that contains the node structure information that the engine can use later after serialization.
         /// </summary>
-        protected Header InternalHeader { get; }
+        /// <return>Header containing information on how the nodes are structured.</return>
+        internal abstract Header CreateHeader();
 
         /// <summary>
-        /// Create the base of the engine.
+        /// Reads a root node (structure) from a stream.
         /// </summary>
-        /// <param name="header">Header containing information on how the nodes are structured.</param>
-        protected Engine(Header header)
-        {
-            throw new NotImplementedException();
-        }
+        /// <param name="reader">Reader used to pull data from the stream.</param>
+        /// <returns>Root node (structure).</returns>
+        internal abstract Node ReadStructure(BinaryReader reader);
+
+        /// <summary>
+        /// Writes a root node (structure) to a stream.
+        /// </summary>
+        /// <param name="writer">Writer used to put data into the stream.</param>
+        /// <param name="node">Root node (structure).</param>
+        internal abstract void WriteStructure(BinaryWriter writer, Node node);
     }
 }
