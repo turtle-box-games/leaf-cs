@@ -36,6 +36,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Unit\ContainerTests.cs" />
     <Compile Include="Unit\Nodes\BlobNodeTests.cs" />
     <Compile Include="Unit\Nodes\ByteNodeTests.cs" />
     <Compile Include="Unit\Nodes\DoubleNodeTests.cs" />
