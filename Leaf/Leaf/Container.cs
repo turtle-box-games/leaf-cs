@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Leaf.Nodes;
+using Leaf.Versions;
 
 namespace Leaf
 {
@@ -10,12 +11,15 @@ namespace Leaf
     /// </summary>
     public class Container
     {
+        private readonly Node _root;
+        private readonly Engine _engine;
+
         /// <summary>
         /// Access to the root node of the structure.
         /// </summary>
         public Node Root
         {
-            get { throw new NotImplementedException(); }
+            get { return _root; }
         }
 
         /// <summary>
@@ -25,7 +29,11 @@ namespace Leaf
         /// <remarks>The lowest compatible engine type will be used for serialization.</remarks>
         public Container(Node root)
         {
-            throw new NotImplementedException();
+            if(root == null)
+                throw new ArgumentNullException("root");
+
+            _root   = root;
+            _engine = new V1Engine();
         }
 
         /// <summary>
@@ -35,7 +43,13 @@ namespace Leaf
         /// <param name="engine">Engine that understands and serializes the node's structure.</param>
         public Container(Node root, Engine engine)
         {
-            throw new NotImplementedException();
+            if(root == null)
+                throw new ArgumentNullException("root");
+            if(engine == null)
+                throw new ArgumentNullException("engine");
+
+            _root   = root;
+            _engine = engine;
         }
 
         /// <summary>
