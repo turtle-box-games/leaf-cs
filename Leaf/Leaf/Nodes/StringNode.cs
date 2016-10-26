@@ -18,10 +18,7 @@ namespace Leaf.Nodes
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.String"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.String; }
-        }
+        public override NodeId TypeId => NodeId.String;
 
         /// <summary>
         /// Gets and sets the value of the node.
@@ -46,7 +43,7 @@ namespace Leaf.Nodes
         public StringNode(string value)
         {
             if(value == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             _value = value;
         }
 

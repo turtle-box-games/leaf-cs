@@ -9,26 +9,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class LongNode : Node
     {
-        private long _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Long"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Long; }
-        }
+        public override NodeId TypeId => NodeId.Long;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public long Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public long Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -36,7 +27,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public LongNode(long value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

@@ -7,31 +7,20 @@
     /// </summary>
     public struct Point3
     {
-        private readonly int _x, _y, _z;
-
         /// <summary>
         /// Offset along the x-axis.
         /// </summary>
-        public int X
-        {
-            get { return _x; }
-        }
+        public int X { get; }
 
         /// <summary>
         /// Offset along the y-axis.
         /// </summary>
-        public int Y
-        {
-            get { return _y; }
-        }
+        public int Y { get; }
 
         /// <summary>
         /// Offset along the z-axis.
         /// </summary>
-        public int Z
-        {
-            get { return _z; }
-        }
+        public int Z { get; }
 
         /// <summary>
         /// Creates a three-dimensional point setting all properties.
@@ -41,9 +30,9 @@
         /// <param name="z">Offset along the z-axis.</param>
         public Point3(int x, int y, int z)
         {
-            _x = x;
-            _y = y;
-            _z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
     }
 }

@@ -8,26 +8,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class FlagNode : Node
     {
-        private bool _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Flag"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Flag; }
-        }
+        public override NodeId TypeId => NodeId.Flag;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public bool Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public bool Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -35,7 +26,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public FlagNode(bool value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

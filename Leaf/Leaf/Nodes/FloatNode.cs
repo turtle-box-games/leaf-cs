@@ -9,26 +9,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class FloatNode : Node
     {
-        private float _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Float"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Float; }
-        }
+        public override NodeId TypeId => NodeId.Float;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public float Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public float Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -36,7 +27,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public FloatNode(float value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

@@ -16,10 +16,7 @@ namespace Leaf.Nodes
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Blob"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Blob; }
-        }
+        public override NodeId TypeId => NodeId.Blob;
 
         /// <summary>
         /// Gets and sets the bytes of the node.
@@ -44,7 +41,7 @@ namespace Leaf.Nodes
         public BlobNode(byte[] bytes)
         {
             if(bytes == null)
-                throw new ArgumentNullException("bytes");
+                throw new ArgumentNullException(nameof(bytes));
             _bytes = bytes;
         }
 

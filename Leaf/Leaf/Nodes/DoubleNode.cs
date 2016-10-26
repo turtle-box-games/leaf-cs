@@ -9,26 +9,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class DoubleNode : Node
     {
-        private double _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Double"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Double; }
-        }
+        public override NodeId TypeId => NodeId.Double;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public double Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public double Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -36,7 +27,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public DoubleNode(double value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

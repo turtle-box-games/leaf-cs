@@ -7,55 +7,35 @@
     /// </summary>
     public struct Rect3
     {
-        private readonly int _x, _y, _z, _w, _h, _d;
-
         /// <summary>
         /// Offset along the x-axis of the region.
         /// </summary>
-        public int X
-        {
-            get { return _x; }
-        }
+        public int X { get; }
 
         /// <summary>
         /// Offset along the y-axis of the region.
         /// </summary>
-        public int Y
-        {
-            get { return _y; }
-        }
+        public int Y { get; }
 
         /// <summary>
         /// Offset along the z-axis of the region.
         /// </summary>
-        public int Z
-        {
-            get { return _z; }
-        }
+        public int Z { get; }
 
         /// <summary>
         /// Distance the region spans along the x-axis.
         /// </summary>
-        public int Width
-        {
-            get { return _w; }
-        }
+        public int Width { get; }
 
         /// <summary>
         /// Distance the region spans along the y-axis.
         /// </summary>
-        public int Height
-        {
-            get { return _h; }
-        }
+        public int Height { get; }
 
         /// <summary>
         /// Distance the region spans along the z-axis.
         /// </summary>
-        public int Depth
-        {
-            get { return _d; }
-        }
+        public int Depth { get; }
 
         /// <summary>
         /// Creates a new three-dimensional rectangle setting all properties.
@@ -68,12 +48,12 @@
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Rect3(int x, int y, int z, int width, int height, int depth)
         {
-            _x = x;
-            _y = y;
-            _z = z;
-            _w = width;
-            _h = height;
-            _d = depth;
+            X = x;
+            Y = y;
+            Z = z;
+            Width  = width;
+            Height = height;
+            Depth  = depth;
         }
 
         /// <summary>
@@ -84,12 +64,12 @@
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Rect3(int width, int height, int depth)
         {
-            _x = 0;
-            _y = 0;
-            _z = 0;
-            _w = width;
-            _h = height;
-            _d = depth;
+            X = 0;
+            Y = 0;
+            Z = 0;
+            Width  = width;
+            Height = height;
+            Depth  = depth;
         }
 
         /// <summary>
@@ -99,12 +79,12 @@
         /// <param name="size">Distance the bounds extend.</param>
         public Rect3(Point3 position, Point3 size)
         {
-            _x = position.X;
-            _y = position.Y;
-            _z = position.Z;
-            _w = size.X;
-            _h = size.Y;
-            _d = size.Z;
+            X = position.X;
+            Y = position.Y;
+            Z = position.Z;
+            Width  = size.X;
+            Height = size.Y;
+            Depth  = size.Z;
         }
     }
 }

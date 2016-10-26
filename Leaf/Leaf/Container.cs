@@ -11,16 +11,12 @@ namespace Leaf
     /// </summary>
     public class Container
     {
-        private readonly Node _root;
         private readonly Engine _engine;
 
         /// <summary>
         /// Access to the root node of the structure.
         /// </summary>
-        public Node Root
-        {
-            get { return _root; }
-        }
+        public Node Root { get; }
 
         /// <summary>
         /// Creates a container with the specified root node.
@@ -30,9 +26,9 @@ namespace Leaf
         public Container(Node root)
         {
             if(root == null)
-                throw new ArgumentNullException("root");
+                throw new ArgumentNullException(nameof(root));
 
-            _root   = root;
+            Root    = root;
             _engine = new V1Engine();
         }
 
@@ -44,11 +40,11 @@ namespace Leaf
         public Container(Node root, Engine engine)
         {
             if(root == null)
-                throw new ArgumentNullException("root");
+                throw new ArgumentNullException(nameof(root));
             if(engine == null)
-                throw new ArgumentNullException("engine");
+                throw new ArgumentNullException(nameof(engine));
 
-            _root   = root;
+            Root    = root;
             _engine = engine;
         }
 

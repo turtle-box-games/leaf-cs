@@ -7,55 +7,35 @@
     /// </summary>
     public struct Bounds3
     {
-        private readonly float _x, _y, _z, _w, _h, _d;
-
         /// <summary>
         /// Offset along the x-axis of the bounding container.
         /// </summary>
-        public float X
-        {
-            get { return _x; }
-        }
+        public float X { get; }
 
         /// <summary>
         /// Offset along the y-axis of the bounding container.
         /// </summary>
-        public float Y
-        {
-            get { return _y; }
-        }
+        public float Y { get; }
 
         /// <summary>
         /// Offset along the z-axis of the bounding container.
         /// </summary>
-        public float Z
-        {
-            get { return _z; }
-        }
+        public float Z { get; }
 
         /// <summary>
         /// Distance the bounding container spans along the x-axis.
         /// </summary>
-        public float Width
-        {
-            get { return _w; }
-        }
+        public float Width { get; }
 
         /// <summary>
         /// Distance the bounding container spans along the y-axis.
         /// </summary>
-        public float Height
-        {
-            get { return _h; }
-        }
+        public float Height { get; }
 
         /// <summary>
         /// Distance the bounding container spans along the z-axis.
         /// </summary>
-        public float Depth
-        {
-            get { return _d; }
-        }
+        public float Depth { get; }
 
         /// <summary>
         /// Creates a new three-dimensional bounds setting all properties.
@@ -68,12 +48,12 @@
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Bounds3(float x, float y, float z, float width, float height, float depth)
         {
-            _x = x;
-            _y = y;
-            _z = z;
-            _w = width;
-            _h = height;
-            _d = depth;
+            X = x;
+            Y = y;
+            Z = z;
+            Width  = width;
+            Height = height;
+            Depth  = depth;
         }
 
         /// <summary>
@@ -84,12 +64,12 @@
         /// <param name="depth">Distance spanned on the z-axis.</param>
         public Bounds3(float width, float height, float depth)
         {
-            _x = 0f;
-            _y = 0f;
-            _z = 0f;
-            _w = width;
-            _h = height;
-            _d = depth;
+            X = 0f;
+            Y = 0f;
+            Z = 0f;
+            Width  = width;
+            Height = height;
+            Depth  = depth;
         }
 
         /// <summary>
@@ -99,12 +79,12 @@
         /// <param name="size">Distance the bounds extend.</param>
         public Bounds3(Vector3 position, Vector3 size)
         {
-            _x = position.X;
-            _y = position.Y;
-            _z = position.Z;
-            _w = size.X;
-            _h = size.Y;
-            _d = size.Z;
+            X = position.X;
+            Y = position.Y;
+            Z = position.Z;
+            Width  = size.X;
+            Height = size.Y;
+            Depth  = size.Z;
         }
     }
 }

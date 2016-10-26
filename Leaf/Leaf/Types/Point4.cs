@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Leaf.Types
+﻿namespace Leaf.Types
 {
     /// <summary>
     /// Storage for a four-dimensional point or size.
@@ -9,39 +7,25 @@ namespace Leaf.Types
     /// </summary>
     public struct Point4
     {
-        private readonly int _x, _y, _z, _w;
-
         /// <summary>
         /// Offset along the x-axis.
         /// </summary>
-        public int X
-        {
-            get { return _x; }
-        }
+        public int X { get; }
 
         /// <summary>
         /// Offset along the y-axis.
         /// </summary>
-        public int Y
-        {
-            get { return _y; }
-        }
+        public int Y { get; }
 
         /// <summary>
         /// Offset along the z-axis.
         /// </summary>
-        public int Z
-        {
-            get { return _z; }
-        }
+        public int Z { get; }
 
         /// <summary>
         /// Offset along the w-axis.
         /// </summary>
-        public int W
-        {
-            get { return _w; }
-        }
+        public int W { get; }
 
         /// <summary>
         /// Creates a four-dimensional point setting all properties.
@@ -52,10 +36,10 @@ namespace Leaf.Types
         /// <param name="w">Offset along the w-axis.</param>
         public Point4(int x, int y, int z, int w)
         {
-            _x = x;
-            _y = y;
-            _z = z;
-            _w = w;
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
         }
     }
 }

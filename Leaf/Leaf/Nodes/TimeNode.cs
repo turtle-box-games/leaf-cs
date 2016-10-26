@@ -10,26 +10,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class TimeNode : Node
     {
-        private DateTime _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Time"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Time; }
-        }
+        public override NodeId TypeId => NodeId.Time;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public DateTime Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public DateTime Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -37,7 +28,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public TimeNode(DateTime value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

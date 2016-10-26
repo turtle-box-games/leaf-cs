@@ -9,26 +9,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class IntNode : Node
     {
-        private int _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Int"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Int; }
-        }
+        public override NodeId TypeId => NodeId.Int;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public int Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public int Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -36,7 +27,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public IntNode(int value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

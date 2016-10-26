@@ -9,26 +9,17 @@ namespace Leaf.Nodes
     /// </summary>
     public class ByteNode : Node
     {
-        private byte _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Byte"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Byte; }
-        }
+        public override NodeId TypeId => NodeId.Byte;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public byte Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public byte Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -36,7 +27,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public ByteNode(byte value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>

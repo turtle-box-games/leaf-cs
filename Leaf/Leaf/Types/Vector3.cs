@@ -7,31 +7,20 @@
     /// </summary>
     public struct Vector3
     {
-        private readonly float _x, _y, _z;
-
         /// <summary>
         /// Magnitude of the x-axis.
         /// </summary>
-        public float X
-        {
-            get { return _x; }
-        }
+        public float X { get; }
 
         /// <summary>
         /// Magnitude of the y-axis.
         /// </summary>
-        public float Y
-        {
-            get { return _y; }
-        }
+        public float Y { get; }
 
         /// <summary>
         /// Magnitude of the z-axis.
         /// </summary>
-        public float Z
-        {
-            get { return _z; }
-        }
+        public float Z { get; }
 
         /// <summary>
         /// Creates a three-dimensional vector setting all properties.
@@ -41,9 +30,9 @@
         /// <param name="z">Magnitude of the z-axis.</param>
         public Vector3(float x, float y, float z)
         {
-            _x = x;
-            _y = y;
-            _z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
     }
 }

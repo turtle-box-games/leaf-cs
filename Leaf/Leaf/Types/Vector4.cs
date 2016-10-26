@@ -7,39 +7,25 @@
     /// </summary>
     public struct Vector4
     {
-        private readonly float _x, _y, _z, _w;
-
         /// <summary>
         /// Magnitude of the x-axis.
         /// </summary>
-        public float X
-        {
-            get { return _x; }
-        }
+        public float X { get; }
 
         /// <summary>
         /// Magnitude of the y-axis.
         /// </summary>
-        public float Y
-        {
-            get { return _y; }
-        }
+        public float Y { get; }
 
         /// <summary>
         /// Magnitude of the z-axis.
         /// </summary>
-        public float Z
-        {
-            get { return _z; }
-        }
+        public float Z { get; }
 
         /// <summary>
         /// Magnitude of the w-axis.
         /// </summary>
-        public float W
-        {
-            get { return _w; }
-        }
+        public float W { get; }
 
         /// <summary>
         /// Creates a four-dimensional vector setting all properties.
@@ -50,10 +36,10 @@
         /// <param name="w">Magnitude of the w-axis.</param>
         public Vector4(float x, float y, float z, float w)
         {
-            _x = x;
-            _y = y;
-            _z = z;
-            _w = w;
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
         }
     }
 }

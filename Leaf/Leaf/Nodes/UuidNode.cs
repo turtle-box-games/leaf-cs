@@ -13,26 +13,17 @@ namespace Leaf.Nodes
     /// See https://en.wikipedia.org/wiki/Globally_unique_identifier#Binary_encoding for more details.</remarks>
     public class UuidNode : Node
     {
-        private Guid _value;
-
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// The value returned by this property is <see cref="NodeId.Uuid"/>.
         /// </summary>
-        public override NodeId TypeId
-        {
-            get { return NodeId.Uuid; }
-        }
+        public override NodeId TypeId => NodeId.Uuid;
 
         /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
-        public Guid Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        public Guid Value { get; set; }
 
         /// <summary>
         /// Creates a new node.
@@ -40,7 +31,7 @@ namespace Leaf.Nodes
         /// <param name="value">Value of the node.</param>
         public UuidNode(Guid value)
         {
-            _value = value;
+            Value = value;
         }
 
         /// <summary>
