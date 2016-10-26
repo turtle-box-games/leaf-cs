@@ -5,13 +5,13 @@ namespace Leaf.Versions
     /// <summary>
     /// First version of the node header.
     /// </summary>
-    public class V1Header : Header
+    internal class V1Header : Header
     {
         /// <summary>
         /// Numerical ID used to distinguish the header and engine type.
         /// For this header version, the value is 1.
         /// </summary>
-        public override int Version { get; }
+        internal override int Version { get; }
 
         /// <summary>
         /// Serializes the header and writes it to a stream.

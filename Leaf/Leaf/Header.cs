@@ -5,12 +5,12 @@ namespace Leaf
     /// <summary>
     /// Contained information for how a node structure is stored.
     /// </summary>
-    public abstract class Header
+    internal abstract class Header
     {
         /// <summary>
         /// Numerical ID used to distinguish the header and engine type.
         /// </summary>
-        public abstract int Version { get; }
+        internal abstract int Version { get; }
 
         /// <summary>
         /// Serializes the header and writes it to a stream.
