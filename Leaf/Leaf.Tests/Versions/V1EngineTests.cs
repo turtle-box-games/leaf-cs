@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Leaf.Versions;
+﻿using Leaf.Versions;
+using NUnit.Framework;
 
-namespace Leaf.Tests.Unit.Versions
+namespace Leaf.Tests.Versions
 {
     [TestFixture]
     public class V1EngineTests

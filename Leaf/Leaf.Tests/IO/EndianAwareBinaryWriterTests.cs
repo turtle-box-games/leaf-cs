@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using Leaf.IO;
+using NUnit.Framework;
 
-namespace Leaf.Tests.Unit.IO
+namespace Leaf.Tests.IO
 {
     [TestFixture]
     public class EndianAwareBinaryWriterTests

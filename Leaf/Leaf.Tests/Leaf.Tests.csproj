@@ -36,27 +36,27 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Unit\ContainerTests.cs" />
-    <Compile Include="Unit\Nodes\BlobNodeTests.cs" />
-    <Compile Include="Unit\Nodes\ByteNodeTests.cs" />
-    <Compile Include="Unit\Nodes\DoubleNodeTests.cs" />
-    <Compile Include="Unit\Nodes\FlagNodeTests.cs" />
-    <Compile Include="Unit\Nodes\FloatNodeTests.cs" />
-    <Compile Include="Unit\Nodes\IntNodeTests.cs" />
-    <Compile Include="Unit\Nodes\LongNodeTests.cs" />
-    <Compile Include="Unit\Nodes\StringNodeTests.cs" />
-    <Compile Include="Unit\Nodes\TimeNodeTests.cs" />
-    <Compile Include="Unit\Nodes\UuidNodeTests.cs" />
+    <Compile Include="ContainerTests.cs" />
+    <Compile Include="IO\EndianAwareBinaryReaderTests.cs" />
+    <Compile Include="IO\EndianAwareBinaryWriterTests.cs" />
+    <Compile Include="Nodes\BlobNodeTests.cs" />
+    <Compile Include="Nodes\ByteNodeTests.cs" />
+    <Compile Include="Nodes\DoubleNodeTests.cs" />
+    <Compile Include="Nodes\FlagNodeTests.cs" />
+    <Compile Include="Nodes\FloatNodeTests.cs" />
+    <Compile Include="Nodes\IntNodeTests.cs" />
+    <Compile Include="Nodes\LongNodeTests.cs" />
+    <Compile Include="Nodes\StringNodeTests.cs" />
+    <Compile Include="Nodes\TimeNodeTests.cs" />
+    <Compile Include="Nodes\UuidNodeTests.cs" />
+    <Compile Include="Types\Bounds3Tests.cs" />
+    <Compile Include="Types\Point3Tests.cs" />
+    <Compile Include="Types\Point4Tests.cs" />
+    <Compile Include="Types\Rect3Tests.cs" />
+    <Compile Include="Types\Vector3Tests.cs" />
+    <Compile Include="Types\Vector4Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\IO\EndianAwareBinaryWriterTests.cs" />
-    <Compile Include="Unit\IO\EndianAwareBinaryReaderTests.cs" />
-    <Compile Include="Unit\Types\Bounds3Tests.cs" />
-    <Compile Include="Unit\Types\Vector4Tests.cs" />
-    <Compile Include="Unit\Types\Vector3Tests.cs" />
-    <Compile Include="Unit\Types\Rect3Tests.cs" />
-    <Compile Include="Unit\Types\Point4Tests.cs" />
-    <Compile Include="Unit\Types\Point3Tests.cs" />
-    <Compile Include="Unit\Versions\V1EngineTests.cs" />
+    <Compile Include="Versions\V1EngineTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,9 +66,6 @@
       <Project>{b99f4110-1553-48d9-8113-63e9de6ce1c8}</Project>
       <Name>Leaf</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Unit\Versions" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.IO;
 using Leaf.Nodes;
 using Leaf.Versions;
+using NUnit.Framework;
 
-namespace Leaf.Tests.Unit
+namespace Leaf.Tests
 {
     [TestFixture]
     public class ContainerTests

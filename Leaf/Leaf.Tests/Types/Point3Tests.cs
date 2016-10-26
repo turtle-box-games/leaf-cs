@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
-using Leaf.Types;
+﻿using Leaf.Types;
+using NUnit.Framework;
 
-namespace Leaf.Tests.Unit.Types
+namespace Leaf.Tests.Types
 {
     [TestFixture]
-    public class Vector3Tests
+    public class Point3Tests
     {
-        private static Vector3 create(float x = 3f, float y = 4f, float z = 5f)
+        private static Point3 create(int x = 3, int y = 4, int z = 5)
         {
-            return new Vector3(x, y, z);
+            return new Point3(x, y, z);
         }
 
         /// <summary>
@@ -17,9 +17,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestXGetter()
         {
-            const float v = 20f;
-            var vector = create(x: v);
-            Assert.AreEqual(v, vector.X);
+            const int v = 20;
+            var point = create(x: v);
+            Assert.AreEqual(v, point.X);
         }
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestYGetter()
         {
-            const float v = 20f;
-            var vector = create(y: v);
-            Assert.AreEqual(v, vector.Y);
+            const int v = 20;
+            var point = create(y: v);
+            Assert.AreEqual(v, point.Y);
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace Leaf.Tests.Unit.Types
         [Test]
         public void TestZGetter()
         {
-            const float v = 20f;
-            var vector = create(z: v);
-            Assert.AreEqual(v, vector.Z);
+            const int v = 20;
+            var point = create(z: v);
+            Assert.AreEqual(v, point.Z);
         }
     }
 }

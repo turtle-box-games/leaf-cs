@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Leaf.Types;
+﻿using Leaf.Types;
+using NUnit.Framework;
 
-namespace Leaf.Tests.Unit.Types
+namespace Leaf.Tests.Types
 {
     [TestFixture]
     public class Vector4Tests
