@@ -5,13 +5,24 @@ namespace Leaf.Versions
     /// <summary>
     /// First version of the node header.
     /// </summary>
+    /// <seealso cref="V1Engine"/>
     internal class V1Header : Header
     {
         /// <summary>
         /// Numerical ID used to distinguish the header and engine type.
         /// For this header version, the value is 1.
         /// </summary>
-        internal override int Version { get; }
+        internal override int Version => 1;
+
+        /// <summary>
+        /// Reads a header for a container from a stream.
+        /// </summary>
+        /// <param name="reader">Reader used to get data from the stream.</param>
+        /// <returns>Version 1 header containing information on how the nodes are structured.</returns>
+        internal static V1Header Read(BinaryReader reader)
+        {
+            throw new System.NotImplementedException();
+        }
 
         /// <summary>
         /// Serializes the header and writes it to a stream.

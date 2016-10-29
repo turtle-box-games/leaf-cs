@@ -12,7 +12,7 @@ namespace Leaf.Versions
         /// Numerical version used to distinguish this engine from others.
         /// For this engine, the value is 1.
         /// </summary>
-        public override int Version { get; } = 1;
+        public override int Version => 1;
 
         /// <summary>
         /// Create a header that contains the node structure information that the engine can use later after serialization.
