@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Text;
+using Leaf.IO;
 using Leaf.Nodes;
 using Leaf.Versions;
 
@@ -11,6 +13,9 @@ namespace Leaf
     /// </summary>
     public class Container
     {
+        /// <summary>
+        /// Engine used to parse the node structure and header for the container.
+        /// </summary>
         private readonly Engine _engine;
 
         /// <summary>
@@ -25,7 +30,7 @@ namespace Leaf
         /// <remarks>The lowest compatible engine type will be used for serialization.</remarks>
         public Container(Node root)
         {
-            if(root == null)
+            if (root == null)
                 throw new ArgumentNullException(nameof(root));
 
             Root    = root;
@@ -39,14 +44,34 @@ namespace Leaf
         /// <param name="engine">Engine that understands and serializes the node's structure.</param>
         public Container(Node root, Engine engine)
         {
-            if(root == null)
+            if (root == null)
                 throw new ArgumentNullException(nameof(root));
-            if(engine == null)
+            if (engine == null)
                 throw new ArgumentNullException(nameof(engine));
 
             Root    = root;
             _engine = engine;
         }
+
+        #region Serialization
+
+        /// <summary>
+        /// Flag indicating whether or not to use big-endian during serialization.
+        /// </summary>
+        private const bool BigEndian = true;
+
+        /// <summary>
+        /// Bytes that prefix the contents of every container.
+        /// The signature spells out LEAF in ASCII.
+        /// </summary>
+        private static readonly byte[] Signature = { 0x4C, 0x45, 0x41, 0x46 };
+
+        /// <summary>
+        /// Text encoding used for serialization.
+        /// </summary>
+        private static readonly Encoding StreamEncoding = Encoding.UTF8;
+
+        #region Read
 
         /// <summary>
         /// Reads a node structure from a stream.
@@ -54,8 +79,14 @@ namespace Leaf
         /// <param name="input">Stream to read a container from.</param>
         public static Container Read(Stream input)
         {
-            throw new NotImplementedException();
+            using (var reader = new EndianAwareBinaryReader(input, BigEndian, StreamEncoding, true))
+            {
+                throw new NotImplementedException();
+            }
         }
+
+        #endregion
+        #region Write
 
         /// <summary>
         /// Writes the contents of the container and its structure to a stream.
@@ -63,7 +94,44 @@ namespace Leaf
         /// <param name="output">Stream to write the container to.</param>
         public void Write(Stream output)
         {
-            throw new NotImplementedException();
+            using (var writer = new EndianAwareBinaryWriter(output, BigEndian, StreamEncoding, true))
+            {
+                WriteSignature(writer);
+                WriteHeader(writer);
+                WriteStructure(writer);
+            }
         }
+
+        /// <summary>
+        /// Writes the Leaf signature and version to a stream.
+        /// </summary>
+        /// <param name="writer">Writer used to put data on the stream.</param>
+        private void WriteSignature(BinaryWriter writer)
+        {
+            writer.Write(Signature);
+            writer.Write(_engine.Version);
+        }
+
+        /// <summary>
+        /// Writes the version-specific header to a stream.
+        /// </summary>
+        /// <param name="writer">Writer used to put data on the stream.</param>
+        private void WriteHeader(BinaryWriter writer)
+        {
+            var header = _engine.CreateHeader();
+            header.Write(writer);
+        }
+
+        /// <summary>
+        /// Writes the node structure to a stream.
+        /// </summary>
+        /// <param name="writer">Writer used to put data on the stream.</param>
+        private void WriteStructure(BinaryWriter writer)
+        {
+            _engine.WriteStructure(writer, Root);
+        }
+
+        #endregion
+        #endregion
     }
 }
