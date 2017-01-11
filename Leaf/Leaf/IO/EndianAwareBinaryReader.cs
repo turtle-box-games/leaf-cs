@@ -26,7 +26,7 @@ namespace Leaf.IO
         public EndianAwareBinaryReader(Stream input, bool bigEndian)
             : base(input)
         {
-            if(bigEndian)
+            if (bigEndian)
                 _implementation = BitConverter.IsLittleEndian
                     ? new FlipBinaryReader(input) // Big -> little
                     : new BinaryReader(input); // Bit -> big
@@ -49,7 +49,7 @@ namespace Leaf.IO
         public EndianAwareBinaryReader(Stream input, bool bigEndian, Encoding encoding)
             : base(input, encoding)
         {
-            if(bigEndian)
+            if (bigEndian)
                 _implementation = BitConverter.IsLittleEndian
                     ? new FlipBinaryReader(input, encoding) // Big -> little
                     : new BinaryReader(input, encoding); // Bit -> big
@@ -73,7 +73,7 @@ namespace Leaf.IO
         public EndianAwareBinaryReader(Stream input, bool bigEndian, Encoding encoding, bool leaveOpen)
             : base(input, encoding, leaveOpen)
         {
-            if(bigEndian)
+            if (bigEndian)
                 _implementation = BitConverter.IsLittleEndian
                     ? new FlipBinaryReader(input, encoding, leaveOpen) // Big -> little
                     : new BinaryReader(input, encoding, leaveOpen); // Bit -> big

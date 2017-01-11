@@ -29,7 +29,7 @@ namespace Leaf.Nodes
             get { return _value; }
             set
             {
-                if(value == null)
+                if (value == null)
                     throw new ArgumentNullException();
                 _value = value;
             }
@@ -42,7 +42,7 @@ namespace Leaf.Nodes
         /// <exception cref="ArgumentNullException">The <paramref name="value"/> is <c>null</c>.</exception>
         public StringNode(string value)
         {
-            if(value == null)
+            if (value == null)
                 throw new ArgumentNullException(nameof(value));
             _value = value;
         }

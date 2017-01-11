@@ -65,10 +65,10 @@ namespace Leaf.IO
         {
             var bits  = decimal.GetBits(value);
             var bytes = new byte[sizeof(decimal)];
-            for(var i = 0; i < bits.Length; ++i)
+            for (var i = 0; i < bits.Length; ++i)
             {
                 var bitBytes = BitConverter.GetBytes(bits[i]);
-                for(var j = 0; j < bitBytes.Length; ++j)
+                for (var j = 0; j < bitBytes.Length; ++j)
                     bytes[i * sizeof(int) + j] = bitBytes[sizeof(int) - j - 1];
             }
             Write(bytes);
@@ -83,7 +83,7 @@ namespace Leaf.IO
         public override void Write(double value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -96,7 +96,7 @@ namespace Leaf.IO
         public override void Write(short value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -109,7 +109,7 @@ namespace Leaf.IO
         public override void Write(int value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -122,7 +122,7 @@ namespace Leaf.IO
         public override void Write(long value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -135,7 +135,7 @@ namespace Leaf.IO
         public override void Write(float value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -148,7 +148,7 @@ namespace Leaf.IO
         public override void Write(ushort value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -161,7 +161,7 @@ namespace Leaf.IO
         public override void Write(uint value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -174,7 +174,7 @@ namespace Leaf.IO
         public override void Write(ulong value)
         {
             var bytes = BitConverter.GetBytes(value);
-            flipBytes(bytes);
+            FlipBytes(bytes);
             Write(bytes);
         }
 
@@ -182,7 +182,7 @@ namespace Leaf.IO
         /// Swaps the ordering of bytes in an array.
         /// </summary>
         /// <param name="bytes">Array of bytes to flip.</param>
-        private static void flipBytes(byte[] bytes)
+        private static void FlipBytes(byte[] bytes)
         {
             var mid = bytes.Length / 2;
             for (int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)

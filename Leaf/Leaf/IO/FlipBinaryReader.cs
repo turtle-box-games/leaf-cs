@@ -66,8 +66,8 @@ namespace Leaf.IO
         {
             var bits  = new int[4];
             var bytes = ReadBytes(sizeof(decimal));
-            flipBytes(bytes);
-            for(var i = 0; i < bits.Length; ++i)
+            FlipBytes(bytes);
+            for (var i = 0; i < bits.Length; ++i)
                 bits[i] = BitConverter.ToInt32(bytes, sizeof(int) * i);
             return new decimal(bits);
         }
@@ -82,7 +82,7 @@ namespace Leaf.IO
         public override double ReadDouble()
         {
             var bytes = ReadBytes(sizeof(double));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToDouble(bytes, 0);
         }
 
@@ -96,7 +96,7 @@ namespace Leaf.IO
         public override short ReadInt16()
         {
             var bytes = ReadBytes(sizeof(short));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToInt16(bytes, 0);
         }
 
@@ -110,7 +110,7 @@ namespace Leaf.IO
         public override int ReadInt32()
         {
             var bytes = ReadBytes(sizeof(int));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToInt32(bytes, 0);
         }
 
@@ -124,7 +124,7 @@ namespace Leaf.IO
         public override long ReadInt64()
         {
             var bytes = ReadBytes(sizeof(long));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToInt64(bytes, 0);
         }
 
@@ -138,7 +138,7 @@ namespace Leaf.IO
         public override float ReadSingle()
         {
             var bytes = ReadBytes(sizeof(float));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToSingle(bytes, 0);
         }
 
@@ -152,7 +152,7 @@ namespace Leaf.IO
         public override ushort ReadUInt16()
         {
             var bytes = ReadBytes(sizeof(ushort));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToUInt16(bytes, 0);
         }
 
@@ -166,7 +166,7 @@ namespace Leaf.IO
         public override uint ReadUInt32()
         {
             var bytes = ReadBytes(sizeof(uint));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToUInt32(bytes, 0);
         }
 
@@ -180,7 +180,7 @@ namespace Leaf.IO
         public override ulong ReadUInt64()
         {
             var bytes = ReadBytes(sizeof(ulong));
-            flipBytes(bytes);
+            FlipBytes(bytes);
             return BitConverter.ToUInt64(bytes, 0);
         }
 
@@ -188,10 +188,10 @@ namespace Leaf.IO
         /// Swaps the ordering of bytes in an array.
         /// </summary>
         /// <param name="bytes">Array of bytes to flip.</param>
-        private static void flipBytes(byte[] bytes)
+        private static void FlipBytes(byte[] bytes)
         {
             var mid = bytes.Length / 2;
-            for(int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)
+            for (int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)
             {
                 var b    = bytes[i];
                 bytes[i] = bytes[j];

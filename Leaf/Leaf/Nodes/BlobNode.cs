@@ -27,7 +27,7 @@ namespace Leaf.Nodes
             get { return _bytes; }
             set
             {
-                if(value == null)
+                if (value == null)
                     throw new ArgumentNullException();
                 _bytes = value;
             }
@@ -40,7 +40,7 @@ namespace Leaf.Nodes
         /// <exception cref="ArgumentNullException">The array of <paramref name="bytes"/> is <c>null</c>.</exception>
         public BlobNode(byte[] bytes)
         {
-            if(bytes == null)
+            if (bytes == null)
                 throw new ArgumentNullException(nameof(bytes));
             _bytes = bytes;
         }

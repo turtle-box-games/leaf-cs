@@ -26,7 +26,7 @@ namespace Leaf.IO
         public EndianAwareBinaryWriter(Stream output, bool bigEndian)
             : base(output)
         {
-            if(bigEndian)
+            if (bigEndian)
                 _implementation = BitConverter.IsLittleEndian
                     ? new FlipBinaryWriter(output) // Big -> little
                     : new BinaryWriter(output); // Bit -> big
@@ -49,7 +49,7 @@ namespace Leaf.IO
         public EndianAwareBinaryWriter(Stream output, bool bigEndian, Encoding encoding)
             : base(output, encoding)
         {
-            if(bigEndian)
+            if (bigEndian)
                 _implementation = BitConverter.IsLittleEndian
                     ? new FlipBinaryWriter(output, encoding) // Big -> little
                     : new BinaryWriter(output, encoding); // Bit -> big
@@ -73,7 +73,7 @@ namespace Leaf.IO
         public EndianAwareBinaryWriter(Stream output, bool bigEndian, Encoding encoding, bool leaveOpen)
             : base(output, encoding, leaveOpen)
         {
-            if(bigEndian)
+            if (bigEndian)
                 _implementation = BitConverter.IsLittleEndian
                     ? new FlipBinaryWriter(output, encoding, leaveOpen) // Big -> little
                     : new BinaryWriter(output, encoding, leaveOpen); // Bit -> big
