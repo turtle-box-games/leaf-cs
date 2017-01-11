@@ -14,10 +14,12 @@ namespace Leaf
         public abstract int Version { get; }
 
         /// <summary>
-        /// Create a header that contains the node structure information that the engine can use later after serialization.
+        /// Create a header that contains the node structure information
+        /// that the engine can use later after serialization.
         /// </summary>
+        /// <param name="node">Root node (structure).</param>
         /// <return>Header containing information on how the nodes are structured.</return>
-        internal abstract Header CreateHeader();
+        internal abstract Header CreateHeader(Node node);
 
         /// <summary>
         /// Reads a root node (structure) from a stream.

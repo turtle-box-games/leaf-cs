@@ -15,13 +15,15 @@ namespace Leaf.Versions
         public override int Version => 1;
 
         /// <summary>
-        /// Create a header that contains the node structure information that the engine can use later after serialization.
+        /// Create a header that contains the node structure information
+        /// that the engine can use later after serialization.
         /// </summary>
+        /// <param name="node">Root node (structure).</param>
         /// <return>Version 1 header containing information on how the nodes are structured.</return>
         /// <seealso cref="V1Header"/>
-        internal override Header CreateHeader()
+        internal override Header CreateHeader(Node node)
         {
-            throw new System.NotImplementedException();
+            return new V1Header();
         }
 
         /// <summary>

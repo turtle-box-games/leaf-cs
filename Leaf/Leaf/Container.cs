@@ -118,7 +118,7 @@ namespace Leaf
         /// <param name="writer">Writer used to put data on the stream.</param>
         private void WriteHeader(BinaryWriter writer)
         {
-            var header = _engine.CreateHeader();
+            var header = _engine.CreateHeader(Root);
             header.Write(writer);
         }
 
