@@ -94,11 +94,12 @@ namespace Leaf
         /// <param name="output">Stream to write the container to.</param>
         public void Write(Stream output)
         {
+            var header = _engine.CreateHeader(Root);
             using (var writer = new EndianAwareBinaryWriter(output, BigEndian, StreamEncoding, true))
             {
-                WriteSignature(writer);
-                WriteHeader(writer);
-                WriteStructure(writer);
+                WriteSignature(writer, header);               // Write signature.
+                header.Write(writer);                         // Write header.
+                _engine.WriteStructure(writer, header, Root); // Write structure.
             }
         }
 
@@ -106,29 +107,11 @@ namespace Leaf
         /// Writes the Leaf signature and version to a stream.
         /// </summary>
         /// <param name="writer">Writer used to put data on the stream.</param>
-        private void WriteSignature(BinaryWriter writer)
+        /// <param name="header">Header data created by the engine.</param>
+        private static void WriteSignature(BinaryWriter writer, Header header)
         {
             writer.Write(Signature);
-            writer.Write(_engine.Version);
-        }
-
-        /// <summary>
-        /// Writes the version-specific header to a stream.
-        /// </summary>
-        /// <param name="writer">Writer used to put data on the stream.</param>
-        private void WriteHeader(BinaryWriter writer)
-        {
-            var header = _engine.CreateHeader(Root);
-            header.Write(writer);
-        }
-
-        /// <summary>
-        /// Writes the node structure to a stream.
-        /// </summary>
-        /// <param name="writer">Writer used to put data on the stream.</param>
-        private void WriteStructure(BinaryWriter writer)
-        {
-            _engine.WriteStructure(writer, Root);
+            writer.Write(header.Version);
         }
 
         #endregion
