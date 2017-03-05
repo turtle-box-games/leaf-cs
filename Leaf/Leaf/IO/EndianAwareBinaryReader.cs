@@ -101,7 +101,7 @@ namespace Leaf.IO
         /// <summary>
         /// Reads a double-precision floating-point value from the stream and advances the position by 8 bytes.
         /// </summary>
-        /// <returns>Double value read from the stream.</returns>
+        /// <returns>Float64 value read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream is reached.</exception>
         /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
         /// <exception cref="IOException">An I/O error occurred.</exception>

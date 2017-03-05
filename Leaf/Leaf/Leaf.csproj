@@ -48,12 +48,12 @@
     <Compile Include="IO\FlipBinaryWriter.cs" />
     <Compile Include="NodeType.cs" />
     <Compile Include="Nodes\BlobNode.cs" />
-    <Compile Include="Nodes\ByteNode.cs" />
-    <Compile Include="Nodes\DoubleNode.cs" />
+    <Compile Include="Nodes\Int8Node.cs" />
+    <Compile Include="Nodes\Float64Node.cs" />
     <Compile Include="Nodes\FlagNode.cs" />
-    <Compile Include="Nodes\FloatNode.cs" />
-    <Compile Include="Nodes\IntNode.cs" />
-    <Compile Include="Nodes\LongNode.cs" />
+    <Compile Include="Nodes\Float32Node.cs" />
+    <Compile Include="Nodes\Int32Node.cs" />
+    <Compile Include="Nodes\Int64Node.cs" />
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Nodes\StringNode.cs" />
     <Compile Include="Nodes\TimeNode.cs" />

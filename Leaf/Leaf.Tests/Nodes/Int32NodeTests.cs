@@ -4,7 +4,7 @@ using Leaf.Nodes;
 namespace Leaf.Tests.Nodes
 {
     [TestFixture]
-    public class DoubleNodeTests
+    public class Int32NodeTests
     {
         /// <summary>
         /// Check that the reported node type is correct.
@@ -12,8 +12,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestTypeId()
         {
-            var node = new DoubleNode(12345.67d);
-            Assert.AreEqual(NodeType.Double, node.Type);
+            var node = new Int32Node(77777);
+            Assert.AreEqual(NodeType.Int32, node.Type);
         }
 
         /// <summary>
@@ -22,8 +22,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestValueGetter()
         {
-            const double value = 12345.67d;
-            var node = new DoubleNode(value);
+            const int value = 77777;
+            var node = new Int32Node(value);
             Assert.AreEqual(value, node.Value);
         }
 
@@ -33,8 +33,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestValueSetter()
         {
-            const double value = 12345.67d, newValue = 9876.543d;
-            var node = new DoubleNode(value);
+            const int value = 77777, newValue = 12345;
+            var node = new Int32Node(value);
             node.Value = newValue;
             Assert.AreEqual(newValue, node.Value);
         }

@@ -19,27 +19,27 @@
         /// <summary>
         /// One byte value ranging from 0 to 255.
         /// </summary>
-        Byte = 0x02,
+        Int8 = 0x02,
 
         /// <summary>
         /// Signed integer stored in 32 bits.
         /// </summary>
-        Int = 0x03,
+        Int32 = 0x03,
 
         /// <summary>
         /// Signed integer stored in 64 bits.
         /// </summary>
-        Long = 0x04,
+        Int64 = 0x04,
 
         /// <summary>
         /// Single-precision floating-point number stored in 32 bits.
         /// </summary>
-        Float = 0x05,
+        Float32 = 0x05,
 
         /// <summary>
         /// Double-precision floating-point number stored in 64 bits.
         /// </summary>
-        Double = 0x06,
+        Float64 = 0x06,
 
         /// <summary>
         /// UTF-8 text.

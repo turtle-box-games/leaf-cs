@@ -4,7 +4,7 @@ using Leaf.Nodes;
 namespace Leaf.Tests.Nodes
 {
     [TestFixture]
-    public class ByteNodeTests
+    public class Float64NodeTests
     {
         /// <summary>
         /// Check that the reported node type is correct.
@@ -12,8 +12,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestTypeId()
         {
-            var node = new ByteNode(25);
-            Assert.AreEqual(NodeType.Byte, node.Type);
+            var node = new Float64Node(12345.67d);
+            Assert.AreEqual(NodeType.Float64, node.Type);
         }
 
         /// <summary>
@@ -22,8 +22,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestValueGetter()
         {
-            const byte value = 130;
-            var node = new ByteNode(value);
+            const double value = 12345.67d;
+            var node = new Float64Node(value);
             Assert.AreEqual(value, node.Value);
         }
 
@@ -33,8 +33,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestValueSetter()
         {
-            const byte value = 130, newValue = 250;
-            var node = new ByteNode(value);
+            const double value = 12345.67d, newValue = 9876.543d;
+            var node = new Float64Node(value);
             node.Value = newValue;
             Assert.AreEqual(newValue, node.Value);
         }

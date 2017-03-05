@@ -5,16 +5,16 @@ namespace Leaf.Nodes
 {
     /// <summary>
     /// Smallest integer value that can be stored.
-    /// Stores a value from 0 to 255.
+    /// Stores a value from 0 to 255 (8-bit).
     /// </summary>
-    public class ByteNode : Node
+    public class Int8Node : Node
     {
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
-        /// The value returned by this property is <see cref="NodeType.Byte"/>.
+        /// The value returned by this property is <see cref="NodeType.Int8"/>.
         /// </summary>
-        public override NodeType Type => NodeType.Byte;
+        public override NodeType Type => NodeType.Int8;
 
         /// <summary>
         /// Gets and sets the value of the node.
@@ -25,7 +25,7 @@ namespace Leaf.Nodes
         /// Creates a new node.
         /// </summary>
         /// <param name="value">Value of the node.</param>
-        public ByteNode(byte value)
+        public Int8Node(byte value)
         {
             Value = value;
         }
@@ -35,7 +35,7 @@ namespace Leaf.Nodes
         /// </summary>
         /// <param name="reader">Reader used to pull data from the stream.</param>
         /// <returns>Newly constructed node.</returns>
-        internal ByteNode Read(BinaryReader reader)
+        internal Int8Node Read(BinaryReader reader)
         {
             throw new NotImplementedException();
         }

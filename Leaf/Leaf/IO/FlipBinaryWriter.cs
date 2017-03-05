@@ -77,7 +77,7 @@ namespace Leaf.IO
         /// <summary>
         /// Writes a double-precision floating-point value to the stream and advances the position by 8 bytes.
         /// </summary>
-        /// <param name="value">Double value to write to the stream.</param>
+        /// <param name="value">Float64 value to write to the stream.</param>
         /// <exception cref="ObjectDisposedException">The stream is closed.</exception>
         /// <exception cref="IOException">An I/O error occurred.</exception>
         public override void Write(double value)

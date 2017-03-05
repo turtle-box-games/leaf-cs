@@ -41,7 +41,7 @@ namespace Leaf.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                new Container(new IntNode(50), null);
+                new Container(new Int32Node(50), null);
             });
         }
 
@@ -51,7 +51,7 @@ namespace Leaf.Tests
         [Test]
         public void TestRootNode()
         {
-            var root = new IntNode(50);
+            var root = new Int32Node(50);
             var container = new Container(root);
             Assert.AreEqual(root, container.Root);
         }
@@ -62,7 +62,7 @@ namespace Leaf.Tests
         [Test]
         public void TestWriteAny()
         {
-            var root = new IntNode(50);
+            var root = new Int32Node(50);
             var container = new Container(root);
             using (var stream = new MemoryStream())
             {
@@ -77,7 +77,7 @@ namespace Leaf.Tests
         [Test]
         public void TestWriteKeepOpen()
         {
-            var root = new IntNode(50);
+            var root = new Int32Node(50);
             var container = new Container(root);
             using (var stream = new MemoryStream())
             {

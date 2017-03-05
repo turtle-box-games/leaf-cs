@@ -4,7 +4,7 @@ using Leaf.Nodes;
 namespace Leaf.Tests.Nodes
 {
     [TestFixture]
-    public class LongNodeTests
+    public class Int8NodeTests
     {
         /// <summary>
         /// Check that the reported node type is correct.
@@ -12,8 +12,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestTypeId()
         {
-            var node = new LongNode(7654321098);
-            Assert.AreEqual(NodeType.Long, node.Type);
+            var node = new Int8Node(25);
+            Assert.AreEqual(NodeType.Int8, node.Type);
         }
 
         /// <summary>
@@ -22,8 +22,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestValueGetter()
         {
-            const long value = 7654321098;
-            var node = new LongNode(value);
+            const byte value = 130;
+            var node = new Int8Node(value);
             Assert.AreEqual(value, node.Value);
         }
 
@@ -33,8 +33,8 @@ namespace Leaf.Tests.Nodes
         [Test]
         public void TestValueSetter()
         {
-            const long value = 7654321098, newValue = 8907654321;
-            var node = new LongNode(value);
+            const byte value = 130, newValue = 250;
+            var node = new Int8Node(value);
             node.Value = newValue;
             Assert.AreEqual(newValue, node.Value);
         }
