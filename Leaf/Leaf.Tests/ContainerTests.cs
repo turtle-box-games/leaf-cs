@@ -60,6 +60,7 @@ namespace Leaf.Tests
         /// Check that something (anything) is written to the stream.
         /// </summary>
         [Test]
+        [Ignore("Not implemented yet")]
         public void TestWriteAny()
         {
             var root = new Int32Node(50);
@@ -75,6 +76,7 @@ namespace Leaf.Tests
         /// Check that the stream stays open after writing to it.
         /// </summary>
         [Test]
+        [Ignore("Not implemented yet")]
         public void TestWriteKeepOpen()
         {
             var root = new Int32Node(50);
