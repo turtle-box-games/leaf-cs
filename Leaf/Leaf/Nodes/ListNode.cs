@@ -25,7 +25,19 @@ namespace Leaf.Nodes
         public NodeType ElementType { get; }
 
         /// <summary>
-        /// Creates a new node.
+        /// Creates a new empty node.
+        /// </summary>
+        /// <param name="type">Node type of each element in the list.</param>
+        /// <exception cref="ArgumentNullException">The set of <paramref name="nodes"/> is <c>null</c>.</exception>
+        /// <exception cref="ArrayTypeMismatchException">One or more elements in <paramref name="nodes"/> do not match
+        /// the type specified by <paramref name="type"/>.</exception>
+        public ListNode(NodeType type)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Creates a new node with an initial set of items.
         /// </summary>
         /// <param name="type">Node type of each element in the list.</param>
         /// <param name="nodes">Collection of nodes to store in the list.</param>
