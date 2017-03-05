@@ -22,108 +22,113 @@
         Int8 = 0x02,
 
         /// <summary>
+        /// Signed integer stored in 16 bits.
+        /// </summary>
+        Int16 = 0x03,
+
+        /// <summary>
         /// Signed integer stored in 32 bits.
         /// </summary>
-        Int32 = 0x03,
+        Int32 = 0x04,
 
         /// <summary>
         /// Signed integer stored in 64 bits.
         /// </summary>
-        Int64 = 0x04,
+        Int64 = 0x05,
 
         /// <summary>
         /// Single-precision floating-point number stored in 32 bits.
         /// </summary>
-        Float32 = 0x05,
+        Float32 = 0x06,
 
         /// <summary>
         /// Double-precision floating-point number stored in 64 bits.
         /// </summary>
-        Float64 = 0x06,
+        Float64 = 0x07,
 
         /// <summary>
         /// UTF-8 text.
         /// </summary>
-        String = 0x07,
+        String = 0x08,
 
         /// <summary>
         /// Date and time value.
         /// </summary>
-        Time = 0x08,
+        Time = 0x09,
 
         /// <summary>
         /// Universally unique identifier.
         /// </summary>
-        Uuid = 0x09,
+        Uuid = 0x0a,
 
         /// <summary>
         /// Arbitrary binary data.
         /// </summary>
-        Blob = 0x0a,
+        Blob = 0x0b,
 
         /// <summary>
         /// Color information with red, green, blue, and alpha channels.
         /// </summary>
-        Color = 0x0b,
+        Color = 0x0c,
 
         /// <summary>
         /// Two-dimensional point using integers.
         /// </summary>
-        Point2 = 0x0c,
+        Point2 = 0x0d,
 
         /// <summary>
         /// Three-dimensional point using integers.
         /// </summary>
-        Point3 = 0x0d,
+        Point3 = 0x0e,
 
         /// <summary>
         /// Four-dimensional point using integers.
         /// </summary>
-        Point4 = 0x0e,
+        Point4 = 0x0f,
 
         /// <summary>
         /// Two-dimensional point using floating-point values.
         /// </summary>
-        Vector2 = 0x0f,
+        Vector2 = 0x10,
 
         /// <summary>
         /// Three-dimensional point using floating-point values.
         /// </summary>
-        Vector3 = 0x10,
+        Vector3 = 0x11,
         
         /// <summary>
         /// Four-dimensional point using floating-point values.
         /// </summary>
-        Vector4 = 0x11,
+        Vector4 = 0x12,
 
         /// <summary>
         /// Two-dimensional size and position using integers.
         /// </summary>
-        Rect2 = 0x12,
+        Rect2 = 0x13,
 
         /// <summary>
         /// Three-dimensional size and position using integers.
         /// </summary>
-        Rect3 = 0x13,
+        Rect3 = 0x14,
 
         /// <summary>
         /// Two-dimensional size and position using floating-point values.
         /// </summary>
-        Bounds2 = 0x14,
+        Bounds2 = 0x15,
 
         /// <summary>
         /// Three-dimensional size and position using floating-point values.
         /// </summary>
-        Bounds3 = 0x15,
+        Bounds3 = 0x16,
 
         /// <summary>
         /// Collection of nodes with the same type.
         /// </summary>
-        List = 0x16,
+        List = 0x17,
 
         /// <summary>
         /// Collection of nodes with names and any combination of types.
         /// </summary>
-        Composite = 0x17
+        Composite = 0x18
     }
 }
