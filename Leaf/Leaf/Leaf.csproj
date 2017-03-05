@@ -47,6 +47,7 @@
     <Compile Include="IO\FlipBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryWriter.cs" />
     <Compile Include="Nodes\Int16Node.cs" />
+    <Compile Include="Nodes\ListNode.cs" />
     <Compile Include="NodeType.cs" />
     <Compile Include="Nodes\BlobNode.cs" />
     <Compile Include="Nodes\Int8Node.cs" />
