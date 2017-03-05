@@ -46,7 +46,7 @@
     <Compile Include="IO\EndianAwareBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryWriter.cs" />
-    <Compile Include="NodeId.cs" />
+    <Compile Include="NodeType.cs" />
     <Compile Include="Nodes\BlobNode.cs" />
     <Compile Include="Nodes\ByteNode.cs" />
     <Compile Include="Nodes\DoubleNode.cs" />

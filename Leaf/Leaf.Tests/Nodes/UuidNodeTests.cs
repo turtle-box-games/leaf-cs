@@ -14,7 +14,7 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new UuidNode(Guid.NewGuid());
-            Assert.AreEqual(NodeId.Uuid, node.TypeId);
+            Assert.AreEqual(NodeType.Uuid, node.Type);
         }
 
         /// <summary>

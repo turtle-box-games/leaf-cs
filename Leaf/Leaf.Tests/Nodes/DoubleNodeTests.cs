@@ -13,7 +13,7 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new DoubleNode(12345.67d);
-            Assert.AreEqual(NodeId.Double, node.TypeId);
+            Assert.AreEqual(NodeType.Double, node.Type);
         }
 
         /// <summary>

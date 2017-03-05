@@ -3,7 +3,7 @@
     /// <summary>
     /// Numerical identifier specifying a node's type.
     /// </summary>
-    public enum NodeId
+    public enum NodeType
     {
         /// <summary>
         /// Not an actual node type.

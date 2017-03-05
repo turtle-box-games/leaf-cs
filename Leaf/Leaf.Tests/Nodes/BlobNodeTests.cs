@@ -14,7 +14,7 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new BlobNode(new byte[0]);
-            Assert.AreEqual(NodeId.Blob, node.TypeId);
+            Assert.AreEqual(NodeType.Blob, node.Type);
         }
 
         /// <summary>

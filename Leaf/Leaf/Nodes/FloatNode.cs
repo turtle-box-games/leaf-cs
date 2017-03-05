@@ -12,9 +12,9 @@ namespace Leaf.Nodes
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
-        /// The value returned by this property is <see cref="NodeId.Float"/>.
+        /// The value returned by this property is <see cref="NodeType.Float"/>.
         /// </summary>
-        public override NodeId TypeId => NodeId.Float;
+        public override NodeType Type => NodeType.Float;
 
         /// <summary>
         /// Gets and sets the value of the node.

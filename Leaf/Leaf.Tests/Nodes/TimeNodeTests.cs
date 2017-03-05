@@ -14,7 +14,7 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new TimeNode(DateTime.Now);
-            Assert.AreEqual(NodeId.Time, node.TypeId);
+            Assert.AreEqual(NodeType.Time, node.Type);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new LongNode(7654321098);
-            Assert.AreEqual(NodeId.Long, node.TypeId);
+            Assert.AreEqual(NodeType.Long, node.Type);
         }
 
         /// <summary>

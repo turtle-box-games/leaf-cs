@@ -13,7 +13,7 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new FloatNode(1234.56f);
-            Assert.AreEqual(NodeId.Float, node.TypeId);
+            Assert.AreEqual(NodeType.Float, node.Type);
         }
 
         /// <summary>

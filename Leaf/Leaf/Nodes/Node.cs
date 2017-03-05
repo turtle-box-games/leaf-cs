@@ -11,7 +11,7 @@ namespace Leaf.Nodes
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
         /// </summary>
-        public abstract NodeId TypeId { get; }
+        public abstract NodeType Type { get; }
 
         /// <summary>
         /// Writes the data of the node to a stream.
