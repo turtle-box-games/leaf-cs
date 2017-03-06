@@ -47,6 +47,7 @@
     <Compile Include="Nodes\Float32NodeTests.cs" />
     <Compile Include="Nodes\Int32NodeTests.cs" />
     <Compile Include="Nodes\Int64NodeTests.cs" />
+    <Compile Include="Nodes\ListNodeTests.cs" />
     <Compile Include="Nodes\StringNodeTests.cs" />
     <Compile Include="Nodes\TimeNodeTests.cs" />
     <Compile Include="Nodes\UuidNodeTests.cs" />
