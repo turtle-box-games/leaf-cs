@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Leaf.Nodes
+﻿namespace Leaf.Nodes
 {
     /// <summary>
     /// Base class for all node types.
@@ -12,11 +10,5 @@ namespace Leaf.Nodes
         /// This can be used to identify, serialize, and cast a node to its type.
         /// </summary>
         public abstract NodeType Type { get; }
-
-        /// <summary>
-        /// Writes the data of the node to a stream.
-        /// </summary>
-        /// <param name="writer">Writer to use for putting data in the stream.</param>
-        internal abstract void Write(BinaryWriter writer);
     }
 }

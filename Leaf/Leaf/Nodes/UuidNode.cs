@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace Leaf.Nodes
 {
@@ -32,25 +31,6 @@ namespace Leaf.Nodes
         public UuidNode(Guid value)
         {
             Value = value;
-        }
-
-        /// <summary>
-        /// Creates a new node by reading its contents from a stream.
-        /// </summary>
-        /// <param name="reader">Reader used to pull data from the stream.</param>
-        /// <returns>Newly constructed node.</returns>
-        internal UuidNode Read(BinaryReader reader)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Writes the contents of the node to a stream.
-        /// </summary>
-        /// <param name="writer">Writer used to put data in the stream.</param>
-        internal override void Write(BinaryWriter writer)
-        {
-            throw new NotImplementedException();
         }
     }
 }

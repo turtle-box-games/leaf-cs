@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Leaf.Nodes;
 
 namespace Leaf.Versions
@@ -35,7 +36,7 @@ namespace Leaf.Versions
         /// <returns>Root node (structure).</returns>
         internal override Node ReadStructure(BinaryReader reader, Header header)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace Leaf.Versions
         /// <param name="node">Root node (structure).</param>
         internal override void WriteStructure(BinaryWriter writer, Header header, Node node)
         {
-            node.Write(writer);
+            throw new NotImplementedException();
         }
     }
 }
