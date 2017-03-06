@@ -11,6 +11,9 @@ namespace Leaf.Nodes
     /// </summary>
     public class ListNode : Node, IList<Node>
     {
+        private readonly NodeType _elementType;
+        private readonly List<Node> _nodes = new List<Node>();
+
         /// <summary>
         /// Retrieve the ID for the type of node.
         /// This can be used to identify, serialize, and cast a node to its type.
@@ -33,7 +36,7 @@ namespace Leaf.Nodes
         /// the type specified by <paramref name="type"/>.</exception>
         public ListNode(NodeType type)
         {
-            throw new NotImplementedException();
+            _elementType = type;
         }
 
         /// <summary>
@@ -46,7 +49,13 @@ namespace Leaf.Nodes
         /// the type specified by <paramref name="type"/>.</exception>
         public ListNode(NodeType type, IEnumerable<Node> nodes)
         {
-            throw new NotImplementedException();
+            _elementType = type;
+            foreach (var node in nodes)
+            {
+                if(node.Type != _elementType)
+                    throw new ArrayTypeMismatchException();
+                _nodes.Add(node);
+            }
         }
 
         /// <summary>
@@ -74,7 +83,7 @@ namespace Leaf.Nodes
         /// <returns>Node enumerator.</returns>
         public IEnumerator<Node> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _nodes.GetEnumerator();
         }
 
         /// <summary>
@@ -95,7 +104,11 @@ namespace Leaf.Nodes
         /// that is a different type than allowed.</exception>
         public void Add(Node item)
         {
-            throw new NotImplementedException();
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            if (item.Type != _elementType)
+                throw new ArrayTypeMismatchException();
+            _nodes.Add(item);
         }
 
         /// <summary>
@@ -103,7 +116,7 @@ namespace Leaf.Nodes
         /// </summary>
         public void Clear()
         {
-            throw new NotImplementedException();
+            _nodes.Clear();
         }
 
         /// <summary>
@@ -114,7 +127,9 @@ namespace Leaf.Nodes
         /// <exception cref="ArgumentNullException">The <paramref name="item"/> to look for is null.</exception>
         public bool Contains(Node item)
         {
-            throw new NotImplementedException();
+            if(item == null)
+                throw new ArgumentNullException(nameof(item));
+            return _nodes.Contains(item);
         }
 
         /// <summary>
@@ -127,7 +142,7 @@ namespace Leaf.Nodes
         /// or past the bounds of the <paramref name="array"/>.</exception>
         public void CopyTo(Node[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _nodes.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -138,19 +153,27 @@ namespace Leaf.Nodes
         /// <exception cref="ArgumentNullException">The <paramref name="item"/> to remove is null.</exception>
         public bool Remove(Node item)
         {
-            throw new NotImplementedException();
+            if(item == null)
+                throw new ArgumentNullException(nameof(item));
+            return _nodes.Remove(item);
         }
 
         /// <summary>
         /// Retrieves the number of items in the list.
         /// </summary>
-        public int Count { get; }
+        public int Count
+        {
+            get { return _nodes.Count; }
+        }
 
         /// <summary>
         /// Checks whether the list is read-only.
         /// This property is always false.
         /// </summary>
-        public bool IsReadOnly { get; }
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
 
         /// <summary>
         /// Searches for an node in the list.
@@ -160,7 +183,9 @@ namespace Leaf.Nodes
         /// <exception cref="ArgumentNullException">The <paramref name="item"/> to find is null.</exception>
         public int IndexOf(Node item)
         {
-            throw new NotImplementedException();
+            if(item == null)
+                throw new ArgumentNullException(nameof(item));
+            return _nodes.IndexOf(item);
         }
 
         /// <summary>
@@ -175,7 +200,11 @@ namespace Leaf.Nodes
         /// that is a different type than allowed.</exception>
         public void Insert(int index, Node item)
         {
-            throw new NotImplementedException();
+            if(item == null)
+                throw new ArgumentNullException(nameof(item));
+            if(item.Type != _elementType)
+                throw new ArrayTypeMismatchException();
+            _nodes.Insert(index, item);
         }
 
         /// <summary>
@@ -186,7 +215,7 @@ namespace Leaf.Nodes
         /// or outside the bounds of the list.</exception>
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _nodes.RemoveAt(index);
         }
 
         /// <summary>
@@ -195,13 +224,20 @@ namespace Leaf.Nodes
         /// <param name="index">Index of the node to operate on.</param>
         /// <exception cref="IndexOutOfRangeException">The <paramref name="index"/> is negative
         /// or outside the bounds of the list.</exception>
-        /// <exception cref="ArgumentNullException">Attempted to set an element in the list to null.</exception>
+        /// <exception cref="NullReferenceException">Attempted to set an element in the list to null.</exception>
         /// <exception cref="ArrayTypeMismatchException">Attempted to change a node
         /// in the list to a different type.</exception>
         public Node this[int index]
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return _nodes[index]; }
+            set
+            {
+                if(value == null)
+                    throw new NullReferenceException();
+                if(value.Type != _elementType)
+                    throw new ArrayTypeMismatchException();
+                _nodes[index] = value;
+            }
         }
     }
 }
