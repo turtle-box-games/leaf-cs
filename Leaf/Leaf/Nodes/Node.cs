@@ -10,5 +10,10 @@
         /// This can be used to identify, serialize, and cast a node to its type.
         /// </summary>
         public abstract NodeType Type { get; }
+
+        /// <summary>
+        /// Version number this node type was introduced in.
+        /// </summary>
+        public abstract int Version { get; }
     }
 }

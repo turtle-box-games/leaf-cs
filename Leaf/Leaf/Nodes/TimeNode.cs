@@ -17,6 +17,12 @@ namespace Leaf.Nodes
         public override NodeType Type => NodeType.Time;
 
         /// <summary>
+        /// Version number this node type was introduced in.
+        /// The value returned by this property is 1.
+        /// </summary>
+        public override int Version => 1;
+
+        /// <summary>
         /// Gets and sets the value of the node.
         /// </summary>
         public DateTime Value { get; set; }

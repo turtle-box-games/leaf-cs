@@ -20,6 +20,12 @@ namespace Leaf.Nodes
         public override NodeType Type => NodeType.List;
 
         /// <summary>
+        /// Version number this node type was introduced in.
+        /// The value returned by this property is 1.
+        /// </summary>
+        public override int Version => 1;
+
+        /// <summary>
         /// Retrieve the ID for the node type of all elements in the list.
         /// This can be used to identify, serialize, and cat a node to its type.
         /// </summary>
