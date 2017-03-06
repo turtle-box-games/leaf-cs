@@ -21,9 +21,20 @@ namespace Leaf.Nodes
 
         /// <summary>
         /// Version number this node type was introduced in.
-        /// The value returned by this property is 1.
+        /// The value returned by this property is the maximum version needed by child nodes.
         /// </summary>
-        public override int Version => 1;
+        public override int Version
+        {
+            get
+            {
+                var maxVersion = 1;
+                // ReSharper disable once LoopCanBeConvertedToQuery - avoid dependency on LINQ library.
+                foreach(var node in _nodes)
+                    if(node.Version > maxVersion)
+                        maxVersion = node.Version;
+                return maxVersion;
+            }
+        }
 
         /// <summary>
         /// Retrieve the ID for the node type of all elements in the list.
