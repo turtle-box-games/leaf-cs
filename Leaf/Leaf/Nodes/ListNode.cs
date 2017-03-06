@@ -46,9 +46,6 @@ namespace Leaf.Nodes
         /// Creates a new empty node.
         /// </summary>
         /// <param name="type">Node type of each element in the list.</param>
-        /// <exception cref="ArgumentNullException">The set of <paramref name="nodes"/> is <c>null</c>.</exception>
-        /// <exception cref="ArrayTypeMismatchException">One or more elements in <paramref name="nodes"/> do not match
-        /// the type specified by <paramref name="type"/>.</exception>
         public ListNode(NodeType type)
         {
             ElementType = type;
