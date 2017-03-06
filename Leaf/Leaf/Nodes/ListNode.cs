@@ -11,7 +11,6 @@ namespace Leaf.Nodes
     /// </summary>
     public class ListNode : Node, IList<Node>
     {
-        private readonly NodeType _elementType;
         private readonly List<Node> _nodes = new List<Node>();
 
         /// <summary>
@@ -25,10 +24,7 @@ namespace Leaf.Nodes
         /// Retrieve the ID for the node type of all elements in the list.
         /// This can be used to identify, serialize, and cat a node to its type.
         /// </summary>
-        public NodeType ElementType
-        {
-            get { return _elementType; }
-        }
+        public NodeType ElementType { get; }
 
         /// <summary>
         /// Creates a new empty node.
@@ -39,7 +35,7 @@ namespace Leaf.Nodes
         /// the type specified by <paramref name="type"/>.</exception>
         public ListNode(NodeType type)
         {
-            _elementType = type;
+            ElementType = type;
         }
 
         /// <summary>
@@ -54,12 +50,12 @@ namespace Leaf.Nodes
         {
             if(nodes == null)
                 throw new ArgumentNullException(nameof(nodes));
-            _elementType = type;
-            foreach (var node in nodes)
+            ElementType = type;
+            foreach(var node in nodes)
             {
                 if(node == null)
                     throw new ArgumentException(nameof(nodes));
-                if(node.Type != _elementType)
+                if(node.Type != ElementType)
                     throw new ArrayTypeMismatchException();
                 _nodes.Add(node);
             }
@@ -111,9 +107,9 @@ namespace Leaf.Nodes
         /// that is a different type than allowed.</exception>
         public void Add(Node item)
         {
-            if (item == null)
+            if(item == null)
                 throw new ArgumentNullException(nameof(item));
-            if (item.Type != _elementType)
+            if(item.Type != ElementType)
                 throw new ArrayTypeMismatchException();
             _nodes.Add(item);
         }
@@ -169,19 +165,13 @@ namespace Leaf.Nodes
         /// <summary>
         /// Retrieves the number of items in the list.
         /// </summary>
-        public int Count
-        {
-            get { return _nodes.Count; }
-        }
+        public int Count => _nodes.Count;
 
         /// <summary>
         /// Checks whether the list is read-only.
         /// This property is always false.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Searches for an node in the list.
@@ -210,7 +200,7 @@ namespace Leaf.Nodes
         {
             if(item == null)
                 throw new ArgumentNullException(nameof(item));
-            if(item.Type != _elementType)
+            if(item.Type != ElementType)
                 throw new ArrayTypeMismatchException();
             _nodes.Insert(index, item);
         }
@@ -242,7 +232,7 @@ namespace Leaf.Nodes
             {
                 if(value == null)
                     throw new ArgumentNullException();
-                if(value.Type != _elementType)
+                if(value.Type != ElementType)
                     throw new ArrayTypeMismatchException();
                 _nodes[index] = value;
             }
