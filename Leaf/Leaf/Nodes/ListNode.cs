@@ -25,7 +25,10 @@ namespace Leaf.Nodes
         /// Retrieve the ID for the node type of all elements in the list.
         /// This can be used to identify, serialize, and cat a node to its type.
         /// </summary>
-        public NodeType ElementType { get; }
+        public NodeType ElementType
+        {
+            get { return _elementType; }
+        }
 
         /// <summary>
         /// Creates a new empty node.
@@ -49,9 +52,13 @@ namespace Leaf.Nodes
         /// the type specified by <paramref name="type"/>.</exception>
         public ListNode(NodeType type, IEnumerable<Node> nodes)
         {
+            if(nodes == null)
+                throw new ArgumentNullException(nameof(nodes));
             _elementType = type;
             foreach (var node in nodes)
             {
+                if(node == null)
+                    throw new ArgumentException(nameof(nodes));
                 if(node.Type != _elementType)
                     throw new ArrayTypeMismatchException();
                 _nodes.Add(node);
@@ -138,8 +145,9 @@ namespace Leaf.Nodes
         /// <param name="array">Array to copy nodes into.</param>
         /// <param name="arrayIndex">Index to start at in <paramref name="array"/>.</param>
         /// <exception cref="ArgumentNullException">The <paramref name="array"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The starting index is negative
-        /// or past the bounds of the <paramref name="array"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The starting index is negative.</exception>
+        /// <exception cref="ArgumentException">The combination of array size and index
+        /// extends past the bounds of the array.</exception>
         public void CopyTo(Node[] array, int arrayIndex)
         {
             _nodes.CopyTo(array, arrayIndex);
@@ -222,9 +230,9 @@ namespace Leaf.Nodes
         /// Retrieves and updates nodes in the list.
         /// </summary>
         /// <param name="index">Index of the node to operate on.</param>
-        /// <exception cref="IndexOutOfRangeException">The <paramref name="index"/> is negative
+        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="index"/> is negative
         /// or outside the bounds of the list.</exception>
-        /// <exception cref="NullReferenceException">Attempted to set an element in the list to null.</exception>
+        /// <exception cref="ArgumentNullException">Attempted to set an element in the list to null.</exception>
         /// <exception cref="ArrayTypeMismatchException">Attempted to change a node
         /// in the list to a different type.</exception>
         public Node this[int index]
@@ -233,7 +241,7 @@ namespace Leaf.Nodes
             set
             {
                 if(value == null)
-                    throw new NullReferenceException();
+                    throw new ArgumentNullException();
                 if(value.Type != _elementType)
                     throw new ArrayTypeMismatchException();
                 _nodes[index] = value;

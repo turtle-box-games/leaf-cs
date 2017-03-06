@@ -126,7 +126,7 @@ namespace Leaf.Tests.Nodes
         public void TestAddTypeMismatch()
         {
             var list = GenerateListNode();
-            Assert.Throws<ArgumentException>(() => { list.Add(new Int32Node(12345)); });
+            Assert.Throws<ArrayTypeMismatchException>(() => { list.Add(new Int32Node(12345)); });
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Leaf.Tests.Nodes
         {
             var list  = GenerateListNode();
             var array = new Node[list.Count];
-            Assert.Throws<ArgumentOutOfRangeException>(() => { list.CopyTo(array, array.Length + 1); });
+            Assert.Throws<ArgumentException>(() => { list.CopyTo(array, array.Length + 1); });
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Leaf.Tests.Nodes
         {
             var list  = GenerateListNode();
             var array = new Node[list.Count - 1];
-            Assert.Throws<ArgumentNullException>(() => { list.CopyTo(array, 0); });
+            Assert.Throws<ArgumentException>(() => { list.CopyTo(array, 0); });
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Leaf.Tests.Nodes
         public void TestGetterNegativeIndex()
         {
             var list = GenerateListNode();
-            Assert.Throws<IndexOutOfRangeException>(() => { var node = list[-1]; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { var node = list[-1]; });
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Leaf.Tests.Nodes
         public void TestGetterIndexTooLarge()
         {
             var list = GenerateListNode();
-            Assert.Throws<IndexOutOfRangeException>(() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 var node = list[list.Count + 1];
             });
@@ -501,7 +501,7 @@ namespace Leaf.Tests.Nodes
             var list = GenerateListNode();
             var node = new StringNode("setter");
             list[1] = node;
-            Assert.Equals(node, list[1]);
+            Assert.AreEqual(node, list[1]);
         }
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Leaf.Tests.Nodes
         public void TestSetterNull()
         {
             var list = GenerateListNode();
-            Assert.Throws<NullReferenceException>(() => { list[1] = null; });
+            Assert.Throws<ArgumentNullException>(() => { list[1] = null; });
         }
 
         /// <summary>
@@ -522,7 +522,7 @@ namespace Leaf.Tests.Nodes
         {
             var list = GenerateListNode();
             var node = new StringNode("setter");
-            Assert.Throws<IndexOutOfRangeException>(() => { list[-1] = node; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { list[-1] = node; });
         }
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Leaf.Tests.Nodes
         {
             var list = GenerateListNode();
             var node = new StringNode("setter");
-            Assert.Throws<IndexOutOfRangeException>(() => { list[list.Count + 1] = node; });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { list[list.Count + 1] = node; });
         }
 
         /// <summary>
