@@ -12,19 +12,9 @@ namespace Leaf.Tests.Nodes
         /// Check that the reported node type is correct.
         /// </summary>
         [Test]
-        public void TestTypeIdEmpty()
+        public void TestTypeId()
         {
             var node = new ListNode(NodeType.String);
-            Assert.AreEqual(NodeType.List, node.Type);
-        }
-
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
-        public void TestTypeIdContents()
-        {
-            var node = new ListNode(NodeType.String, EmptyNodeSet);
             Assert.AreEqual(NodeType.List, node.Type);
         }
 
