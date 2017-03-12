@@ -159,10 +159,7 @@ namespace Leaf.Nodes
         /// <summary>
         /// Retrieves the number of nodes in the set.
         /// </summary>
-        public int Count
-        {
-            get { return _nodes.Count; }
-        }
+        public int Count => _nodes.Count;
 
         /// <summary>
         /// Checks whether the set is read-only.
@@ -238,17 +235,11 @@ namespace Leaf.Nodes
         /// <summary>
         /// Retrieve a list of node names.
         /// </summary>
-        public ICollection<string> Keys
-        {
-            get { return _nodes.Keys; }
-        }
+        public ICollection<string> Keys => _nodes.Keys;
 
         /// <summary>
         /// Retrieve a list of nodes.
         /// </summary>
-        public ICollection<Node> Values
-        {
-            get { return _nodes.Values; }
-        }
+        public ICollection<Node> Values => _nodes.Values;
     }
 }
