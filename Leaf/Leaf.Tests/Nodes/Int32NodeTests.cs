@@ -17,6 +17,16 @@ namespace Leaf.Tests.Nodes
         }
 
         /// <summary>
+        /// Check that the version is the expected value.
+        /// </summary>
+        [Test]
+        public void TestVersion()
+        {
+            var node = new Int32Node(77777);
+            Assert.AreEqual(1, node.Version);
+        }
+
+        /// <summary>
         /// Verify that the Value getter returns the correct value.
         /// </summary>
         [Test]

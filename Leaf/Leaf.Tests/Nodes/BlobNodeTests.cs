@@ -18,6 +18,16 @@ namespace Leaf.Tests.Nodes
         }
 
         /// <summary>
+        /// Check that the version is the expected value.
+        /// </summary>
+        [Test]
+        public void TestVersion()
+        {
+            var node = new BlobNode(new byte[0]);
+            Assert.AreEqual(1, node.Version);
+        }
+
+        /// <summary>
         /// Check that the constructor throws an exception when given null.
         /// </summary>
         [Test]

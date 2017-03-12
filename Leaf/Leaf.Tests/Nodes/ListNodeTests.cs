@@ -19,6 +19,16 @@ namespace Leaf.Tests.Nodes
         }
 
         /// <summary>
+        /// Check that the version is the expected value.
+        /// </summary>
+        [Test]
+        public void TestVersion()
+        {
+            var node = GenerateListNode();
+            Assert.AreEqual(1, node.Version);
+        }
+
+        /// <summary>
         /// Check that the reported node type is correct.
         /// </summary>
         [Test]

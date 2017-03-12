@@ -18,6 +18,16 @@ namespace Leaf.Tests.Nodes
         }
 
         /// <summary>
+        /// Check that the version is the expected value.
+        /// </summary>
+        [Test]
+        public void TestVersion()
+        {
+            var node = new StringNode("foobar");
+            Assert.AreEqual(1, node.Version);
+        }
+
+        /// <summary>
         /// Verify that the constructor throws an exception for a null value.
         /// </summary>
         [Test]
