@@ -46,6 +46,7 @@
     <Compile Include="IO\EndianAwareBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryWriter.cs" />
+    <Compile Include="Nodes\CompositeNode.cs" />
     <Compile Include="Nodes\Int16Node.cs" />
     <Compile Include="Nodes\ListNode.cs" />
     <Compile Include="NodeType.cs" />
