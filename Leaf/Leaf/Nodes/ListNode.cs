@@ -27,6 +27,7 @@ namespace Leaf.Nodes
         {
             get
             {
+                // FIXME: When node list is empty and element type > v1, 1 is returned when should be > 1.
                 var maxVersion = 1;
                 // ReSharper disable once LoopCanBeConvertedToQuery - avoid dependency on LINQ library.
                 foreach(var node in _nodes)
