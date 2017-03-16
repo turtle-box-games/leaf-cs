@@ -47,7 +47,7 @@ namespace Leaf.Nodes
         /// <param name="serializer">Instance that handles serializing node data.</param>
         internal override void Serialize(INodeSerializer serializer)
         {
-            throw new NotImplementedException();
+            serializer.Write(this);
         }
     }
 }
