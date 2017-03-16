@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Leaf.Serialization;
 
 namespace Leaf.Nodes
 {
@@ -61,6 +62,16 @@ namespace Leaf.Nodes
                     throw new ArgumentException(nameof(nodes));
                 _nodes.Add(pair.Key, pair.Value);
             }
+        }
+
+        /// <summary>
+        /// Calls the correct method to serialize the node.
+        /// Uses the strategy algorithm.
+        /// </summary>
+        /// <param name="serializer">Instance that handles serializing node data.</param>
+        internal override void Serialize(INodeSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

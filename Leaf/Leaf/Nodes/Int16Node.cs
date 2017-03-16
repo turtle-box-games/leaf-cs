@@ -1,4 +1,7 @@
-﻿namespace Leaf.Nodes
+﻿using System;
+using Leaf.Serialization;
+
+namespace Leaf.Nodes
 {
     /// <summary>
     /// Small integer value that can be stored.
@@ -31,6 +34,16 @@
         public Int16Node(short value)
         {
             Value = value;
+        }
+
+        /// <summary>
+        /// Calls the correct method to serialize the node.
+        /// Uses the strategy algorithm.
+        /// </summary>
+        /// <param name="serializer">Instance that handles serializing node data.</param>
+        internal override void Serialize(INodeSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

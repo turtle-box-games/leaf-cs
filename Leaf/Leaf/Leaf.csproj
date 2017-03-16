@@ -62,7 +62,10 @@
     <Compile Include="Nodes\TimeNode.cs" />
     <Compile Include="Nodes\UuidNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\ISerializer.cs" />
+    <Compile Include="Serialization\BinaryFormatSerializer.cs" />
+    <Compile Include="Serialization\INodeSerializer.cs" />
+    <Compile Include="Serialization\IFormatSerializer.cs" />
+    <Compile Include="Serialization\IVersion1NodeSerializer.cs" />
     <Compile Include="Types\Bounds3.cs" />
     <Compile Include="Types\Point3.cs" />
     <Compile Include="Types\Point4.cs" />

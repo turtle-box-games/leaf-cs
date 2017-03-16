@@ -1,4 +1,6 @@
-﻿namespace Leaf.Nodes
+﻿using Leaf.Serialization;
+
+namespace Leaf.Nodes
 {
     /// <summary>
     /// Base class for all node types.
@@ -15,5 +17,12 @@
         /// Version number this node type was introduced in.
         /// </summary>
         public abstract int Version { get; }
+
+        /// <summary>
+        /// Calls the correct method to serialize the node.
+        /// Uses the strategy algorithm.
+        /// </summary>
+        /// <param name="serializer">Instance that handles serializing node data.</param>
+        internal abstract void Serialize(INodeSerializer serializer);
     }
 }
