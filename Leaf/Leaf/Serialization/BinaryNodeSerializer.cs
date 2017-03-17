@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Leaf.Nodes;
 
 namespace Leaf.Serialization
@@ -9,6 +10,10 @@ namespace Leaf.Serialization
     /// </summary>
     internal class BinaryNodeSerializer : INodeSerializer
     {
+        private const long TicksPerSecond = 10000000;
+        private const long MicroSecond = 1000000;
+        private const long TicksPerMicro = TicksPerSecond / MicroSecond;
+
         private readonly BinaryWriter _writer;
         private readonly BinaryReader _reader;
 
@@ -99,7 +104,10 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(StringNode node)
         {
-            throw new NotImplementedException();
+            var bytes  = Encoding.UTF8.GetBytes(node.Value);
+            var length = bytes.Length;
+            _writer.Write((short)length);
+            _writer.Write(bytes);
         }
 
         /// <summary>
@@ -108,7 +116,9 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(TimeNode node)
         {
-            throw new NotImplementedException();
+            var ticks = node.Value.Ticks;
+            var micro = ticks / TicksPerMicro;
+            _writer.Write(micro);
         }
 
         /// <summary>
@@ -117,7 +127,15 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(UuidNode node)
         {
-            throw new NotImplementedException();
+            var guid  = node.Value;
+            var bytes = guid.ToByteArray();
+            var data1 = BitConverter.ToInt32(bytes, 0);
+            var data2 = BitConverter.ToInt16(bytes, 4);
+            var data3 = BitConverter.ToInt16(bytes, 6);
+            _writer.Write(data1);
+            _writer.Write(data2);
+            _writer.Write(data3);
+            _writer.Write(bytes, 8, 8);
         }
 
         /// <summary>
@@ -126,7 +144,10 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(BlobNode node)
         {
-            throw new NotImplementedException();
+            var bytes  = node.Bytes;
+            var length = bytes.Length;
+            _writer.Write(length);
+            _writer.Write(bytes);
         }
 
         /// <summary>
@@ -135,7 +156,10 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(ListNode node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Count);
+            _writer.Write((byte)node.ElementType);
+            foreach(var child in node)
+                child.Serialize(this);
         }
 
         /// <summary>
@@ -144,7 +168,17 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(CompositeNode node)
         {
-            throw new NotImplementedException();
+            foreach(var pair in node)
+            {
+                var key = pair.Key;
+                _writer.Write((byte)key.Length);
+                var bytes  = Encoding.UTF8.GetBytes(key);
+                var length = bytes.Length;
+                _writer.Write((byte)length);
+                _writer.Write(bytes);
+                pair.Value.Serialize(this);
+            }
+            _writer.Write((byte)NodeType.End);
         }
 
         /// <summary>
@@ -223,7 +257,9 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public StringNode ReadStringNode()
         {
-            throw new NotImplementedException();
+            var length = _reader.ReadInt16();
+            var value  = ReadString(length);
+            return new StringNode(value);
         }
 
         /// <summary>
@@ -232,7 +268,10 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public TimeNode ReadTimeNode()
         {
-            throw new NotImplementedException();
+            var micro = _reader.ReadInt64();
+            var ticks = micro * TicksPerMicro;
+            var time  = new DateTime(ticks);
+            return new TimeNode(time);
         }
 
         /// <summary>
@@ -241,7 +280,12 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public UuidNode ReadUuidNode()
         {
-            throw new NotImplementedException();
+            var data1 = _reader.ReadInt32();
+            var data2 = _reader.ReadInt16();
+            var data3 = _reader.ReadInt16();
+            var data4 = _reader.ReadBytes(8);
+            var guid  = new Guid(data1, data2, data3, data4);
+            return new UuidNode(guid);
         }
 
         /// <summary>
@@ -250,7 +294,9 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public BlobNode ReadBlobNode()
         {
-            throw new NotImplementedException();
+            var length = _reader.ReadInt32();
+            var bytes  = _reader.ReadBytes(length);
+            return new BlobNode(bytes);
         }
 
         /// <summary>
@@ -259,7 +305,16 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public ListNode ReadListNode()
         {
-            throw new NotImplementedException();
+            var length      = _reader.ReadInt32();
+            var elementType = (NodeType)_reader.ReadByte();
+            var reader = GetReaderForNodeType(elementType);
+            var list = new ListNode(elementType);
+            for(var i = 0; i < length; ++i)
+            {
+                var node = reader();
+                list.Add(node);
+            }
+            return list;
         }
 
         /// <summary>
@@ -268,7 +323,17 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public CompositeNode ReadCompositeNode()
         {
-            throw new NotImplementedException();
+            var composite = new CompositeNode();
+            var nodeType  = (NodeType) _reader.ReadByte();
+            while(nodeType != NodeType.End)
+            {
+                var keyLength = _reader.ReadByte();
+                var key       = ReadString(keyLength);
+                var node      = ReadNode(nodeType);
+                nodeType      = (NodeType) _reader.ReadByte();
+                composite.Add(key, node);
+            }
+            return composite;
         }
 
         /// <summary>
@@ -278,37 +343,66 @@ namespace Leaf.Serialization
         /// <returns>Read node type.</returns>
         public Node ReadNode(NodeType type)
         {
+            var reader = GetReaderForNodeType(type);
+            return reader();
+        }
+
+        /// <summary>
+        /// Describes a method that reads a node and returns it.
+        /// </summary>
+        private delegate Node NodeReader();
+
+        /// <summary>
+        /// Figures out which method to use for a specific node type.
+        /// </summary>
+        /// <param name="type">Node type to read.</param>
+        /// <returns>Method that can be used to read the node.</returns>
+        /// <exception cref="NotSupportedException">The node <paramref name="type"/> is unrecognized.
+        /// Either the node format is too new or the data is corrupt.</exception>
+        private NodeReader GetReaderForNodeType(NodeType type)
+        {
             switch(type)
             {
             case NodeType.Flag:
-                return ReadFlagNode();
+                return ReadFlagNode;
             case NodeType.Int8:
-                return ReadInt8Node();
+                return ReadInt8Node;
             case NodeType.Int16:
-                return ReadInt16Node();
+                return ReadInt16Node;
             case NodeType.Int32:
-                return ReadInt32Node();
+                return ReadInt32Node;
             case NodeType.Int64:
-                return ReadInt64Node();
+                return ReadInt64Node;
             case NodeType.Float32:
-                return ReadFloat32Node();
+                return ReadFloat32Node;
             case NodeType.Float64:
-                return ReadFloat64Node();
+                return ReadFloat64Node;
             case NodeType.String:
-                return ReadStringNode();
+                return ReadStringNode;
             case NodeType.Time:
-                return ReadTimeNode();
+                return ReadTimeNode;
             case NodeType.Uuid:
-                return ReadUuidNode();
+                return ReadUuidNode;
             case NodeType.Blob:
-                return ReadBlobNode();
+                return ReadBlobNode;
             case NodeType.List:
-                return ReadListNode();
+                return ReadListNode;
             case NodeType.Composite:
-                return ReadCompositeNode();
+                return ReadCompositeNode;
             default:
                 throw new NotSupportedException($"Unrecognized node type - {type}");
             }
+        }
+
+        /// <summary>
+        /// Reads a UTF-8 string from the stream.
+        /// </summary>
+        /// <param name="length">Reported length of the string.</param>
+        /// <returns>String read from the stream.</returns>
+        private string ReadString(int length)
+        {
+            var bytes = _reader.ReadBytes(length);
+            return Encoding.UTF8.GetString(bytes);
         }
     }
 }
