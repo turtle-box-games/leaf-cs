@@ -36,7 +36,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(FlagNode node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(Int8Node node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(Int16Node node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(Int32Node node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(Int64Node node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(Float32Node node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Leaf.Serialization
         /// <param name="node">Node to serialize.</param>
         public void Write(Float64Node node)
         {
-            throw new NotImplementedException();
+            _writer.Write(node.Value);
         }
 
         /// <summary>
@@ -153,7 +153,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public FlagNode ReadFlagNode()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadBoolean();
+            return new FlagNode(value);
         }
 
         /// <summary>
@@ -162,7 +163,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public Int8Node ReadInt8Node()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadByte();
+            return new Int8Node(value);
         }
 
         /// <summary>
@@ -171,7 +173,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public Int16Node ReadInt16Node()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadInt16();
+            return new Int16Node(value);
         }
 
         /// <summary>
@@ -180,7 +183,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public Int32Node ReadInt32Node()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadInt32();
+            return new Int32Node(value);
         }
 
         /// <summary>
@@ -189,7 +193,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public Int64Node ReadInt64Node()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadInt64();
+            return new Int64Node(value);
         }
 
         /// <summary>
@@ -198,7 +203,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public Float32Node ReadFloat32Node()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadSingle();
+            return new Float32Node(value);
         }
 
         /// <summary>
@@ -207,7 +213,8 @@ namespace Leaf.Serialization
         /// <returns>Node read from data.</returns>
         public Float64Node ReadFloat64Node()
         {
-            throw new NotImplementedException();
+            var value = _reader.ReadDouble();
+            return new Float64Node(value);
         }
 
         /// <summary>
