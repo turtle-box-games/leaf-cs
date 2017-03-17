@@ -1,5 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Text;
+using Leaf.IO;
+using Leaf.Nodes;
 
 namespace Leaf.Serialization
 {
@@ -10,6 +12,16 @@ namespace Leaf.Serialization
     public class BinaryFormatSerializer : IFormatSerializer
     {
         /// <summary>
+        /// Flag indicating whether or not to use big-endian during serialization.
+        /// </summary>
+        private const bool BigEndian = true;
+
+        /// <summary>
+        /// Text encoding used for serialization.
+        /// </summary>
+        private static readonly Encoding StreamEncoding = Encoding.UTF8;
+
+        /// <summary>
         /// Write node data to a stream.
         /// </summary>
         /// <param name="container">Container holding the root node and associated data
@@ -17,7 +29,14 @@ namespace Leaf.Serialization
         /// <param name="output">Output stream to write data to.</param>
         public void Serialize(Container container, Stream output)
         {
-            throw new NotImplementedException();
+            var root   = container.Root;
+            var header = new BinaryFormatHeader(root.Type, root.Version);
+            using(var writer = new EndianAwareBinaryWriter(output, BigEndian, StreamEncoding, true))
+            {
+                var serializer = new BinaryNodeSerializer(writer);
+                header.Write(writer);
+                root.Serialize(serializer);
+            }
         }
 
         /// <summary>
@@ -27,7 +46,14 @@ namespace Leaf.Serialization
         /// <returns>Container holding the root node and associated data read from the stream.</returns>
         public Container Deserialize(Stream input)
         {
-            throw new NotImplementedException();
+            Node root;
+            using(var reader = new EndianAwareBinaryReader(input, BigEndian, StreamEncoding, true))
+            {
+                var header = BinaryFormatHeader.Read(reader);
+                var serializer = new BinaryNodeSerializer(reader);
+                root = serializer.ReadNode(header.RootType);
+            }
+            return new Container(root);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Leaf.Serialization
+﻿using Leaf.Nodes;
+
+namespace Leaf.Serialization
 {
     /// <summary>
     /// Redirection to latest node serializer.
@@ -7,5 +9,11 @@
     /// </summary>
     internal interface INodeSerializer : IVersion1NodeSerializer
     {
+        /// <summary>
+        /// Reads a node given its type.
+        /// </summary>
+        /// <param name="type">Node type to read.</param>
+        /// <returns>Read node type.</returns>
+        Node ReadNode(NodeType type);
     }
 }

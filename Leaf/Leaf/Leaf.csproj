@@ -67,6 +67,7 @@
     <Compile Include="Serialization\INodeSerializer.cs" />
     <Compile Include="Serialization\IFormatSerializer.cs" />
     <Compile Include="Serialization\IVersion1NodeSerializer.cs" />
+    <Compile Include="Serialization\BinaryNodeSerializer.cs" />
     <Compile Include="Types\Bounds3.cs" />
     <Compile Include="Types\Point3.cs" />
     <Compile Include="Types\Point4.cs" />
