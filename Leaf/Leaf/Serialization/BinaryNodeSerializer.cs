@@ -271,7 +271,37 @@ namespace Leaf.Serialization
         /// <returns>Read node type.</returns>
         public Node ReadNode(NodeType type)
         {
-            throw new NotImplementedException();
+            switch(type)
+            {
+            case NodeType.Flag:
+                return ReadFlagNode();
+            case NodeType.Int8:
+                return ReadInt8Node();
+            case NodeType.Int16:
+                return ReadInt16Node();
+            case NodeType.Int32:
+                return ReadInt32Node();
+            case NodeType.Int64:
+                return ReadInt64Node();
+            case NodeType.Float32:
+                return ReadFloat32Node();
+            case NodeType.Float64:
+                return ReadFloat64Node();
+            case NodeType.String:
+                return ReadStringNode();
+            case NodeType.Time:
+                return ReadTimeNode();
+            case NodeType.Uuid:
+                return ReadUuidNode();
+            case NodeType.Blob:
+                return ReadBlobNode();
+            case NodeType.List:
+                return ReadListNode();
+            case NodeType.Composite:
+                return ReadCompositeNode();
+            default:
+                throw new NotSupportedException($"Unrecognized node type - {type}");
+            }
         }
     }
 }
