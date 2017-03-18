@@ -40,8 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="Header.cs" />
     <Compile Include="IO\EndianAwareBinaryWriter.cs" />
     <Compile Include="IO\EndianAwareBinaryReader.cs" />
     <Compile Include="IO\FlipBinaryReader.cs" />
@@ -74,11 +72,6 @@
     <Compile Include="Types\Rect3.cs" />
     <Compile Include="Types\Vector3.cs" />
     <Compile Include="Types\Vector4.cs" />
-    <Compile Include="Versions\V1Engine.cs" />
-    <Compile Include="Versions\V1Header.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Versions" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
