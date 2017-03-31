@@ -15,7 +15,7 @@ linux-test:
   image: mono
   script:
   - xbuild /p:Configuration=Release Leaf/Leaf.Tests/Leaf.Tests.csproj
-  - mono Leaf/packages/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe Leaf/Leaf.Tests/bin/Release/Leaf.Tests.dll
+  - mono Leaf/packages/NUnit.ConsoleRunner.3.6.1/tools/nunit3-console.exe Leaf/Leaf.Tests/bin/Release/Leaf.Tests.dll
   artifacts:
     paths:
     - Leaf/Leaf.Tests/bin/Release/
