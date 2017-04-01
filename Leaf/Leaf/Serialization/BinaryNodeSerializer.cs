@@ -170,10 +170,9 @@ namespace Leaf.Serialization
         {
             foreach(var pair in node)
             {
-                var key = pair.Key;
-                _writer.Write((byte)key.Length);
-                var bytes  = Encoding.UTF8.GetBytes(key);
+                var bytes  = Encoding.UTF8.GetBytes(pair.Key);
                 var length = bytes.Length;
+                _writer.Write((byte)pair.Value.Type);
                 _writer.Write((byte)length);
                 _writer.Write(bytes);
                 pair.Value.Serialize(this);
