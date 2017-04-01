@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Leaf.Nodes;
 using Leaf.Serialization;
 using NUnit.Framework;
@@ -164,6 +166,106 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized for an empty ListNode is correct.
+        /// </summary>
+        [Test]
+        public void TestSerializeEmptyList()
+        {
+            var node = new ListNode(NodeType.Flag);
+            byte[] expected = {0x00, 0x00, 0x00, 0x00, (byte) NodeType.Flag};
+            CheckSerializedNodeData(node, expected);
+        }
+
+        /// <summary>
+        /// Check that the data serialized for a ListNode is correct.
+        /// </summary>
+        [Test]
+        public void TestSerializeList()
+        {
+            var nodes = new Node[]
+            {
+                new Int32Node(12345),
+                new Int32Node(67890),
+                new Int32Node(1337)
+            };
+            var node = new ListNode(NodeType.Int32, nodes);
+            byte[] preface = {0x00, 0x00, 0x00, 0x03, (byte) NodeType.Int32};
+            var expected = ConcatNodes(preface, nodes);
+            CheckSerializedNodeData(node, expected);
+        }
+
+        /// <summary>
+        /// Check that the data serialized for a ListNode containing ListNodes is correct.
+        /// </summary>
+        [Test]
+        public void TestSerializeListOfList()
+        {
+            var set1 = new Node[]
+            {
+                new Int32Node(12345),
+                new Int32Node(67890),
+                new Int32Node(1337)
+            };
+            var set2 = new Node[]
+            {
+                new StringNode("foo"),
+                new StringNode("bar"),
+                new StringNode("baz"),
+            };
+            var lists = new Node[]
+            {
+                new ListNode(NodeType.Int32, set1),
+                new ListNode(NodeType.Int32, set1),
+                new ListNode(NodeType.String, set2),
+                new ListNode(NodeType.String, set2),
+            };
+            var node = new ListNode(NodeType.List, lists);
+            byte[] preface0 = {0x00, 0x00, 0x00, 0x04, (byte) NodeType.List};
+            byte[] preface1 = {0x00, 0x00, 0x00, 0x03, (byte) NodeType.Int32};
+            byte[] preface2 = {0x00, 0x00, 0x00, 0x03, (byte) NodeType.String};
+            var bytes1 = ConcatNodes(preface1, set1);
+            var bytes2 = ConcatNodes(preface2, set2);
+            var expected = ConcatByteSet(preface0, bytes1, bytes1, bytes2, bytes2);
+            CheckSerializedNodeData(node, expected);
+        }
+
+        [Test]
+        public void TestSerializeListOfComposite()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void TestSerializeEmptyComposite()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void TestSerializeComposite()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void TestSerializeCompositeOfList()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void TestSerializeCompositeOfComposite()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void TestSerializeComplexComposite()
+        {
+            Assert.Inconclusive();
+        }
+
         private static byte[] Serialize(Node root = null)
         {
             var container = new Container(root ?? GenerateRootNode());
@@ -172,6 +274,34 @@ namespace Leaf.Tests.Serialization
                 new BinaryFormatSerializer().Serialize(container, stream);
                 return stream.ToArray();
             }
+        }
+
+        private static byte[] SerializeNode(Node node)
+        {
+            var bytes = Serialize(node);
+            return bytes.Skip(HeaderSize + 1).ToArray();
+        }
+
+        private static byte[] ConcatByteSet(params byte[][] arrays)
+        {
+            return ConcatByteArrays(arrays);
+        }
+
+        private static byte[] ConcatByteArrays(ICollection<byte[]> arrays)
+        {
+            var size = arrays.Sum(a => a.Length);
+            var bytes = new byte[size];
+            var i = 0;
+            foreach(var array in arrays)
+            foreach(var b in array)
+                bytes[i++] = b;
+            return bytes;
+        }
+
+        private static byte[] ConcatNodes(byte[] preface, IEnumerable<Node> nodes)
+        {
+            var nodeData = new[] {preface}.Union(nodes.Select(SerializeNode));
+            return ConcatByteArrays(nodeData.ToList());
         }
 
         private static Container GenerateContainer()
@@ -189,9 +319,9 @@ namespace Leaf.Tests.Serialization
         {
             var actual = Serialize(node);
             Assert.AreEqual((byte)node.Type, actual[HeaderSize]);
-            Assert.AreEqual(expected.Length + HeaderSize + 1, actual.Length);
+            Assert.AreEqual(expected.Length + HeaderSize + 1, actual.Length, "Serialization length mismatch");
             for(int i = 0, j = HeaderSize + 1; i < expected.Length; ++i, ++j)
-                Assert.AreEqual(expected[i], actual[j]);
+                Assert.AreEqual(expected[i], actual[j], $"Index {i} ({j}) expected: {expected[i]}, actual: {actual[j]}");
         }
     }
 }
