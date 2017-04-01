@@ -329,7 +329,7 @@ namespace Leaf.Tests.Serialization
             };
             var node = new CompositeNode(pairsOfComposites);
             var sets = ConcatNodes(pairs);
-            var expected = ConcatByteSet(SerializePair("c1", sets), SerializePair("c3", sets),
+            var expected = ConcatByteSet(SerializePair("c1", sets), SerializePair("c2", sets),
                 SerializePair("c3", sets), new[] {(byte) NodeType.End});
             CheckSerializedNodeData(node, expected);
         }
