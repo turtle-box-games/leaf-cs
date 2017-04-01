@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Leaf.Nodes;
 using Leaf.Serialization;
 using NUnit.Framework;
@@ -230,39 +232,134 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized from a list of CompositeNodes is correct.
+        /// </summary>
         [Test]
         public void TestSerializeListOfComposite()
         {
-            Assert.Inconclusive();
+            var pairs = new KeyValuePair<string, Node>[]
+            {
+                new KeyValuePair<string, Node>("flag", new FlagNode(true)),
+                new KeyValuePair<string, Node>("float", new Float32Node(123.45f)),
+                new KeyValuePair<string, Node>("time", new TimeNode(DateTime.Now)),
+            };
+            var composites = new Node[]
+            {
+                new CompositeNode(pairs),
+                new CompositeNode(pairs),
+                new CompositeNode(pairs),
+                new CompositeNode(pairs)
+            };
+            var node = new ListNode(NodeType.Composite, composites);
+            byte[] preface = {0x00, 0x00, 0x00, 0x04, (byte) NodeType.Composite};
+            var expected = ConcatNodes(preface, composites);
+            CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized from an empty CompositeNode is correct.
+        /// </summary>
         [Test]
         public void TestSerializeEmptyComposite()
         {
-            Assert.Inconclusive();
+            var node = new CompositeNode();
+            byte[] expected = {(byte) NodeType.End};
+            CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized from a CompositeNode is correct.
+        /// </summary>
         [Test]
         public void TestSerializeComposite()
         {
-            Assert.Inconclusive();
+            var pairs = new[]
+            {
+                new KeyValuePair<string, Node>("int", new Int32Node(1234567)),
+                new KeyValuePair<string, Node>("string", new StringNode("foobar")),
+                new KeyValuePair<string, Node>("blob", new BlobNode(new byte[] {0x12, 0x34, 0x56, 0x78, 0x90}))
+            };
+            var node = new CompositeNode(pairs);
+            var expected = ConcatNodes(pairs);
+            CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized from a CompositeNode containing ListNodes is correct.
+        /// </summary>
         [Test]
         public void TestSerializeCompositeOfList()
         {
-            Assert.Inconclusive();
+            var nodes = new Node[]
+            {
+                new Int32Node(12345),
+                new Int32Node(67890),
+                new Int32Node(98765),
+                new Int32Node(43210)
+            };
+            var pairs = new[]
+            {
+                new KeyValuePair<string, Node>("l1", new ListNode(NodeType.Int32, nodes)),
+                new KeyValuePair<string, Node>("l2", new ListNode(NodeType.Int32, nodes)),
+                new KeyValuePair<string, Node>("l3", new ListNode(NodeType.Int32, nodes))
+            };
+            var node = new CompositeNode(pairs);
+            var expected = ConcatNodes(pairs);
+            CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized from a CompositeNode containing CompositeNodes is correct.
+        /// </summary>
         [Test]
         public void TestSerializeCompositeOfComposite()
         {
-            Assert.Inconclusive();
+            var pairs = new[]
+            {
+                new KeyValuePair<string, Node>("n1", new UuidNode(Guid.Empty)),
+                new KeyValuePair<string, Node>("n2", new Float64Node(12345.6789f)),
+                new KeyValuePair<string, Node>("n3", new Int8Node(42))
+            };
+            var pairsOfComposites = new[]
+            {
+                new KeyValuePair<string, Node>("c1", new CompositeNode(pairs)),
+                new KeyValuePair<string, Node>("c2", new CompositeNode(pairs)),
+                new KeyValuePair<string, Node>("c3", new CompositeNode(pairs))
+            };
+            var node = new CompositeNode(pairsOfComposites);
+            var sets = ConcatNodes(pairs);
+            var expected = ConcatByteSet(SerializePair("c1", sets), SerializePair("c3", sets),
+                SerializePair("c3", sets), new[] {(byte) NodeType.End});
+            CheckSerializedNodeData(node, expected);
         }
 
+        /// <summary>
+        /// Check that the data serialized from a CompositeNode containing a mix of nodes is correct.
+        /// </summary>
         [Test]
         public void TestSerializeComplexComposite()
         {
+            var listNodes = new[]
+            {
+                new Int64Node(1234567890),
+                new Int64Node(9876543210)
+            };
+            var compositePairs = new[]
+            {
+                new KeyValuePair<string, Node>("foo", new StringNode("foo")),
+                new KeyValuePair<string, Node>("bar", new TimeNode(DateTime.Now)),
+                new KeyValuePair<string, Node>("baz",
+                    new BlobNode(new byte[] {0x90, 0x89, 0x78, 0x67, 0x56, 0x45, 0x34, 0x23, 0x12}))
+            };
+            var pairs = new[]
+            {
+                new KeyValuePair<string, Node>("flag", new FlagNode(false)),
+                new KeyValuePair<string, Node>("short", new Int16Node(1337)),
+                new KeyValuePair<string, Node>("float", new Float32Node(123.45f)),
+                new KeyValuePair<string, Node>("list", new ListNode(NodeType.Int64, listNodes)),
+                new KeyValuePair<string, Node>("composite", new CompositeNode(compositePairs))
+            };
             Assert.Inconclusive();
         }
 
@@ -302,6 +399,34 @@ namespace Leaf.Tests.Serialization
         {
             var nodeData = new[] {preface}.Union(nodes.Select(SerializeNode));
             return ConcatByteArrays(nodeData.ToList());
+        }
+
+        private static byte[] ConcatNodes(IEnumerable<KeyValuePair<string, Node>> pairs)
+        {
+            var sets = pairs.Select(SerializePair).ToList();
+            sets.Add(new[] {(byte)NodeType.End});
+            return ConcatByteArrays(sets);
+        }
+
+        private static byte[] SerializeString(string value)
+        {
+            var bytes = Encoding.UTF8.GetBytes(value);
+            var size = bytes.Length;
+            byte[] sizeByte = {(byte) size};
+            return ConcatByteSet(sizeByte, bytes);
+        }
+
+        private static byte[] SerializePair(KeyValuePair<string, Node> pair)
+        {
+            var keyBytes = SerializeString(pair.Key);
+            var nodeBytes = SerializeNode(pair.Value);
+            return ConcatByteSet(new[] {(byte) pair.Value.Type}, keyBytes, nodeBytes);
+        }
+
+        private static byte[] SerializePair(string key, byte[] nodeBytes)
+        {
+            var keyBytes = SerializeString(key);
+            return ConcatByteSet(new[] {(byte) NodeType.Composite}, keyBytes, nodeBytes);
         }
 
         private static Container GenerateContainer()
