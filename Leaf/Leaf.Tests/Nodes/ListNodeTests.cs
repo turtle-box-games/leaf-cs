@@ -5,33 +5,24 @@ using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(ListNode))]
     public class ListNodeTests
     {
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestTypeId()
         {
             var node = new ListNode(NodeType.String);
             Assert.AreEqual(NodeType.List, node.Type);
         }
 
-        /// <summary>
-        /// Check that the version is the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = GenerateListNode();
             Assert.AreEqual(1, node.Version);
         }
 
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestElementTypeIdEmpty()
         {
             const NodeType elementType = NodeType.String;
@@ -39,10 +30,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(elementType, node.ElementType);
         }
 
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestElementTypeIdContents()
         {
             const NodeType elementType = NodeType.String;
@@ -50,57 +38,39 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(elementType, node.ElementType);
         }
 
-        /// <summary>
-        /// Check that the empty constructor creates an empty list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the empty constructor creates an empty list.")]
         public void TestEmptyConstructor()
         {
             var node = new ListNode(NodeType.String);
             Assert.IsEmpty(node);
         }
 
-        /// <summary>
-        /// Check that the contents constructor adds the same nodes.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the contents constructor adds the same nodes.")]
         public void TestContentsConstructor()
         {
             var node = new ListNode(NodeSet.First().Type, NodeSet);
             CollectionAssert.AreEqual(NodeSet, node);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown for a null set of nodes.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown for a null set of nodes.")]
         public void TestNullContentsConstructor()
         {
             Assert.Throws<ArgumentNullException>(() => { new ListNode(NodeType.String, null); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown for mixed node types.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown for mixed node types.")]
         public void TestMixedContentsConstructor()
         {
             Assert.Throws<ArrayTypeMismatchException>(() => { new ListNode(MixedNodeSet.First().Type, MixedNodeSet); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown for null mixed in with nodes.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown for null mixed in with nodes.")]
         public void TestNullNodeContentsConstructor()
         {
             Assert.Throws<ArgumentException>(() => { new ListNode(NullNodeSet.First().Type, NullNodeSet); });
         }
 
-        /// <summary>
-        /// Check that appending a node works.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that appending a node works.")]
         public void TestAdd()
         {
             var list = GenerateListNode();
@@ -109,30 +79,21 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(NodeSet.Concat(new Node[] {node}), list);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to append null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to append null.")]
         public void TestAddNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list.Add(null); });
         }
 
-        /// <summary>
-        /// Check  that an exception is thrown when attempting to append a node of a different type.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check  that an exception is thrown when attempting to append a node of a different type.")]
         public void TestAddTypeMismatch()
         {
             var list = GenerateListNode();
             Assert.Throws<ArrayTypeMismatchException>(() => { list.Add(new Int32Node(12345)); });
         }
 
-        /// <summary>
-        /// Check that clearing the list empties it.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that clearing the list empties it.")]
         public void TestClear()
         {
             var list = GenerateListNode();
@@ -140,10 +101,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.IsEmpty(list);
         }
 
-        /// <summary>
-        /// Check that an item can be found in the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an item can be found in the list.")]
         public void TestContains()
         {
             var list = GenerateListNode();
@@ -151,10 +109,7 @@ namespace Leaf.Tests.Nodes
             Assert.True(list.Contains(node));
         }
 
-        /// <summary>
-        /// Check that false is returned when an item can't be found in the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that false is returned when an item can't be found in the list.")]
         public void TestNotContains()
         {
             var list = GenerateListNode();
@@ -162,20 +117,14 @@ namespace Leaf.Tests.Nodes
             Assert.False(list.Contains(node));
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to look for null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to look for null.")]
         public void TestContainsNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list.Contains(null); });
         }
 
-        /// <summary>
-        /// Check that nodes in the list can be copied to an array.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that nodes in the list can be copied to an array.")]
         public void TestCopyTo()
         {
             var list  = GenerateListNode();
@@ -184,20 +133,14 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(list, array);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the destination array is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the destination array is null.")]
         public void TestCopyToNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list.CopyTo(null, 0); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the starting index is negative.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the starting index is negative.")]
         public void TestCopyToNegativeIndex()
         {
             var list  = GenerateListNode();
@@ -205,10 +148,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.CopyTo(array, -3); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the starting index is past the bounds of the array.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the starting index is past the bounds of the array.")]
         public void TestCopyToIndexTooLarge()
         {
             var list  = GenerateListNode();
@@ -216,10 +156,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { list.CopyTo(array, array.Length + 1); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the destination array is too small the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the destination array is too small the list.")]
         public void TestCopyToArrayTooSmall()
         {
             var list  = GenerateListNode();
@@ -227,10 +164,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { list.CopyTo(array, 0); });
         }
 
-        /// <summary>
-        /// Check that removing a node works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing a node works as expected.")]
         public void TestRemove()
         {
             var list = GenerateListNode();
@@ -241,10 +175,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that nothing happens when attempting to remove a non-existent node.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that nothing happens when attempting to remove a non-existent node.")]
         public void TestRemoveNonExistent()
         {
             var list = GenerateListNode();
@@ -253,40 +184,28 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(NodeSet, list);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to remove null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to remove null.")]
         public void TestRemoveNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list.Remove(null); });
         }
 
-        /// <summary>
-        /// Check that the count property returns the correct amount.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the count property returns the correct amount.")]
         public void TestCount()
         {
             var list = GenerateListNode();
             Assert.AreEqual(NodeSet.Length, list.Count);
         }
 
-        /// <summary>
-        /// Check that the read-only property returns the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the read-only property returns the expected value.")]
         public void TestIsReadOnly()
         {
             var list = GenerateListNode();
             Assert.False(list.IsReadOnly);
         }
 
-        /// <summary>
-        /// Check that an item can be found in the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an item can be found in the list.")]
         public void TestIndexOf()
         {
             var list = GenerateListNode();
@@ -294,10 +213,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(1, list.IndexOf(node));
         }
 
-        /// <summary>
-        /// Check that a negative index is returned for an item that can't be found in the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a negative index is returned for an item that can't be found in the list.")]
         public void TestIndexOfNonExistent()
         {
             var list = GenerateListNode();
@@ -305,20 +221,14 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(-1, list.IndexOf(node));
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when looking for null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when looking for null.")]
         public void TestIndexOfNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list.IndexOf(null); });
         }
 
-        /// <summary>
-        /// Check that the insert method works.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the insert method works.")]
         public void TestInsert()
         {
             var list = GenerateListNode();
@@ -329,10 +239,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that inserting an item at the start of the list works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that inserting an item at the start of the list works as expected.")]
         public void TestInsertFirst()
         {
             var list = GenerateListNode();
@@ -343,10 +250,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that inserting an item at the end of the list works as expecte.d
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that inserting an item at the end of the list works as expected.")]
         public void TestInsertLast()
         {
             var list = GenerateListNode();
@@ -357,20 +261,14 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to insert null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to insert null.")]
         public void TestInsertNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list.Insert(1, null); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a negative index.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
         public void TestInsertNegativeIndex()
         {
             var list = GenerateListNode();
@@ -378,10 +276,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.Insert(-1, node); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use an index outside the bounds of the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
         public void TestInsertIndexTooLarge()
         {
             var list = GenerateListNode();
@@ -389,10 +284,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.Insert(list.Count + 1, node); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to insert a node of a different type.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to insert a node of a different type.")]
         public void TestInsertTypeMismatch()
         {
             var list = GenerateListNode();
@@ -400,10 +292,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArrayTypeMismatchException>(() => { list.Insert(1, node); });
         }
 
-        /// <summary>
-        /// Check that removing an item at an index works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing an item at an index works as expected.")]
         public void TestRemoveAt()
         {
             var list = GenerateListNode();
@@ -413,10 +302,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that removing the first item in the list works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing the first item in the list works as expected.")]
         public void TestRemoveAtFirst()
         {
             var list = GenerateListNode();
@@ -426,10 +312,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that removing the last item in the list works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing the last item in the list works as expected.")]
         public void TestRemoveAtLast()
         {
             var list = GenerateListNode();
@@ -439,50 +322,35 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(expected, list);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a negative index.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
         public void TestRemoveAtNegativeIndex()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.RemoveAt(-1); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use an index outside the bounds of the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
         public void TestRemoveAtIndexTooLarge()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentOutOfRangeException>(() => { list.RemoveAt(list.Count + 1); });
         }
 
-        /// <summary>
-        /// Check that the getter works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the getter works as expected.")]
         public void TestGetter()
         {
             var list = GenerateListNode();
             Assert.AreEqual(NodeSet[0], list[0]);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a negative index.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
         public void TestGetterNegativeIndex()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentOutOfRangeException>(() => { var node = list[-1]; });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use an index outside the bounds of the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
         public void TestGetterIndexTooLarge()
         {
             var list = GenerateListNode();
@@ -492,10 +360,7 @@ namespace Leaf.Tests.Nodes
             });
         }
 
-        /// <summary>
-        /// Check that the setter works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the setter works as expected.")]
         public void TestSetter()
         {
             var list = GenerateListNode();
@@ -504,20 +369,14 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(node, list[1]);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to set an element to null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to set an element to null.")]
         public void TestSetterNull()
         {
             var list = GenerateListNode();
             Assert.Throws<ArgumentNullException>(() => { list[1] = null; });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a negative index.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
         public void TestSetterNegativeIndex()
         {
             var list = GenerateListNode();
@@ -525,10 +384,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentOutOfRangeException>(() => { list[-1] = node; });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use an index outside the bounds of the list.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
         public void TestSetterIndexTooLarge()
         {
             var list = GenerateListNode();
@@ -536,10 +392,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentOutOfRangeException>(() => { list[list.Count + 1] = node; });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to set an element to a different node type.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to set an element to a different node type.")]
         public void TestSetterTypeMismatch()
         {
             var list = GenerateListNode();

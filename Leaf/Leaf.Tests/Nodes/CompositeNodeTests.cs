@@ -6,80 +6,56 @@ using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(CompositeNode))]
     public class CompositeNodeTests
     {
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestTypeIdEmpty()
         {
             var node = new CompositeNode();
             Assert.AreEqual(NodeType.Composite, node.Type);
         }
 
-        /// <summary>
-        /// Check that the version is the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = GenerateCompositeNode();
             Assert.AreEqual(1, node.Version);
         }
 
-        /// <summary>
-        /// Check that the empty constructor creates an empty set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the empty constructor creates an empty set.")]
         public void TestEmptyConstructor()
         {
             var node = new CompositeNode();
             Assert.IsEmpty(node);
         }
 
-        /// <summary>
-        /// Check that the contents constructor adds the same nodes.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the contents constructor adds the same nodes.")]
         public void TestContentsConstructor()
         {
             var node = new CompositeNode(NodeSet);
             CollectionAssert.AreEqual(NodeSet, node);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown for a null set of nodes.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown for a null set of nodes.")]
         public void TestNullContentsConstructor()
         {
             Assert.Throws<ArgumentNullException>(() => { new CompositeNode(null); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown for null mixed in with nodes.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown for null mixed in with nodes.")]
         public void TestNullNodeContentsConstructor()
         {
             Assert.Throws<ArgumentException>(() => { new CompositeNode(NullNodeSet); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown for null as a key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown for null as a key.")]
         public void TestNullKeyContentsConstructor()
         {
             Assert.Throws<ArgumentException>(() => { new CompositeNode(NullStringSet); });
         }
 
-        /// <summary>
-        /// Check that adding a key-value pair works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that adding a key-value pair works as expected.")]
         public void TestAddPair()
         {
             var node = GenerateCompositeNode();
@@ -88,10 +64,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.Contains(node, pair);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when adding a null node in a key-value pair.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when adding a null node in a key-value pair.")]
         public void TestAddPairNullNode()
         {
             var node = GenerateCompositeNode();
@@ -99,10 +72,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Add(pair); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when adding a null key in a key-value pair.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when adding a null key in a key-value pair.")]
         public void TestAddPairNullKey()
         {
             var node = GenerateCompositeNode();
@@ -110,7 +80,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Add(pair); });
         }
 
-        [Test]
+        [Test(Description = "Check that an exception is thrown when adding an existing key-value pair.")]
         public void TestAddExistingPair()
         {
             var node = GenerateCompositeNode();
@@ -118,10 +88,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Add(pair); });
         }
 
-        /// <summary>
-        /// Check that the set is empty after clearing it.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the set is empty after clearing it.")]
         public void TestClear()
         {
             var node = GenerateCompositeNode();
@@ -129,10 +96,7 @@ namespace Leaf.Tests.Nodes
             Assert.IsEmpty(node);
         }
 
-        /// <summary>
-        /// Check that a key-value pair can be found in the set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a key-value pair can be found in the set.")]
         public void TestContains()
         {
             var node = GenerateCompositeNode();
@@ -140,10 +104,7 @@ namespace Leaf.Tests.Nodes
             Assert.IsTrue(node.Contains(pair));
         }
 
-        /// <summary>
-        /// Check that false is returned when a key-value pair can't be found in the set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that false is returned when a key-value pair can't be found in the set.")]
         public void TestContainsFalse()
         {
             var node = GenerateCompositeNode();
@@ -151,10 +112,7 @@ namespace Leaf.Tests.Nodes
             Assert.IsFalse(node.Contains(pair));
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when checking for a null node.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when checking for a null node.")]
         public void TestContainsNullNode()
         {
             var node = GenerateCompositeNode();
@@ -162,10 +120,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Contains(pair); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when checking for a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when checking for a null key.")]
         public void TestContainsNullKey()
         {
             var node = GenerateCompositeNode();
@@ -173,10 +128,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Contains(pair); });
         }
 
-        /// <summary>
-        /// Check that nodes in the set can be copied to an array.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that nodes in the set can be copied to an array.")]
         public void TestCopyTo()
         {
             var set   = GenerateCompositeNode();
@@ -185,20 +137,14 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEqual(set, array);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the destination array is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the destination array is null.")]
         public void TestCopyToNull()
         {
             var set = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { set.CopyTo(null, 0); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the starting index is negative.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the starting index is negative.")]
         public void TestCopyToNegativeIndex()
         {
             var set   = GenerateCompositeNode();
@@ -206,10 +152,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentOutOfRangeException>(() => { set.CopyTo(array, -3); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the starting index is past the bounds of the array.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the starting index is past the bounds of the array.")]
         public void TestCopyToIndexTooLarge()
         {
             var set   = GenerateCompositeNode();
@@ -217,10 +160,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { set.CopyTo(array, array.Length + 1); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the destination array is too small for the set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the destination array is too small for the set.")]
         public void TestCopyToArrayTooSmall()
         {
             var set   = GenerateCompositeNode();
@@ -228,10 +168,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { set.CopyTo(array, 0); });
         }
 
-        /// <summary>
-        /// Check that removing a key-value pair works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing a key-value pair works as expected.")]
         public void TestRemovePair()
         {
             var node = GenerateCompositeNode();
@@ -242,10 +179,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(list, node);
         }
 
-        /// <summary>
-        /// Check that attempting to remove a key-value pair with a different key doesn't remove anything.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that attempting to remove a key-value pair with a different key doesn't remove anything.")]
         public void TestRemovePairDifferentKey()
         {
             var node = GenerateCompositeNode();
@@ -254,10 +188,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(NodeSet, node);
         }
 
-        /// <summary>
-        /// Check that attempting to remove a key-value pair with a different node doesn't remove anything.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that attempting to remove a key-value pair with a different node doesn't remove anything.")]
         public void TestRemovePairDifferentNode()
         {
             var node = GenerateCompositeNode();
@@ -266,10 +197,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(NodeSet, node);
         }
 
-        /// <summary>
-        /// Check that attempting to remove an entirely different key-value pair doesn't remove anything.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that attempting to remove an entirely different key-value pair doesn't remove anything.")]
         public void TestRemovePairFalse()
         {
             var node = GenerateCompositeNode();
@@ -278,10 +206,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(NodeSet, node);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the node is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the node is null.")]
         public void TestRemovePairNullNode()
         {
             var node = GenerateCompositeNode();
@@ -289,10 +214,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Remove(pair); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when the key is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when the key is null.")]
         public void TestRemovePairNullKey()
         {
             var node = GenerateCompositeNode();
@@ -300,30 +222,21 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Remove(pair); });
         }
 
-        /// <summary>
-        /// Check that the count is the expected amount.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the count is the expected amount.")]
         public void TestCount()
         {
             var node = GenerateCompositeNode();
             Assert.AreEqual(NodeSet.Length, node.Count);
         }
 
-        /// <summary>
-        /// Check that the read-only property returns the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the read-only property returns the expected value.")]
         public void TestIsReadOnly()
         {
             var node = GenerateCompositeNode();
             Assert.IsFalse(node.IsReadOnly);
         }
 
-        /// <summary>
-        /// Check that an existing key is found in the set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an existing key is found in the set.")]
         public void TestContainsKey()
         {
             var node = GenerateCompositeNode();
@@ -331,10 +244,7 @@ namespace Leaf.Tests.Nodes
             Assert.IsTrue(node.ContainsKey(key));
         }
 
-        /// <summary>
-        /// Check that a non-existent key is not found in the set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a non-existent key is not found in the set.")]
         public void TestContainsKeyFalse()
         {
             var node = GenerateCompositeNode();
@@ -342,20 +252,14 @@ namespace Leaf.Tests.Nodes
             Assert.IsFalse(node.ContainsKey(key));
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when looking for a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when looking for a null key.")]
         public void TestContainsKeyNull()
         {
             var node = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { node.ContainsKey(null); });
         }
 
-        /// <summary>
-        /// Check that adding a new node works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that adding a new node works as expected.")]
         public void TestAdd()
         {
             var node  = GenerateCompositeNode();
@@ -366,10 +270,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(list, node);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to add a node with an existing key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to add a node with an existing key.")]
         public void TestAddExisting()
         {
             var node = GenerateCompositeNode();
@@ -377,30 +278,21 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentException>(() => { node.Add(existing.Key, existing.Value); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
         public void TestAddNullKey()
         {
             var node = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { node.Add(null, new FlagNode(false)); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to add a null node.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to add a null node.")]
         public void TestAddNullNode()
         {
             var node = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { node.Add("Add", null); });
         }
 
-        /// <summary>
-        /// Check that removing a node by its key works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing a node by its key works as expected.")]
         public void TestRemove()
         {
             var node  = GenerateCompositeNode();
@@ -411,10 +303,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(list, node);
         }
 
-        /// <summary>
-        /// Check that removing a non-existent node doesn't modify the set.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that removing a non-existent node doesn't modify the set.")]
         public void TestRemoveFalse()
         {
             var node = GenerateCompositeNode();
@@ -422,20 +311,14 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(NodeSet, node);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
         public void TestRemoveNull()
         {
             var node = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { node.Remove(null); });
         }
 
-        /// <summary>
-        /// Check that a node can be found by its key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a node can be found by its key.")]
         public void TestTryGetValue()
         {
             var node = GenerateCompositeNode();
@@ -447,10 +330,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(expected, result);
         }
 
-        /// <summary>
-        /// Check that false is returned when a node can't be found.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that false is returned when a node can't be found.")]
         public void TestTryGetValueFalse()
         {
             var node = GenerateCompositeNode();
@@ -458,10 +338,7 @@ namespace Leaf.Tests.Nodes
             Assert.False(node.TryGetValue("TryGetValue", out result));
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
         public void TestTryGetValueNull()
         {
             var node = GenerateCompositeNode();
@@ -469,10 +346,7 @@ namespace Leaf.Tests.Nodes
             Assert.Throws<ArgumentNullException>(() => { node.TryGetValue(null, out result); });
         }
 
-        /// <summary>
-        /// Check that a node can be retrieved.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a node can be retrieved.")]
         public void TestGetter()
         {
             var node = GenerateCompositeNode();
@@ -482,10 +356,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(expected, node[key]);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when a key doesn't exist.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when a key doesn't exist.")]
         public void TestGetterNotFound()
         {
             var node = GenerateCompositeNode();
@@ -495,10 +366,7 @@ namespace Leaf.Tests.Nodes
             });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
         public void TestGetterNull()
         {
             var node = GenerateCompositeNode();
@@ -508,10 +376,7 @@ namespace Leaf.Tests.Nodes
             });
         }
 
-        /// <summary>
-        /// Check that updating an existing key works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that updating an existing key works as expected.")]
         public void TestSetter()
         {
             var node = GenerateCompositeNode();
@@ -524,10 +389,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(list, node);
         }
 
-        /// <summary>
-        /// Check that setting a new key and node works as expected.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that setting a new key and node works as expected.")]
         public void TestSetterNew()
         {
             var node = GenerateCompositeNode();
@@ -539,30 +401,21 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(list, node);
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a null key.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
         public void TestSetterNullKey()
         {
             var node = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { node[null] = new StringNode("setter"); });
         }
 
-        /// <summary>
-        /// Check that an exception is thrown when attempting to use a null node.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an exception is thrown when attempting to use a null node.")]
         public void TestSetterNullNode()
         {
             var node = GenerateCompositeNode();
             Assert.Throws<ArgumentNullException>(() => { node["foo"] = null; });
         }
 
-        /// <summary>
-        /// Check that an expected set of keys is returned.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an expected set of keys is returned.")]
         public void TestKeys()
         {
             var node = GenerateCompositeNode();
@@ -570,10 +423,7 @@ namespace Leaf.Tests.Nodes
             CollectionAssert.AreEquivalent(values, node.Keys);
         }
 
-        /// <summary>
-        /// Check that an expected set of nodes is returned.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an expected set of nodes is returned.")]
         public void TestValues()
         {
             var node = GenerateCompositeNode();

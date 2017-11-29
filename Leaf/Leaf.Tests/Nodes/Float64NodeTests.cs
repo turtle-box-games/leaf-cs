@@ -3,33 +3,24 @@ using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(Float64Node))]
     public class Float64NodeTests
     {
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestTypeId()
         {
             var node = new Float64Node(12345.67d);
             Assert.AreEqual(NodeType.Float64, node.Type);
         }
 
-        /// <summary>
-        /// Check that the version is the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new Float64Node(12345.67d);
             Assert.AreEqual(1, node.Version);
         }
 
-        /// <summary>
-        /// Verify that the Value getter returns the correct value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the Value getter returns the correct value.")]
         public void TestValueGetter()
         {
             const double value = 12345.67d;
@@ -37,10 +28,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(value, node.Value);
         }
 
-        /// <summary>
-        /// Verify that the Value setter updates the value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the Value setter updates the value.")]
         public void TestValueSetter()
         {
             const double value = 12345.67d, newValue = 9876.543d;

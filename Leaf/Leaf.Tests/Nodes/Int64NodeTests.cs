@@ -3,33 +3,24 @@ using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(Int64Node))]
     public class Int64NodeTests
     {
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestTypeId()
         {
             var node = new Int64Node(7654321098);
             Assert.AreEqual(NodeType.Int64, node.Type);
         }
 
-        /// <summary>
-        /// Check that the version is the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new Int64Node(7654321098);
             Assert.AreEqual(1, node.Version);
         }
 
-        /// <summary>
-        /// Verify that the Value getter returns the correct value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the Value getter returns the correct value.")]
         public void TestValueGetter()
         {
             const long value = 7654321098;
@@ -37,10 +28,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(value, node.Value);
         }
 
-        /// <summary>
-        /// Verify that the Value setter updates the value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the Value setter updates the value.")]
         public void TestValueSetter()
         {
             const long value = 7654321098, newValue = 8907654321;

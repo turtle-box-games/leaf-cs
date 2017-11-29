@@ -3,33 +3,24 @@ using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(FlagNode))]
     public class FlagNodeTests
     {
-        /// <summary>
-        /// Check that the reported node type is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the reported node type is correct.")]
         public void TestTypeId()
         {
             var node = new FlagNode(false);
             Assert.AreEqual(NodeType.Flag, node.Type);
         }
 
-        /// <summary>
-        /// Check that the version is the expected value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new FlagNode(false);
             Assert.AreEqual(1, node.Version);
         }
 
-        /// <summary>
-        /// Verify that the Value getter returns the correct value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the Value getter returns the correct value.")]
         public void TestValueGetter()
         {
             const bool value = false;
@@ -37,10 +28,7 @@ namespace Leaf.Tests.Nodes
             Assert.AreEqual(value, node.Value);
         }
 
-        /// <summary>
-        /// Verify that the Value setter updates the value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the Value setter updates the value.")]
         public void TestValueSetter()
         {
             const bool value = false, newValue = true;

@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Leaf.Tests.IO
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(EndianAwareBinaryReader))]
     public class EndianAwareBinaryReaderTests
     {
         private static byte[] GetDecimalBytes(decimal value)
@@ -33,10 +33,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Verify that the constructor throws a <see cref="ArgumentNullException"/> when the stream is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the constructor throws an exception when the stream is null.")]
         public void TestNullStream()
         {
             Assert.Throws<ArgumentNullException>(() =>
@@ -45,10 +42,7 @@ namespace Leaf.Tests.IO
             });
         }
 
-        /// <summary>
-        /// Verify that the constructor throws a <see cref="ArgumentException"/> when the stream is closed.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the constructor throws an exception when the stream is closed.")]
         public void TestClosedStream()
         {
             using (var input = new MemoryStream(new byte[] {0, 1, 2, 3}))
@@ -61,10 +55,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Verify that the constructor throws a <see cref="ArgumentException"/> when the stream can't be read from.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the constructor throws an exception when the stream can't be read from.")]
         public void TestNonReadableStream()
         {
             // Create temp file with append mode - this gives the test a stream with no read capability.
@@ -79,10 +70,7 @@ namespace Leaf.Tests.IO
             File.Delete(filename);
         }
 
-        /// <summary>
-        /// Verify that the "encoding" constructor throws a <see cref="ArgumentNullException"/> when the stream is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is null.")]
         public void TestNullStreamEncoding()
         {
             Assert.Throws<ArgumentNullException>(() =>
@@ -91,10 +79,7 @@ namespace Leaf.Tests.IO
             });
         }
 
-        /// <summary>
-        /// Verify that the "encoding" constructor throws a <see cref="ArgumentException"/> when the stream is closed.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is closed.")]
         public void TestClosedStreamEncoding()
         {
             using (var input = new MemoryStream(new byte[] {0, 1, 2, 3}))
@@ -107,10 +92,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Verify that the "encoding" constructor throws a <see cref="ArgumentException"/> when the stream can't be read from.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream can't be read from.")]
         public void TestNonReadableStreamEncoding()
         {
             // Create temp file with append mode - this gives the test a stream with no read capability.
@@ -125,10 +107,7 @@ namespace Leaf.Tests.IO
             File.Delete(filename);
         }
 
-        /// <summary>
-        /// Verify that the "leave open" constructor throws a <see cref="ArgumentNullException"/> when the stream is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream is null.")]
         public void TestNullStreamLeaveOpen()
         {
             Assert.Throws<ArgumentNullException>(() =>
@@ -137,10 +116,7 @@ namespace Leaf.Tests.IO
             });
         }
 
-        /// <summary>
-        /// Verify that the "leave open" constructor throws a <see cref="ArgumentException"/> when the stream is closed.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream is closed.")]
         public void TestClosedStreamLeaveOpen()
         {
             using (var input = new MemoryStream(new byte[] {0, 1, 2, 3}))
@@ -153,10 +129,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Verify that the "leave open" constructor throws a <see cref="ArgumentException"/> when the stream can't be read from.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream can't be read from.")]
         public void TestNonReadableStreamLeaveOpen()
         {
             // Create temp file with append mode - this gives the test a stream with no read capability.
@@ -171,10 +144,7 @@ namespace Leaf.Tests.IO
             File.Delete(filename);
         }
 
-        /// <summary>
-        /// Verifies that the "encoding" constructor throws a <see cref="ArgumentNullException"/> when the encoding is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verifies that the \"encoding\" constructor throws an exception when the encoding is null.")]
         public void TestNullEncoding()
         {
             using (var input = new MemoryStream())
@@ -186,10 +156,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Verifies that the "leave open" constructor throws a <see cref="ArgumentNullException"/> when the encoding is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verifies that the \"leave open\" constructor throws an exception when the encoding is null.")]
         public void TestNullEncodingLeaveOpen()
         {
             using (var input = new MemoryStream())
@@ -201,10 +168,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a decimal value can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a decimal value can be read when the stream is the same endian as the system's.")]
         public void TestReadDecimalNoFlip()
         {
             const decimal value = 1234567890m;
@@ -219,10 +183,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 16 bytes after reading a decimal.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 16 bytes after reading a decimal.")]
         public void TestReadDecimalNoFlipPosition()
         {
             const decimal value = 1234567890m;
@@ -237,10 +198,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a decimal value can be read when the stream is in the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a decimal value can be read when the stream is in the opposite endian as the system's.")]
         public void TestReadDecimalFlip()
         {
             const decimal value = 1234567890m;
@@ -256,10 +214,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 16 bytes after reading a decimal.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 16 bytes after reading a decimal.")]
         public void TestReadDecimalFlipPosition()
         {
             const decimal value = 1234567890m;
@@ -275,10 +230,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a single-precision floating-point value can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a single-precision floating-point value can be read when the stream is the same endian as the system's.")]
         public void TestReadSingleNoFlip()
         {
             const float value = 123456.789f;
@@ -293,10 +245,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.")]
         public void TestReadSingleNoFlipPosition()
         {
             const float value = 123456.789f;
@@ -311,10 +260,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a single-precision floating-point value can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a single-precision floating-point value can be read when the stream is the opposite endian as the system's.")]
         public void TestReadSingleFlip()
         {
             const float value = 123456.789f;
@@ -330,10 +276,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.")]
         public void TestReadSingleFlipPosition()
         {
             const float value = 123456.789f;
@@ -349,10 +292,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a double-precision floating-point value can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a double-precision floating-point value can be read when the stream is the same endian as the system's.")]
         public void TestReadDoubleNoFlip()
         {
             const double value = 123456.789d;
@@ -367,10 +307,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.")]
         public void TestReadDoubleNoFlipPosition()
         {
             const double value = 123456.789d;
@@ -385,10 +322,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a double-precision floating-point value can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a double-precision floating-point value can be read when the stream is the opposite endian as the system's.")]
         public void TestReadDoubleFlip()
         {
             const double value = 123456.789d;
@@ -404,10 +338,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.")]
         public void TestReadDoubleFlipPosition()
         {
             const double value = 123456.789d;
@@ -423,10 +354,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a 16-bit integer can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a 16-bit integer can be read when the stream is the same endian as the system's.")]
         public void TestReadInt16NoFlip()
         {
             const short value = -12345;
@@ -441,10 +369,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 2 bytes after reading a 16-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 2 bytes after reading a 16-bit integer.")]
         public void TestReadInt16NoFlipPosition()
         {
             const short value = -12345;
@@ -459,10 +384,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a 16-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a 16-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadInt16Flip()
         {
             const short value = -12345;
@@ -478,10 +400,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 2 bytes after reading a 16-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 2 bytes after reading a 16-bit integer.")]
         public void TestReadInt16FlipPosition()
         {
             const short value = -12345;
@@ -497,10 +416,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a 32-bit integer can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a 32-bit integer can be read when the stream is the same endian as the system's.")]
         public void TestReadInt32NoFlip()
         {
             const int value = -1234567890;
@@ -515,10 +431,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 4 bytes after reading a 32-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 4 bytes after reading a 32-bit integer.")]
         public void TestReadInt32NoFlipPosition()
         {
             const int value = -1234567890;
@@ -533,10 +446,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a 32-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadInt32Flip()
         {
             const int value = -1234567890;
@@ -552,10 +462,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 4 bytes after reading a 32-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 4 bytes after reading a 32-bit integer.")]
         public void TestReadInt32FlipPosition()
         {
             const int value = -1234567890;
@@ -571,10 +478,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a 64-bit integer can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a 64-bit integer can be read when the stream is the same endian as the system's.")]
         public void TestReadInt64NoFlip()
         {
             const long value = -1234567890123456789;
@@ -589,10 +493,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 8 bytes after reading a 64-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 8 bytes after reading a 64-bit integer.")]
         public void TestReadInt64NoFlipPosition()
         {
             const long value = -1234567890123456789;
@@ -607,10 +508,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that a 64-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that a 64-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadInt64Flip()
         {
             const long value = -1234567890123456789;
@@ -626,10 +524,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 8 bytes after reading a 64-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 8 bytes after reading a 64-bit integer.")]
         public void TestReadInt64FlipPosition()
         {
             const long value = -1234567890123456789;
@@ -645,10 +540,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that an unsigned 16-bit integer can be read when the stream is the same endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an unsigned 16-bit integer can be read when the stream is the same endian as the system's.")]
         public void TestReadUInt16NoFlip()
         {
             const ushort value = 12345;
@@ -663,10 +555,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.")]
         public void TestReadUInt16NoFlipPosition()
         {
             const ushort value = 12345;
@@ -681,10 +570,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that an unsigned 16-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an unsigned 16-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadUInt16Flip()
         {
             const ushort value = 12345;
@@ -700,10 +586,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.")]
         public void TestReadUInt16FlipPosition()
         {
             const ushort value = 12345;
@@ -719,10 +602,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadUInt32NoFlip()
         {
             const uint value = 1234567890;
@@ -737,10 +617,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.")]
         public void TestReadUInt32NoFlipPosition()
         {
             const uint value = 1234567890;
@@ -755,10 +632,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadUInt32Flip()
         {
             const uint value = 1234567890;
@@ -774,10 +648,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.")]
         public void TestReadUInt32FlipPosition()
         {
             const uint value = 1234567890;
@@ -793,10 +664,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadUInt64NoFlip()
         {
             const ulong value = 12345678901234567890;
@@ -811,10 +679,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.")]
         public void TestReadUInt64NoFlipPosition()
         {
             const ulong value = 12345678901234567890;
@@ -829,10 +694,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void TestReadUInt64Flip()
         {
             const ulong value = 12345678901234567890;
@@ -848,10 +710,7 @@ namespace Leaf.Tests.IO
             }
         }
 
-        /// <summary>
-        /// Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.")]
         public void TestReadUInt64FlipPosition()
         {
             const ulong value = 12345678901234567890;

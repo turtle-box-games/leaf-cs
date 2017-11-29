@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Leaf.Tests.Serialization
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(BinaryFormatSerializer))]
     public partial class BinaryFormatSerializerTests
     {
         private const int HeaderSize = 8;
@@ -19,20 +19,14 @@ namespace Leaf.Tests.Serialization
         private static readonly byte[] Flag = {0x01};
         #endregion
 
-        /// <summary>
-        /// Check that data is actually written.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that data is actually written.")]
         public void TestSerialize()
         {
             var result = Serialize();
             CollectionAssert.IsNotEmpty(result);
         }
 
-        /// <summary>
-        /// Check that the stream is left open after serializing.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the stream is left open after serializing.")]
         public void TestSerializeLeaveStreamOpen()
         {
             var container = GenerateContainer();
@@ -43,10 +37,7 @@ namespace Leaf.Tests.Serialization
             }
         }
 
-        /// <summary>
-        /// Check that the header contains the signature.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the header contains the signature.")]
         public void TestSerializeHeaderSignature()
         {
             var result = Serialize();
@@ -56,10 +47,7 @@ namespace Leaf.Tests.Serialization
             Assert.AreEqual(0x46, result[3]);
         }
 
-        /// <summary>
-        /// Check that the header contains the version.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the header contains the version.")]
         public void TestSerializeHeaderVersion()
         {
             var result = Serialize();
@@ -69,10 +57,7 @@ namespace Leaf.Tests.Serialization
             Assert.AreEqual(0x01, result[7]);
         }
 
-        /// <summary>
-        /// Check that the header contains the node type.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the header contains the node type.")]
         public void TestSerializeHeaderType()
         {
             var node = GenerateRootNode();
@@ -80,10 +65,7 @@ namespace Leaf.Tests.Serialization
             Assert.AreEqual((byte)node.Type, result[HeaderSize]);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a flag node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a flag node is correct.")]
         public void TestSerializeFlagNode()
         {
             var node = new FlagNode(true);
@@ -91,10 +73,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a Int8Node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a Int8Node is correct.")]
         public void TestSerializeInt8Node()
         {
             var node = new Int8Node(123);
@@ -102,10 +81,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for an Int16Node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for an Int16Node is correct.")]
         public void TestSerializeInt16Node()
         {
             var node = new Int16Node(12345);
@@ -113,10 +89,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for an Int32Node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for an Int32Node is correct.")]
         public void TestSerializeInt32Node()
         {
             var node = new Int32Node(1234567);
@@ -124,10 +97,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for an Int64Node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for an Int64Node is correct.")]
         public void TestSerializeInt64Node()
         {
             var node = new Int64Node(98765432101234567);
@@ -135,10 +105,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a Float32Node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a Float32Node is correct.")]
         public void TestSerializeFloat32Node()
         {
             var node = new Float32Node(1.2345f);
@@ -146,10 +113,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a Float64Node is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a Float64Node is correct.")]
         public void TestSerializeFloat64Node()
         {
             var node = new Float64Node(12345.6789d);
@@ -157,10 +121,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a StringNode is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a StringNode is correct.")]
         public void TestSerializeStringNode()
         {
             var node = new StringNode("foobarbaz");
@@ -168,10 +129,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for an empty ListNode is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for an empty ListNode is correct.")]
         public void TestSerializeEmptyList()
         {
             var node = new ListNode(NodeType.Flag);
@@ -179,10 +137,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a ListNode is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a ListNode is correct.")]
         public void TestSerializeList()
         {
             var nodes = new Node[]
@@ -197,10 +152,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized for a ListNode containing ListNodes is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized for a ListNode containing ListNodes is correct.")]
         public void TestSerializeListOfList()
         {
             var set1 = new Node[]
@@ -232,10 +184,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized from a list of CompositeNodes is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized from a list of CompositeNodes is correct.")]
         public void TestSerializeListOfComposite()
         {
             var pairs = new KeyValuePair<string, Node>[]
@@ -257,10 +206,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized from an empty CompositeNode is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized from an empty CompositeNode is correct.")]
         public void TestSerializeEmptyComposite()
         {
             var node = new CompositeNode();
@@ -268,10 +214,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized from a CompositeNode is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized from a CompositeNode is correct.")]
         public void TestSerializeComposite()
         {
             var pairs = new[]
@@ -285,10 +228,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized from a CompositeNode containing ListNodes is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized from a CompositeNode containing ListNodes is correct.")]
         public void TestSerializeCompositeOfList()
         {
             var nodes = new Node[]
@@ -309,10 +249,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized from a CompositeNode containing CompositeNodes is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized from a CompositeNode containing CompositeNodes is correct.")]
         public void TestSerializeCompositeOfComposite()
         {
             var pairs = new[]
@@ -334,10 +271,7 @@ namespace Leaf.Tests.Serialization
             CheckSerializedNodeData(node, expected);
         }
 
-        /// <summary>
-        /// Check that the data serialized from a CompositeNode containing a mix of nodes is correct.
-        /// </summary>
-        [Test]
+        [Test(Description = "Check that the data serialized from a CompositeNode containing a mix of nodes is correct.")]
         public void TestSerializeComplexComposite()
         {
             var listNodes = new[]

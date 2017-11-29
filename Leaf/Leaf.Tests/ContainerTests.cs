@@ -4,13 +4,10 @@ using NUnit.Framework;
 
 namespace Leaf.Tests
 {
-    [TestFixture]
+    [TestFixture(TestOf = typeof(Container))]
     public class ContainerTests
     {
-        /// <summary>
-        /// Verify that the constructor throws a <see cref="ArgumentNullException"/> when the root node is null.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the constructor throws an exception when the root node is null.")]
         public void TestNullRoot()
         {
             Assert.Throws<ArgumentNullException>(() =>
@@ -19,10 +16,7 @@ namespace Leaf.Tests
             });
         }
 
-        /// <summary>
-        /// Verify that the root node property is set properly.
-        /// </summary>
-        [Test]
+        [Test(Description = "Verify that the root node property is set properly.")]
         public void TestRootNode()
         {
             var root = new Int32Node(50);
