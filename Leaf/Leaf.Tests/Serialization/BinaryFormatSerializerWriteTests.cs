@@ -23,7 +23,7 @@ namespace Leaf.Tests.Serialization
         public void TestSerialize()
         {
             var result = Serialize();
-            CollectionAssert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test(Description = "Check that the stream is left open after serializing.")]
@@ -33,7 +33,7 @@ namespace Leaf.Tests.Serialization
             using(var stream = new MemoryStream())
             {
                 new BinaryFormatSerializer().Serialize(container, stream);
-                Assert.Greater(stream.Length, 0);
+                Assert.That(stream.Length, Is.GreaterThan(0));
             }
         }
 
@@ -41,20 +41,26 @@ namespace Leaf.Tests.Serialization
         public void TestSerializeHeaderSignature()
         {
             var result = Serialize();
-            Assert.AreEqual(0x4c, result[0]);
-            Assert.AreEqual(0x45, result[1]);
-            Assert.AreEqual(0x41, result[2]);
-            Assert.AreEqual(0x46, result[3]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[0], Is.EqualTo(0x4c));
+                Assert.That(result[1], Is.EqualTo(0x45));
+                Assert.That(result[2], Is.EqualTo(0x41));
+                Assert.That(result[3], Is.EqualTo(0x46));
+            });
         }
 
         [Test(Description = "Check that the header contains the version.")]
         public void TestSerializeHeaderVersion()
         {
             var result = Serialize();
-            Assert.AreEqual(0x00, result[4]);
-            Assert.AreEqual(0x00, result[5]);
-            Assert.AreEqual(0x00, result[6]);
-            Assert.AreEqual(0x01, result[7]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result[4], Is.EqualTo(0x00));
+                Assert.That(result[5], Is.EqualTo(0x00));
+                Assert.That(result[6], Is.EqualTo(0x00));
+                Assert.That(result[7], Is.EqualTo(0x01));
+            });
         }
 
         [Test(Description = "Check that the header contains the node type.")]
@@ -62,7 +68,7 @@ namespace Leaf.Tests.Serialization
         {
             var node = GenerateRootNode();
             var result = Serialize(node);
-            Assert.AreEqual((byte)node.Type, result[HeaderSize]);
+            Assert.That(result[HeaderSize], Is.EqualTo((byte)node.Type));
         }
 
         [Test(Description = "Check that the data serialized for a flag node is correct.")]
@@ -376,11 +382,16 @@ namespace Leaf.Tests.Serialization
 
         private static void CheckSerializedNodeData(Node node, byte[] expected)
         {
-            var actual = Serialize(node);
-            Assert.AreEqual((byte)node.Type, actual[HeaderSize]);
-            Assert.AreEqual(expected.Length + HeaderSize + 1, actual.Length, "Serialization length mismatch");
-            for(int i = 0, j = HeaderSize + 1; i < expected.Length; ++i, ++j)
-                Assert.AreEqual(expected[i], actual[j], $"Index {i} ({j}) expected: {expected[i]}, actual: {actual[j]}");
+            var serialized    = Serialize(node);
+            var typeByte      = serialized[HeaderSize];
+            var payloadLength = serialized.Length - HeaderSize - 1;
+            var payload       = new byte[payloadLength];
+            Buffer.BlockCopy(serialized, HeaderSize + 1, payload, 0, payloadLength);
+            Assert.Multiple(() =>
+            {
+                Assert.That(typeByte, Is.EqualTo((byte)node.Type));
+                Assert.That(payload, Is.EqualTo(expected));
+            });
         }
     }
 }
