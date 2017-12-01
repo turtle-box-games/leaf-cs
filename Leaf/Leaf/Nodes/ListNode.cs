@@ -233,7 +233,7 @@ namespace Leaf.Nodes
         /// in the list to a different type.</exception>
         public Node this[int index]
         {
-            get { return _nodes[index]; }
+            get => _nodes[index];
             set
             {
                 if(value == null)

@@ -21,10 +21,7 @@ namespace Leaf
         /// <remarks>The lowest compatible engine type will be used for serialization.</remarks>
         public Container(Node root)
         {
-            if (root == null)
-                throw new ArgumentNullException(nameof(root));
-
-            Root = root;
+            Root = root ?? throw new ArgumentNullException(nameof(root));
         }
     }
 }

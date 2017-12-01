@@ -122,8 +122,7 @@ namespace Leaf.Nodes
         {
             if(item.Key == null || item.Value == null)
                 throw new ArgumentException(nameof(item));
-            Node node;
-            if(_nodes.TryGetValue(item.Key, out node))
+            if(_nodes.TryGetValue(item.Key, out var node))
                 return node == item.Value;
             return false;
         }
@@ -161,8 +160,7 @@ namespace Leaf.Nodes
         {
             if(item.Key == null || item.Value == null)
                 throw new ArgumentException(nameof(item));
-            Node node;
-            if(!_nodes.TryGetValue(item.Key, out node))
+            if(!_nodes.TryGetValue(item.Key, out var node))
                 return false;
             return node == item.Value && _nodes.Remove(item.Key);
         }
@@ -234,13 +232,8 @@ namespace Leaf.Nodes
         /// <exception cref="ArgumentNullException">The key or node is null.</exception>
         public Node this[string key]
         {
-            get { return _nodes[key]; }
-            set
-            {
-                if(value == null)
-                    throw new ArgumentNullException(nameof(value));
-                _nodes[key] = value;
-            }
+            get => _nodes[key];
+            set => _nodes[key] = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
