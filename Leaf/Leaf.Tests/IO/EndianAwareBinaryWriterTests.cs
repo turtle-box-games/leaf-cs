@@ -9,13 +9,6 @@ namespace Leaf.Tests.IO
     [TestFixture(TestOf = typeof(EndianAwareBinaryWriter))]
     public class EndianAwareBinaryWriterTests
     {
-        private static void AssertBytesMatch(byte[] expected, byte[] actual)
-        {
-            Assert.AreEqual(expected.Length, actual.Length);
-            for (var i = 0; i < expected.Length; ++i)
-                Assert.AreEqual(expected[i], actual[i]);
-        }
-
         private static byte[] GetDecimalBytes(decimal value)
         {
             var ints = decimal.GetBits(value);
@@ -43,10 +36,7 @@ namespace Leaf.Tests.IO
         [Test(Description = "Verify that the constructor throws an exception when the stream is null.")]
         public void TestNullStream()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new EndianAwareBinaryWriter(null, true);
-            });
+            Assert.That(() => { new EndianAwareBinaryWriter(null, true); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream is closed.")]
@@ -55,10 +45,7 @@ namespace Leaf.Tests.IO
             using (var output = new MemoryStream())
             {
                 output.Close();
-                Assert.Throws<ArgumentException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true);
-                });
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true); }, Throws.ArgumentException);
             }
         }
 
@@ -66,21 +53,14 @@ namespace Leaf.Tests.IO
         public void TestNonReadableStream()
         {
             using (var output = new MemoryStream(new byte[0], false))
-            {
-                Assert.Throws<ArgumentException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true);
-                });
-            }
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is null.")]
         public void TestNullStreamEncoding()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new EndianAwareBinaryWriter(null, true, Encoding.UTF8);
-            });
+            Assert.That(() => { new EndianAwareBinaryWriter(null, true, Encoding.UTF8); },
+                Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is closed.")]
@@ -89,84 +69,67 @@ namespace Leaf.Tests.IO
             using (var output = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
                 output.Close();
-                Assert.Throws<ArgumentException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true, Encoding.UTF8);
-                });
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true, Encoding.UTF8); },
+                    Throws.ArgumentException);
             }
         }
 
-        [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream can't be written to.")]
+        [Test(Description =
+            "Verify that the \"encoding\" constructor throws an exception when the stream can't be written to.")]
         public void TestNonReadableStreamEncoding()
         {
             using (var output = new MemoryStream(new byte[0], false))
-            {
-                Assert.Throws<ArgumentException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true, Encoding.UTF8);
-                });
-            }
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true, Encoding.UTF8); },
+                    Throws.ArgumentException);
         }
 
         [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream is null.")]
         public void TestNullStreamLeaveOpen()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new EndianAwareBinaryWriter(null, true, Encoding.UTF8, true);
-            });
+            Assert.That(() => { new EndianAwareBinaryWriter(null, true, Encoding.UTF8, true); },
+                Throws.ArgumentNullException);
         }
 
-        [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream is closed.")]
+        [Test(Description =
+            "Verify that the \"leave open\" constructor throws an exception when the stream is closed.")]
         public void TestClosedStreamLeaveOpen()
         {
             using (var output = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
                 output.Close();
-                Assert.Throws<ArgumentException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true, Encoding.UTF8, true);
-                });
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true, Encoding.UTF8, true); },
+                    Throws.ArgumentException);
             }
         }
 
-        [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream can't be written to.")]
+        [Test(Description =
+            "Verify that the \"leave open\" constructor throws an exception when the stream can't be written to.")]
         public void TestNonReadableStreamLeaveOpen()
         {
             using (var output = new MemoryStream(new byte[0], false))
-            {
-                Assert.Throws<ArgumentException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true, Encoding.UTF8, true);
-                });
-            }
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true, Encoding.UTF8, true); },
+                    Throws.ArgumentException);
         }
 
-        [Test(Description = "Verifies that the \"encoding\" constructor throws an exception when the encoding is null.")]
+        [Test(Description =
+            "Verifies that the \"encoding\" constructor throws an exception when the encoding is null.")]
         public void TestNullEncoding()
         {
             using (var output = new MemoryStream())
-            {
-                Assert.Throws<ArgumentNullException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true, null);
-                });
-            }
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true, null); }, Throws.ArgumentNullException);
         }
 
-        [Test(Description = "Verifies that the \"leave open\" constructor throws an exception when the encoding is null.")]
+        [Test(Description =
+            "Verifies that the \"leave open\" constructor throws an exception when the encoding is null.")]
         public void TestNullEncodingLeaveOpen()
         {
             using (var output = new MemoryStream())
-            {
-                Assert.Throws<ArgumentNullException>(() =>
-                {
-                    new EndianAwareBinaryWriter(output, true, null, true);
-                });
-            }
+                Assert.That(() => { new EndianAwareBinaryWriter(output, true, null, true); },
+                    Throws.ArgumentNullException);
         }
 
-        [Test(Description = "Check that a decimal value can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that a decimal value can be written when the stream is the same endian as the system's.")]
         public void TestWriteDecimalNoFlip()
         {
             const decimal value = 1234567890m;
@@ -175,7 +138,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                AssertBytesMatch(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -185,16 +148,15 @@ namespace Leaf.Tests.IO
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(decimal), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(decimal)));
             }
         }
 
-        [Test(Description = "Check that a decimal value can be written when the stream is in the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that a decimal value can be written when the stream is in the opposite endian as the system's.")]
         public void TestWriteDecimalFlip()
         {
             const decimal value = 1234567890m;
@@ -204,7 +166,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -215,16 +177,15 @@ namespace Leaf.Tests.IO
             var bytes = GetDecimalBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(decimal), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(decimal)));
             }
         }
 
-        [Test(Description = "Check that a single-precision floating-point value can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that a single-precision floating-point value can be written when the stream is the same endian as the system's.")]
         public void TestWriteSingleNoFlip()
         {
             const float value = 123456.789f;
@@ -233,26 +194,26 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
-        [Test(Description = "Check that the stream is advanced 4 bytes after writing a single-precision floating-point value.")]
+        [Test(Description =
+            "Check that the stream is advanced 4 bytes after writing a single-precision floating-point value.")]
         public void TestWriteSingleNoFlipPosition()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(float), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(float)));
             }
         }
 
-        [Test(Description = "Check that a single-precision floating-point value can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that a single-precision floating-point value can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteSingleFlip()
         {
             const float value = 123456.789f;
@@ -262,27 +223,27 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
-        [Test(Description = "Check that the stream is advanced 4 bytes after writing a single-precision floating-point value.")]
+        [Test(Description =
+            "Check that the stream is advanced 4 bytes after writing a single-precision floating-point value.")]
         public void TestWriteSingleFlipPosition()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(float), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(float)));
             }
         }
 
-        [Test(Description = "Check that a double-precision floating-point value can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that a double-precision floating-point value can be written when the stream is the same endian as the system's.")]
         public void TestWriteDoubleNoFlip()
         {
             const double value = 123456.789d;
@@ -291,26 +252,26 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
-        [Test(Description = "Check that the stream is advanced 8 bytes after writing a double-precision floating-point value.")]
+        [Test(Description =
+            "Check that the stream is advanced 8 bytes after writing a double-precision floating-point value.")]
         public void TestWriteDoubleNoFlipPosition()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(double), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(double)));
             }
         }
 
-        [Test(Description = "Check that a double-precision floating-point value can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that a double-precision floating-point value can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteDoubleFlip()
         {
             const double value = 123456.789d;
@@ -320,27 +281,27 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
-        [Test(Description = "Check that the stream is advanced 8 bytes after writing a double-precision floating-point value.")]
+        [Test(Description =
+            "Check that the stream is advanced 8 bytes after writing a double-precision floating-point value.")]
         public void TestWriteDoubleFlipPosition()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(double), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(double)));
             }
         }
 
-        [Test(Description = "Check that a 16-bit integer can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that a 16-bit integer can be written when the stream is the same endian as the system's.")]
         public void TestWriteInt16NoFlip()
         {
             const short value = -12345;
@@ -349,7 +310,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -359,16 +320,15 @@ namespace Leaf.Tests.IO
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(short), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(short)));
             }
         }
 
-        [Test(Description = "Check that a 16-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that a 16-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteInt16Flip()
         {
             const short value = -12345;
@@ -378,7 +338,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -389,16 +349,15 @@ namespace Leaf.Tests.IO
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(short), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(short)));
             }
         }
 
-        [Test(Description = "Check that a 32-bit integer can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that a 32-bit integer can be written when the stream is the same endian as the system's.")]
         public void TestWriteInt32NoFlip()
         {
             const int value = -1234567890;
@@ -407,7 +366,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -417,16 +376,15 @@ namespace Leaf.Tests.IO
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(int), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(int)));
             }
         }
 
-        [Test(Description = "Check that a 32-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that a 32-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteInt32Flip()
         {
             const int value = -1234567890;
@@ -436,7 +394,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -447,16 +405,15 @@ namespace Leaf.Tests.IO
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(int), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(int)));
             }
         }
 
-        [Test(Description = "Check that a 64-bit integer can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that a 64-bit integer can be written when the stream is the same endian as the system's.")]
         public void TestWriteInt64NoFlip()
         {
             const long value = -1234567890123456789;
@@ -465,7 +422,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -475,16 +432,15 @@ namespace Leaf.Tests.IO
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(long), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(long)));
             }
         }
 
-        [Test(Description = "Check that a 64-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that a 64-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteInt64Flip()
         {
             const long value = -1234567890123456789;
@@ -494,7 +450,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -505,16 +461,15 @@ namespace Leaf.Tests.IO
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(long), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(long)));
             }
         }
 
-        [Test(Description = "Check that an unsigned 16-bit integer can be written when the stream is the same endian as the system's.")]
+        [Test(Description =
+            "Check that an unsigned 16-bit integer can be written when the stream is the same endian as the system's.")]
         public void TestWriteUInt16NoFlip()
         {
             const ushort value = 12345;
@@ -523,7 +478,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -533,16 +488,15 @@ namespace Leaf.Tests.IO
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(ushort), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(ushort)));
             }
         }
 
-        [Test(Description = "Check that an unsigned 16-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that an unsigned 16-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteUInt16Flip()
         {
             const ushort value = 12345;
@@ -552,7 +506,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -563,16 +517,15 @@ namespace Leaf.Tests.IO
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(ushort), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(ushort)));
             }
         }
 
-        [Test(Description = "Check that an unsigned 32-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that an unsigned 32-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteUInt32NoFlip()
         {
             const uint value = 1234567890;
@@ -581,7 +534,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -591,16 +544,15 @@ namespace Leaf.Tests.IO
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(uint), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(uint)));
             }
         }
 
-        [Test(Description = "Check that an unsigned 32-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that an unsigned 32-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteUInt32Flip()
         {
             const uint value = 1234567890;
@@ -610,7 +562,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -621,16 +573,15 @@ namespace Leaf.Tests.IO
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(uint), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(uint)));
             }
         }
 
-        [Test(Description = "Check that an unsigned 64-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that an unsigned 64-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteUInt64NoFlip()
         {
             const ulong value = 12345678901234567890;
@@ -639,7 +590,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -649,16 +600,15 @@ namespace Leaf.Tests.IO
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, !BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(ulong), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(ulong)));
             }
         }
 
-        [Test(Description = "Check that an unsigned 64-bit integer can be written when the stream is the opposite endian as the system's.")]
+        [Test(Description =
+            "Check that an unsigned 64-bit integer can be written when the stream is the opposite endian as the system's.")]
         public void TestWriteUInt64Flip()
         {
             const ulong value = 12345678901234567890;
@@ -668,7 +618,7 @@ namespace Leaf.Tests.IO
             {
                 using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
                     writer.Write(value);
-                Assert.AreEqual(bytes, output.ToArray());
+                Assert.That(output.ToArray(), Is.EqualTo(bytes));
             }
         }
 
@@ -679,12 +629,10 @@ namespace Leaf.Tests.IO
             var bytes = BitConverter.GetBytes(value);
             FlipByteArray(bytes);
             using (var output = new MemoryStream(bytes))
+            using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
             {
-                using (var writer = new EndianAwareBinaryWriter(output, BitConverter.IsLittleEndian))
-                {
-                    writer.Write(value);
-                    Assert.AreEqual(sizeof(ulong), output.Position);
-                }
+                writer.Write(value);
+                Assert.That(output.Position, Is.EqualTo(sizeof(ulong)));
             }
         }
     }
