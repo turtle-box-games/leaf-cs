@@ -1,5 +1,4 @@
-﻿using System;
-using Leaf.Nodes;
+﻿using Leaf.Nodes;
 using NUnit.Framework;
 
 namespace Leaf.Tests
@@ -10,10 +9,7 @@ namespace Leaf.Tests
         [Test(Description = "Verify that the constructor throws an exception when the root node is null.")]
         public void TestNullRoot()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new Container(null);
-            });
+            Assert.That(() => { new Container(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the root node property is set properly.")]
@@ -21,7 +17,7 @@ namespace Leaf.Tests
         {
             var root = new Int32Node(50);
             var container = new Container(root);
-            Assert.AreEqual(root, container.Root);
+            Assert.That(container.Root, Is.EqualTo(root));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 using Leaf.Nodes;
 
 namespace Leaf.Tests.Nodes
@@ -11,23 +10,20 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new BlobNode(new byte[0]);
-            Assert.AreEqual(NodeType.Blob, node.Type);
+            Assert.That(node.Type, Is.EqualTo(NodeType.Blob));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new BlobNode(new byte[0]);
-            Assert.AreEqual(1, node.Version);
+            Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Check that the constructor throws an exception when given null.")]
         public void TestNullBytes()
         {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                new BlobNode(null);
-            });
+            Assert.That(() => { new BlobNode(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the Bytes getter returns the correct value.")]
@@ -35,17 +31,17 @@ namespace Leaf.Tests.Nodes
         {
             var bytes = new byte[] {1, 2, 3, 4, 5};
             var node  = new BlobNode(bytes);
-            Assert.AreEqual(bytes, node.Bytes);
+            Assert.That(node.Bytes, Is.EquivalentTo(bytes));
         }
 
         [Test(Description = "Verify that the Bytes setter updates the byte array.")]
         public void TestBytesSetter()
         {
-            var bytes = new byte[] {1, 2, 3, 4, 5};
-            var node  = new BlobNode(bytes);
+            var bytes    = new byte[] {1, 2, 3, 4, 5};
+            var node     = new BlobNode(bytes);
             var newBytes = new byte[] {6, 7, 8, 9, 0};
             node.Bytes   = newBytes;
-            Assert.AreEqual(newBytes, node.Bytes);
+            Assert.That(node.Bytes, Is.EquivalentTo(newBytes));
         }
 
         [Test(Description = "Verify that the Bytes setter throws an exception when trying to use null.")]
@@ -53,10 +49,7 @@ namespace Leaf.Tests.Nodes
         {
             var bytes = new byte[] {1, 2, 3, 4, 5};
             var node  = new BlobNode(bytes);
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                node.Bytes = null;
-            });
+            Assert.That(() => { node.Bytes = null; }, Throws.ArgumentNullException);
         }
     }
 }

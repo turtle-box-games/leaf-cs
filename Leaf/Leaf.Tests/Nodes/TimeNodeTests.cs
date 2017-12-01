@@ -11,14 +11,14 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new TimeNode(DateTime.Now);
-            Assert.AreEqual(NodeType.Time, node.Type);
+            Assert.That(node.Type, Is.EqualTo(NodeType.Time));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new TimeNode(DateTime.Now);
-            Assert.AreEqual(1, node.Version);
+            Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
@@ -26,7 +26,7 @@ namespace Leaf.Tests.Nodes
         {
             var value = DateTime.Now - TimeSpan.FromHours(5);
             var node = new TimeNode(value);
-            Assert.AreEqual(value, node.Value);
+            Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
@@ -35,7 +35,7 @@ namespace Leaf.Tests.Nodes
             DateTime value = DateTime.Now, newValue = DateTime.Today - TimeSpan.FromDays(3);
             var node = new TimeNode(value);
             node.Value = newValue;
-            Assert.AreEqual(newValue, node.Value);
+            Assert.That(node.Value, Is.EqualTo(newValue));
         }
     }
 }

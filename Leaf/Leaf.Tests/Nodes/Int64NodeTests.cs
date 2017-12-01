@@ -10,14 +10,14 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new Int64Node(7654321098);
-            Assert.AreEqual(NodeType.Int64, node.Type);
+            Assert.That(node.Type, Is.EqualTo(NodeType.Int64));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new Int64Node(7654321098);
-            Assert.AreEqual(1, node.Version);
+            Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
@@ -25,7 +25,7 @@ namespace Leaf.Tests.Nodes
         {
             const long value = 7654321098;
             var node = new Int64Node(value);
-            Assert.AreEqual(value, node.Value);
+            Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
@@ -34,7 +34,7 @@ namespace Leaf.Tests.Nodes
             const long value = 7654321098, newValue = 8907654321;
             var node = new Int64Node(value);
             node.Value = newValue;
-            Assert.AreEqual(newValue, node.Value);
+            Assert.That(node.Value, Is.EqualTo(newValue));
         }
     }
 }

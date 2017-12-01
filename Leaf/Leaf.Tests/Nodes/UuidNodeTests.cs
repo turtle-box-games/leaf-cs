@@ -11,14 +11,14 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new UuidNode(Guid.NewGuid());
-            Assert.AreEqual(NodeType.Uuid, node.Type);
+            Assert.That(node.Type, Is.EqualTo(NodeType.Uuid));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new UuidNode(Guid.NewGuid());
-            Assert.AreEqual(1, node.Version);
+            Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
@@ -26,7 +26,7 @@ namespace Leaf.Tests.Nodes
         {
             var value = Guid.NewGuid();
             var node = new UuidNode(value);
-            Assert.AreEqual(value, node.Value);
+            Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
@@ -35,7 +35,7 @@ namespace Leaf.Tests.Nodes
             Guid value = Guid.Empty, newValue = Guid.NewGuid();
             var node = new UuidNode(value);
             node.Value = newValue;
-            Assert.AreEqual(newValue, node.Value);
+            Assert.That(node.Value, Is.EqualTo(newValue));
         }
     }
 }

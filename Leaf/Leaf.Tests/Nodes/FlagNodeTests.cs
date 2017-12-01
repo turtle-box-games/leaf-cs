@@ -10,14 +10,14 @@ namespace Leaf.Tests.Nodes
         public void TestTypeId()
         {
             var node = new FlagNode(false);
-            Assert.AreEqual(NodeType.Flag, node.Type);
+            Assert.That(node.Type, Is.EqualTo(NodeType.Flag));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
         public void TestVersion()
         {
             var node = new FlagNode(false);
-            Assert.AreEqual(1, node.Version);
+            Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
@@ -25,7 +25,7 @@ namespace Leaf.Tests.Nodes
         {
             const bool value = false;
             var node = new FlagNode(value);
-            Assert.AreEqual(value, node.Value);
+            Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
@@ -34,7 +34,7 @@ namespace Leaf.Tests.Nodes
             const bool value = false, newValue = true;
             var node = new FlagNode(value);
             node.Value = newValue;
-            Assert.AreEqual(newValue, node.Value);
+            Assert.That(node.Value, Is.EqualTo(newValue));
         }
     }
 }
