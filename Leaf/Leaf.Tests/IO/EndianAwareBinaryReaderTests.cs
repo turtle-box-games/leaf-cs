@@ -34,13 +34,13 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream is null.")]
-        public void TestNullStream()
+        public void NullStreamTest()
         {
             Assert.That(() => { new EndianAwareBinaryReader(null, true); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream is closed.")]
-        public void TestClosedStream()
+        public void ClosedStreamTest()
         {
             using (var input = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
@@ -50,7 +50,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream can't be read from.")]
-        public void TestNonReadableStream()
+        public void NonReadableStreamTest()
         {
             // Create temp file with append mode - this gives the test a stream with no read capability.
             var filename = Path.GetTempFileName();
@@ -60,14 +60,14 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is null.")]
-        public void TestNullStreamEncoding()
+        public void NullStreamEncodingTest()
         {
             Assert.That(() => { new EndianAwareBinaryReader(null, true, Encoding.UTF8); },
                 Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is closed.")]
-        public void TestClosedStreamEncoding()
+        public void ClosedStreamEncodingTest()
         {
             using (var input = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
@@ -79,7 +79,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verify that the \"encoding\" constructor throws an exception when the stream can't be read from.")]
-        public void TestNonReadableStreamEncoding()
+        public void NonReadableStreamEncodingTest()
         {
             // Create temp file with append mode - this gives the test a stream with no read capability.
             var filename = Path.GetTempFileName();
@@ -90,7 +90,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream is null.")]
-        public void TestNullStreamLeaveOpen()
+        public void NullStreamLeaveOpenTest()
         {
             Assert.That(() => { new EndianAwareBinaryReader(null, true, Encoding.UTF8, true); },
                 Throws.ArgumentNullException);
@@ -98,7 +98,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verify that the \"leave open\" constructor throws an exception when the stream is closed.")]
-        public void TestClosedStreamLeaveOpen()
+        public void ClosedStreamLeaveOpenTest()
         {
             using (var input = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
@@ -110,7 +110,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verify that the \"leave open\" constructor throws an exception when the stream can't be read from.")]
-        public void TestNonReadableStreamLeaveOpen()
+        public void NonReadableStreamLeaveOpenTest()
         {
             // Create temp file with append mode - this gives the test a stream with no read capability.
             var filename = Path.GetTempFileName();
@@ -122,7 +122,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verifies that the \"encoding\" constructor throws an exception when the encoding is null.")]
-        public void TestNullEncoding()
+        public void NullEncodingTest()
         {
             using (var input = new MemoryStream())
                 Assert.That(() => { new EndianAwareBinaryReader(input, true, null); }, Throws.ArgumentNullException);
@@ -130,7 +130,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verifies that the \"leave open\" constructor throws an exception when the encoding is null.")]
-        public void TestNullEncodingLeaveOpen()
+        public void NullEncodingLeaveOpenTest()
         {
             using (var input = new MemoryStream())
                 Assert.That(() => { new EndianAwareBinaryReader(input, true, null, true); },
@@ -139,7 +139,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a decimal value can be read when the stream is the same endian as the system's.")]
-        public void TestReadDecimalNoFlip()
+        public void ReadDecimalNoFlipTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -149,7 +149,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 16 bytes after reading a decimal.")]
-        public void TestReadDecimalNoFlipPosition()
+        public void ReadDecimalNoFlipPositionTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -163,7 +163,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a decimal value can be read when the stream is in the opposite endian as the system's.")]
-        public void TestReadDecimalFlip()
+        public void ReadDecimalFlipTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -174,7 +174,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 16 bytes after reading a decimal.")]
-        public void TestReadDecimalFlipPosition()
+        public void ReadDecimalFlipPositionTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -189,7 +189,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a single-precision floating-point value can be read when the stream is the same endian as the system's.")]
-        public void TestReadSingleNoFlip()
+        public void ReadSingleNoFlipTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -200,7 +200,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.")]
-        public void TestReadSingleNoFlipPosition()
+        public void ReadSingleNoFlipPositionTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -214,7 +214,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a single-precision floating-point value can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadSingleFlip()
+        public void ReadSingleFlipTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -226,7 +226,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.")]
-        public void TestReadSingleFlipPosition()
+        public void ReadSingleFlipPositionTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -241,7 +241,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a double-precision floating-point value can be read when the stream is the same endian as the system's.")]
-        public void TestReadDoubleNoFlip()
+        public void ReadDoubleNoFlipTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -252,7 +252,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.")]
-        public void TestReadDoubleNoFlipPosition()
+        public void ReadDoubleNoFlipPositionTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -266,7 +266,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a double-precision floating-point value can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadDoubleFlip()
+        public void ReadDoubleFlipTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -278,7 +278,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.")]
-        public void TestReadDoubleFlipPosition()
+        public void ReadDoubleFlipPositionTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -293,7 +293,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 16-bit integer can be read when the stream is the same endian as the system's.")]
-        public void TestReadInt16NoFlip()
+        public void ReadInt16NoFlipTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -303,7 +303,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after reading a 16-bit integer.")]
-        public void TestReadInt16NoFlipPosition()
+        public void ReadInt16NoFlipPositionTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -317,7 +317,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 16-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadInt16Flip()
+        public void ReadInt16FlipTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -328,7 +328,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after reading a 16-bit integer.")]
-        public void TestReadInt16FlipPosition()
+        public void ReadInt16FlipPositionTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -343,7 +343,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 32-bit integer can be read when the stream is the same endian as the system's.")]
-        public void TestReadInt32NoFlip()
+        public void ReadInt32NoFlipTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -353,7 +353,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after reading a 32-bit integer.")]
-        public void TestReadInt32NoFlipPosition()
+        public void ReadInt32NoFlipPositionTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -367,7 +367,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 32-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadInt32Flip()
+        public void ReadInt32FlipTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -378,7 +378,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after reading a 32-bit integer.")]
-        public void TestReadInt32FlipPosition()
+        public void ReadInt32FlipPositionTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -393,7 +393,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 64-bit integer can be read when the stream is the same endian as the system's.")]
-        public void TestReadInt64NoFlip()
+        public void ReadInt64NoFlipTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -403,7 +403,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after reading a 64-bit integer.")]
-        public void TestReadInt64NoFlipPosition()
+        public void ReadInt64NoFlipPositionTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -417,7 +417,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 64-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadInt64Flip()
+        public void ReadInt64FlipTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -428,7 +428,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after reading a 64-bit integer.")]
-        public void TestReadInt64FlipPosition()
+        public void ReadInt64FlipPositionTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -443,7 +443,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 16-bit integer can be read when the stream is the same endian as the system's.")]
-        public void TestReadUInt16NoFlip()
+        public void ReadUInt16NoFlipTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -453,7 +453,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.")]
-        public void TestReadUInt16NoFlipPosition()
+        public void ReadUInt16NoFlipPositionTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -467,7 +467,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 16-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadUInt16Flip()
+        public void ReadUInt16FlipTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -478,7 +478,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.")]
-        public void TestReadUInt16FlipPosition()
+        public void ReadUInt16FlipPositionTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -493,7 +493,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadUInt32NoFlip()
+        public void ReadUInt32NoFlipTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -503,7 +503,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.")]
-        public void TestReadUInt32NoFlipPosition()
+        public void ReadUInt32NoFlipPositionTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -517,7 +517,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadUInt32Flip()
+        public void ReadUInt32FlipTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -528,7 +528,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.")]
-        public void TestReadUInt32FlipPosition()
+        public void ReadUInt32FlipPositionTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -543,7 +543,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadUInt64NoFlip()
+        public void ReadUInt64NoFlipTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -553,7 +553,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.")]
-        public void TestReadUInt64NoFlipPosition()
+        public void ReadUInt64NoFlipPositionTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -567,7 +567,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void TestReadUInt64Flip()
+        public void ReadUInt64FlipTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -578,7 +578,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.")]
-        public void TestReadUInt64FlipPosition()
+        public void ReadUInt64FlipPositionTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);

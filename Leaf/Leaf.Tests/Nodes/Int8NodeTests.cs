@@ -7,21 +7,21 @@ namespace Leaf.Tests.Nodes
     public class Int8NodeTests
     {
         [Test(Description = "Check that the reported node type is correct.")]
-        public void TestTypeId()
+        public void TypeIdTest()
         {
             var node = new Int8Node(25);
             Assert.That(node.Type, Is.EqualTo(NodeType.Int8));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
-        public void TestVersion()
+        public void VersionTest()
         {
             var node = new Int8Node(25);
             Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
-        public void TestValueGetter()
+        public void ValueGetterTest()
         {
             const byte value = 130;
             var node = new Int8Node(value);
@@ -29,7 +29,7 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
-        public void TestValueSetter()
+        public void ValueSetterTest()
         {
             const byte value = 130, newValue = 250;
             var node = new Int8Node(value);

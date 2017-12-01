@@ -20,14 +20,14 @@ namespace Leaf.Tests.Serialization
         #endregion
 
         [Test(Description = "Check that data is actually written.")]
-        public void TestSerialize()
+        public void SerializeTest()
         {
             var result = Serialize();
             Assert.That(result, Is.Not.Empty);
         }
 
         [Test(Description = "Check that the stream is left open after serializing.")]
-        public void TestSerializeLeaveStreamOpen()
+        public void SerializeLeaveStreamOpenTest()
         {
             var container = GenerateContainer();
             using(var stream = new MemoryStream())
@@ -38,7 +38,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the header contains the signature.")]
-        public void TestSerializeHeaderSignature()
+        public void SerializeHeaderSignatureTest()
         {
             var result = Serialize();
             Assert.Multiple(() =>
@@ -51,7 +51,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the header contains the version.")]
-        public void TestSerializeHeaderVersion()
+        public void SerializeHeaderVersionTest()
         {
             var result = Serialize();
             Assert.Multiple(() =>
@@ -64,7 +64,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the header contains the node type.")]
-        public void TestSerializeHeaderType()
+        public void SerializeHeaderTypeTest()
         {
             var node = GenerateRootNode();
             var result = Serialize(node);
@@ -72,7 +72,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a flag node is correct.")]
-        public void TestSerializeFlagNode()
+        public void SerializeFlagNodeTest()
         {
             var node = new FlagNode(true);
             byte[] expected = {0x01};
@@ -80,7 +80,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a Int8Node is correct.")]
-        public void TestSerializeInt8Node()
+        public void SerializeInt8NodeTest()
         {
             var node = new Int8Node(123);
             byte[] expected = {0x7b};
@@ -88,7 +88,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for an Int16Node is correct.")]
-        public void TestSerializeInt16Node()
+        public void SerializeInt16NodeTest()
         {
             var node = new Int16Node(12345);
             byte[] expected = {0x30, 0x39};
@@ -96,7 +96,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for an Int32Node is correct.")]
-        public void TestSerializeInt32Node()
+        public void SerializeInt32NodeTest()
         {
             var node = new Int32Node(1234567);
             byte[] expected = {0x00, 0x12, 0xd6, 0x87};
@@ -104,7 +104,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for an Int64Node is correct.")]
-        public void TestSerializeInt64Node()
+        public void SerializeInt64NodeTest()
         {
             var node = new Int64Node(98765432101234567);
             byte[] expected = {0x01, 0x5e, 0xe2, 0xa3, 0x20, 0x7b, 0x67, 0x87};
@@ -112,7 +112,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a Float32Node is correct.")]
-        public void TestSerializeFloat32Node()
+        public void SerializeFloat32NodeTest()
         {
             var node = new Float32Node(1.2345f);
             byte[] expected = {0x3f, 0x9e, 0x04, 0x19};
@@ -120,7 +120,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a Float64Node is correct.")]
-        public void TestSerializeFloat64Node()
+        public void SerializeFloat64NodeTest()
         {
             var node = new Float64Node(12345.6789d);
             byte[] expected = {0x40, 0xc8, 0x1c, 0xd6, 0xe6, 0x31, 0xf8, 0xa1};
@@ -128,7 +128,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a StringNode is correct.")]
-        public void TestSerializeStringNode()
+        public void SerializeStringNodeTest()
         {
             var node = new StringNode("foobarbaz");
             byte[] expected = {0x00, 0x09, 0x66, 0x6f, 0x6f, 0x62, 0x61, 0x72, 0x62, 0x61, 0x7a};
@@ -136,7 +136,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for an empty ListNode is correct.")]
-        public void TestSerializeEmptyList()
+        public void SerializeEmptyListTest()
         {
             var node = new ListNode(NodeType.Flag);
             byte[] expected = {0x00, 0x00, 0x00, 0x00, (byte) NodeType.Flag};
@@ -144,7 +144,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a ListNode is correct.")]
-        public void TestSerializeList()
+        public void SerializeListTest()
         {
             var nodes = new Node[]
             {
@@ -159,7 +159,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized for a ListNode containing ListNodes is correct.")]
-        public void TestSerializeListOfList()
+        public void SerializeListOfListTest()
         {
             var set1 = new Node[]
             {
@@ -191,7 +191,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized from a list of CompositeNodes is correct.")]
-        public void TestSerializeListOfComposite()
+        public void SerializeListOfCompositeTest()
         {
             var pairs = new KeyValuePair<string, Node>[]
             {
@@ -213,7 +213,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized from an empty CompositeNode is correct.")]
-        public void TestSerializeEmptyComposite()
+        public void SerializeEmptyCompositeTest()
         {
             var node = new CompositeNode();
             byte[] expected = {(byte) NodeType.End};
@@ -221,7 +221,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized from a CompositeNode is correct.")]
-        public void TestSerializeComposite()
+        public void SerializeCompositeTest()
         {
             var pairs = new[]
             {
@@ -235,7 +235,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized from a CompositeNode containing ListNodes is correct.")]
-        public void TestSerializeCompositeOfList()
+        public void SerializeCompositeOfListTest()
         {
             var nodes = new Node[]
             {
@@ -256,7 +256,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized from a CompositeNode containing CompositeNodes is correct.")]
-        public void TestSerializeCompositeOfComposite()
+        public void SerializeCompositeOfCompositeTest()
         {
             var pairs = new[]
             {
@@ -278,7 +278,7 @@ namespace Leaf.Tests.Serialization
         }
 
         [Test(Description = "Check that the data serialized from a CompositeNode containing a mix of nodes is correct.")]
-        public void TestSerializeComplexComposite()
+        public void SerializeComplexCompositeTest()
         {
             var listNodes = new[]
             {

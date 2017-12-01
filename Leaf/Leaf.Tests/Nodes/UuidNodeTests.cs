@@ -8,21 +8,21 @@ namespace Leaf.Tests.Nodes
     public class UuidNodeTests
     {
         [Test(Description = "Check that the reported node type is correct.")]
-        public void TestTypeId()
+        public void TypeIdTest()
         {
             var node = new UuidNode(Guid.NewGuid());
             Assert.That(node.Type, Is.EqualTo(NodeType.Uuid));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
-        public void TestVersion()
+        public void VersionTest()
         {
             var node = new UuidNode(Guid.NewGuid());
             Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
-        public void TestValueGetter()
+        public void ValueGetterTest()
         {
             var value = Guid.NewGuid();
             var node = new UuidNode(value);
@@ -30,7 +30,7 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
-        public void TestValueSetter()
+        public void ValueSetterTest()
         {
             Guid value = Guid.Empty, newValue = Guid.NewGuid();
             var node = new UuidNode(value);

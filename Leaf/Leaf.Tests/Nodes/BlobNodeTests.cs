@@ -7,27 +7,27 @@ namespace Leaf.Tests.Nodes
     public class BlobNodeTests
     {
         [Test(Description = "Check that the reported node type is correct.")]
-        public void TestTypeId()
+        public void TypeIdTest()
         {
             var node = new BlobNode(new byte[0]);
             Assert.That(node.Type, Is.EqualTo(NodeType.Blob));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
-        public void TestVersion()
+        public void VersionTest()
         {
             var node = new BlobNode(new byte[0]);
             Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Check that the constructor throws an exception when given null.")]
-        public void TestNullBytes()
+        public void NullBytesTest()
         {
             Assert.That(() => { new BlobNode(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the Bytes getter returns the correct value.")]
-        public void TestBytesGetter()
+        public void BytesGetterTest()
         {
             var bytes = new byte[] {1, 2, 3, 4, 5};
             var node  = new BlobNode(bytes);
@@ -35,7 +35,7 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Bytes setter updates the byte array.")]
-        public void TestBytesSetter()
+        public void BytesSetterTest()
         {
             var bytes    = new byte[] {1, 2, 3, 4, 5};
             var node     = new BlobNode(bytes);
@@ -45,7 +45,7 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Bytes setter throws an exception when trying to use null.")]
-        public void TestBytesSetterNull()
+        public void BytesSetterNullTest()
         {
             var bytes = new byte[] {1, 2, 3, 4, 5};
             var node  = new BlobNode(bytes);

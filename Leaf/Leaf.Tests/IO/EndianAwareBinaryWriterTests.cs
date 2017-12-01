@@ -34,13 +34,13 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream is null.")]
-        public void TestNullStream()
+        public void NullStreamTest()
         {
             Assert.That(() => { new EndianAwareBinaryWriter(null, true); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream is closed.")]
-        public void TestClosedStream()
+        public void ClosedStreamTest()
         {
             using (var output = new MemoryStream())
             {
@@ -50,21 +50,21 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the constructor throws an exception when the stream can't be written to.")]
-        public void TestNonReadableStream()
+        public void NonReadableStreamTest()
         {
             using (var output = new MemoryStream(new byte[0], false))
                 Assert.That(() => { new EndianAwareBinaryWriter(output, true); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is null.")]
-        public void TestNullStreamEncoding()
+        public void NullStreamEncodingTest()
         {
             Assert.That(() => { new EndianAwareBinaryWriter(null, true, Encoding.UTF8); },
                 Throws.ArgumentNullException);
         }
 
         [Test(Description = "Verify that the \"encoding\" constructor throws an exception when the stream is closed.")]
-        public void TestClosedStreamEncoding()
+        public void ClosedStreamEncodingTest()
         {
             using (var output = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
@@ -76,7 +76,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verify that the \"encoding\" constructor throws an exception when the stream can't be written to.")]
-        public void TestNonReadableStreamEncoding()
+        public void NonReadableStreamEncodingTest()
         {
             using (var output = new MemoryStream(new byte[0], false))
                 Assert.That(() => { new EndianAwareBinaryWriter(output, true, Encoding.UTF8); },
@@ -84,7 +84,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Verify that the \"leave open\" constructor throws an exception when the stream is null.")]
-        public void TestNullStreamLeaveOpen()
+        public void NullStreamLeaveOpenTest()
         {
             Assert.That(() => { new EndianAwareBinaryWriter(null, true, Encoding.UTF8, true); },
                 Throws.ArgumentNullException);
@@ -92,7 +92,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verify that the \"leave open\" constructor throws an exception when the stream is closed.")]
-        public void TestClosedStreamLeaveOpen()
+        public void ClosedStreamLeaveOpenTest()
         {
             using (var output = new MemoryStream(new byte[] {0, 1, 2, 3}))
             {
@@ -104,7 +104,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verify that the \"leave open\" constructor throws an exception when the stream can't be written to.")]
-        public void TestNonReadableStreamLeaveOpen()
+        public void NonReadableStreamLeaveOpenTest()
         {
             using (var output = new MemoryStream(new byte[0], false))
                 Assert.That(() => { new EndianAwareBinaryWriter(output, true, Encoding.UTF8, true); },
@@ -113,7 +113,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verifies that the \"encoding\" constructor throws an exception when the encoding is null.")]
-        public void TestNullEncoding()
+        public void NullEncodingTest()
         {
             using (var output = new MemoryStream())
                 Assert.That(() => { new EndianAwareBinaryWriter(output, true, null); }, Throws.ArgumentNullException);
@@ -121,7 +121,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Verifies that the \"leave open\" constructor throws an exception when the encoding is null.")]
-        public void TestNullEncodingLeaveOpen()
+        public void NullEncodingLeaveOpenTest()
         {
             using (var output = new MemoryStream())
                 Assert.That(() => { new EndianAwareBinaryWriter(output, true, null, true); },
@@ -130,7 +130,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a decimal value can be written when the stream is the same endian as the system's.")]
-        public void TestWriteDecimalNoFlip()
+        public void WriteDecimalNoFlipTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -143,7 +143,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 16 bytes after writing a decimal.")]
-        public void TestWriteDecimalNoFlipPosition()
+        public void WriteDecimalNoFlipPositionTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -157,7 +157,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a decimal value can be written when the stream is in the opposite endian as the system's.")]
-        public void TestWriteDecimalFlip()
+        public void WriteDecimalFlipTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -171,7 +171,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 16 bytes after writing a decimal.")]
-        public void TestWriteDecimalFlipPosition()
+        public void WriteDecimalFlipPositionTest()
         {
             const decimal value = 1234567890m;
             var bytes = GetDecimalBytes(value);
@@ -186,7 +186,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a single-precision floating-point value can be written when the stream is the same endian as the system's.")]
-        public void TestWriteSingleNoFlip()
+        public void WriteSingleNoFlipTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -200,7 +200,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 4 bytes after writing a single-precision floating-point value.")]
-        public void TestWriteSingleNoFlipPosition()
+        public void WriteSingleNoFlipPositionTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -214,7 +214,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a single-precision floating-point value can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteSingleFlip()
+        public void WriteSingleFlipTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -229,7 +229,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 4 bytes after writing a single-precision floating-point value.")]
-        public void TestWriteSingleFlipPosition()
+        public void WriteSingleFlipPositionTest()
         {
             const float value = 123456.789f;
             var bytes = BitConverter.GetBytes(value);
@@ -244,7 +244,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a double-precision floating-point value can be written when the stream is the same endian as the system's.")]
-        public void TestWriteDoubleNoFlip()
+        public void WriteDoubleNoFlipTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -258,7 +258,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 8 bytes after writing a double-precision floating-point value.")]
-        public void TestWriteDoubleNoFlipPosition()
+        public void WriteDoubleNoFlipPositionTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -272,7 +272,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a double-precision floating-point value can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteDoubleFlip()
+        public void WriteDoubleFlipTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -287,7 +287,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that the stream is advanced 8 bytes after writing a double-precision floating-point value.")]
-        public void TestWriteDoubleFlipPosition()
+        public void WriteDoubleFlipPositionTest()
         {
             const double value = 123456.789d;
             var bytes = BitConverter.GetBytes(value);
@@ -302,7 +302,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 16-bit integer can be written when the stream is the same endian as the system's.")]
-        public void TestWriteInt16NoFlip()
+        public void WriteInt16NoFlipTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -315,7 +315,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after writing a 16-bit integer.")]
-        public void TestWriteInt16NoFlipPosition()
+        public void WriteInt16NoFlipPositionTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -329,7 +329,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 16-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteInt16Flip()
+        public void WriteInt16FlipTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -343,7 +343,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after writing a 16-bit integer.")]
-        public void TestWriteInt16FlipPosition()
+        public void WriteInt16FlipPositionTest()
         {
             const short value = -12345;
             var bytes = BitConverter.GetBytes(value);
@@ -358,7 +358,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 32-bit integer can be written when the stream is the same endian as the system's.")]
-        public void TestWriteInt32NoFlip()
+        public void WriteInt32NoFlipTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -371,7 +371,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after writing a 32-bit integer.")]
-        public void TestWriteInt32NoFlipPosition()
+        public void WriteInt32NoFlipPositionTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -385,7 +385,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 32-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteInt32Flip()
+        public void WriteInt32FlipTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -399,7 +399,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after writing a 32-bit integer.")]
-        public void TestWriteInt32FlipPosition()
+        public void WriteInt32FlipPositionTest()
         {
             const int value = -1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -414,7 +414,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 64-bit integer can be written when the stream is the same endian as the system's.")]
-        public void TestWriteInt64NoFlip()
+        public void WriteInt64NoFlipTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -427,7 +427,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after writing a 64-bit integer.")]
-        public void TestWriteInt64NoFlipPosition()
+        public void WriteInt64NoFlipPositionTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -441,7 +441,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that a 64-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteInt64Flip()
+        public void WriteInt64FlipTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -455,7 +455,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after writing a 64-bit integer.")]
-        public void TestWriteInt64FlipPosition()
+        public void WriteInt64FlipPositionTest()
         {
             const long value = -1234567890123456789;
             var bytes = BitConverter.GetBytes(value);
@@ -470,7 +470,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 16-bit integer can be written when the stream is the same endian as the system's.")]
-        public void TestWriteUInt16NoFlip()
+        public void WriteUInt16NoFlipTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -483,7 +483,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after writing an unsigned 16-bit integer.")]
-        public void TestWriteUInt16NoFlipPosition()
+        public void WriteUInt16NoFlipPositionTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -497,7 +497,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 16-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteUInt16Flip()
+        public void WriteUInt16FlipTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -511,7 +511,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 2 bytes after writing an unsigned 16-bit integer.")]
-        public void TestWriteUInt16FlipPosition()
+        public void WriteUInt16FlipPositionTest()
         {
             const ushort value = 12345;
             var bytes = BitConverter.GetBytes(value);
@@ -526,7 +526,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 32-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteUInt32NoFlip()
+        public void WriteUInt32NoFlipTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -539,7 +539,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after writing an unsigned 32-bit integer.")]
-        public void TestWriteUInt32NoFlipPosition()
+        public void WriteUInt32NoFlipPositionTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -553,7 +553,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 32-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteUInt32Flip()
+        public void WriteUInt32FlipTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -567,7 +567,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 4 bytes after writing an unsigned 32-bit integer.")]
-        public void TestWriteUInt32FlipPosition()
+        public void WriteUInt32FlipPositionTest()
         {
             const uint value = 1234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -582,7 +582,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteUInt64NoFlip()
+        public void WriteUInt64NoFlipTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -595,7 +595,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after writing an unsigned 64-bit integer.")]
-        public void TestWriteUInt64NoFlipPosition()
+        public void WriteUInt64NoFlipPositionTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -609,7 +609,7 @@ namespace Leaf.Tests.IO
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be written when the stream is the opposite endian as the system's.")]
-        public void TestWriteUInt64Flip()
+        public void WriteUInt64FlipTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);
@@ -623,7 +623,7 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description = "Check that the stream is advanced 8 bytes after writing an unsigned 64-bit integer.")]
-        public void TestWriteUInt64FlipPosition()
+        public void WriteUInt64FlipPositionTest()
         {
             const ulong value = 12345678901234567890;
             var bytes = BitConverter.GetBytes(value);

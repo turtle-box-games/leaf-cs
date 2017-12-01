@@ -7,21 +7,21 @@ namespace Leaf.Tests.Nodes
     public class Float32NodeTests
     {
         [Test(Description = "Check that the reported node type is correct.")]
-        public void TestTypeId()
+        public void TypeIdTest()
         {
             var node = new Float32Node(1234.56f);
             Assert.That(node.Type, Is.EqualTo(NodeType.Float32));
         }
 
         [Test(Description = "Check that the version is the expected value.")]
-        public void TestVersion()
+        public void VersionTest()
         {
             var node = new Float32Node(1234.56f);
             Assert.That(node.Version, Is.EqualTo(1));
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
-        public void TestValueGetter()
+        public void ValueGetterTest()
         {
             const float value = 1234.56f;
             var node = new Float32Node(value);
@@ -29,7 +29,7 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
-        public void TestValueSetter()
+        public void ValueSetterTest()
         {
             const float value = 1234.56f, newValue = 789.012f;
             var node = new Float32Node(value);
