@@ -39,6 +39,7 @@
     <Compile Include="ContainerTests.cs" />
     <Compile Include="IO\EndianAwareBinaryReaderTests.cs" />
     <Compile Include="IO\EndianAwareBinaryWriterTests.cs" />
+    <Compile Include="NodeBuilders.cs" />
     <Compile Include="Nodes\BlobNodeTests.cs" />
     <Compile Include="Nodes\CompositeNodeTests.cs" />
     <Compile Include="Nodes\Int16NodeTests.cs" />
