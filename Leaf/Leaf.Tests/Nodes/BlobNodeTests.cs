@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
 using Leaf.Nodes;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Leaf.Tests.Nodes
 {
@@ -27,20 +29,19 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Bytes getter returns the correct value.")]
-        public void BytesGetterTest()
+        [TestCaseSource(nameof(RandomBlobs))]
+        public void BytesGetterTest(byte[] bytes)
         {
-            var bytes = new byte[] {1, 2, 3, 4, 5};
-            var node  = new BlobNode(bytes);
+            var node = new BlobNode(bytes);
             Assert.That(node.Bytes, Is.EquivalentTo(bytes));
         }
 
         [Test(Description = "Verify that the Bytes setter updates the byte array.")]
-        public void BytesSetterTest()
+        [TestCaseSource(nameof(RandomBlobPairs))]
+        public void BytesSetterTest(byte[] oldBytes, byte[] newBytes)
         {
-            var bytes    = new byte[] {1, 2, 3, 4, 5};
-            var node     = new BlobNode(bytes);
-            var newBytes = new byte[] {6, 7, 8, 9, 0};
-            node.Bytes   = newBytes;
+            var node   = new BlobNode(oldBytes);
+            node.Bytes = newBytes;
             Assert.That(node.Bytes, Is.EquivalentTo(newBytes));
         }
 
@@ -50,6 +51,20 @@ namespace Leaf.Tests.Nodes
             var bytes = new byte[] {1, 2, 3, 4, 5};
             var node  = new BlobNode(bytes);
             Assert.That(() => { node.Bytes = null; }, Throws.ArgumentNullException);
+        }
+
+        private static IEnumerable<byte[]> RandomBlobs()
+        {
+            var randomizer = new Randomizer();
+            for (var i = 0; i < 5; ++i)
+                yield return randomizer.NextBytes();
+        }
+
+        private static IEnumerable<byte[][]> RandomBlobPairs()
+        {
+            var randomizer = new Randomizer();
+            for (var i = 0; i < 5; ++i)
+                yield return new[] {randomizer.NextBytes(), randomizer.NextBytes()};
         }
     }
 }

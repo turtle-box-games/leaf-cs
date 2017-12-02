@@ -1,6 +1,7 @@
-﻿using System;
-using NUnit.Framework;
+﻿using System.Collections.Generic;
 using Leaf.Nodes;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Leaf.Tests.Nodes
 {
@@ -28,18 +29,18 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
-        public void ValueGetterTest()
+        [TestCaseSource(nameof(RandomStrings))]
+        public void ValueGetterTest(string value)
         {
-            const string value = "foobar";
             var node = new StringNode(value);
             Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
-        public void ValueSetterTest()
+        [TestCaseSource(nameof(RandomStringPairs))]
+        public void ValueSetterTest(string oldValue, string newValue)
         {
-            const string value = "foobar", newValue = "lorem-ipsum";
-            var node = new StringNode(value);
+            var node   = new StringNode(oldValue);
             node.Value = newValue;
             Assert.That(node.Value, Is.EqualTo(newValue));
         }
@@ -54,6 +55,20 @@ namespace Leaf.Tests.Nodes
                 Assert.That(() => { node.Value = null; }, Throws.ArgumentNullException);
                 Assert.That(node.Value, Is.EqualTo(value));
             });
+        }
+
+        private static IEnumerable<string> RandomStrings()
+        {
+            var randomizer = new Randomizer();
+            for (var i = 0; i < 5; ++i)
+                yield return randomizer.GetString();
+        }
+
+        private static IEnumerable<string[]> RandomStringPairs()
+        {
+            var randomizer = new Randomizer();
+            for (var i = 0; i < 5; ++i)
+                yield return new[] {randomizer.GetString(), randomizer.GetString()};
         }
     }
 }

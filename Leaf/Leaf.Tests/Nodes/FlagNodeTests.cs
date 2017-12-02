@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Leaf.Nodes;
+﻿using Leaf.Nodes;
+using NUnit.Framework;
 
 namespace Leaf.Tests.Nodes
 {
@@ -21,17 +21,18 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
-        public void ValueGetterTest()
+        [TestCase(true), TestCase(false)]
+        public void ValueGetterTest(bool value)
         {
-            const bool value = false;
             var node = new FlagNode(value);
             Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
-        public void ValueSetterTest()
+        [TestCase(true), TestCase(false)]
+        public void ValueSetterTest(bool value)
         {
-            const bool value = false, newValue = true;
+            var newValue = !value;
             var node = new FlagNode(value);
             node.Value = newValue;
             Assert.That(node.Value, Is.EqualTo(newValue));

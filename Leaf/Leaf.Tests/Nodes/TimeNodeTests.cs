@@ -1,6 +1,8 @@
 ﻿using System;
-using NUnit.Framework;
+using System.Collections.Generic;
 using Leaf.Nodes;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Leaf.Tests.Nodes
 {
@@ -22,20 +24,34 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
-        public void ValueGetterTest()
+        [TestCaseSource(nameof(RandomDateTimes))]
+        public void ValueGetterTest(DateTime value)
         {
-            var value = DateTime.Now - TimeSpan.FromHours(5);
             var node = new TimeNode(value);
             Assert.That(node.Value, Is.EqualTo(value));
         }
 
         [Test(Description = "Verify that the Value setter updates the value.")]
-        public void ValueSetterTest()
+        [TestCaseSource(nameof(RandomDateTimePairs))]
+        public void ValueSetterTest(DateTime oldValue, DateTime newValue)
         {
-            DateTime value = DateTime.Now, newValue = DateTime.Today - TimeSpan.FromDays(3);
-            var node = new TimeNode(value);
+            var node   = new TimeNode(oldValue);
             node.Value = newValue;
             Assert.That(node.Value, Is.EqualTo(newValue));
+        }
+
+        private static IEnumerable<DateTime> RandomDateTimes()
+        {
+            var randomizer = new Randomizer();
+            for (var i = 0; i < 5; ++i)
+                yield return randomizer.NextDateTime();
+        }
+
+        private static IEnumerable<DateTime[]> RandomDateTimePairs()
+        {
+            var randomizer = new Randomizer();
+            for (var i = 0; i < 5; ++i)
+                yield return new[] {randomizer.NextDateTime(), randomizer.NextDateTime()};
         }
     }
 }
