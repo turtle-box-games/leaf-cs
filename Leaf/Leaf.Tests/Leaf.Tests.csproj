@@ -53,6 +53,7 @@
     <Compile Include="Nodes\TimeNodeTests.cs" />
     <Compile Include="Nodes\UuidNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomizerExtensions.cs" />
     <Compile Include="Serialization\BinaryFormatSerializerWriteTests.cs" />
   </ItemGroup>
   <ItemGroup>
