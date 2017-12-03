@@ -43,14 +43,14 @@ namespace Leaf.Tests.Nodes
         private static IEnumerable<DateTime> RandomDateTimes()
         {
             var randomizer = TestContext.CurrentContext.Random;
-            for (var i = 0; i < 5; ++i)
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
                 yield return randomizer.NextDateTime();
         }
 
         private static IEnumerable<DateTime[]> RandomDateTimePairs()
         {
             var randomizer = TestContext.CurrentContext.Random;
-            for (var i = 0; i < 5; ++i)
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
                 yield return new[] {randomizer.NextDateTime(), randomizer.NextDateTime()};
         }
     }

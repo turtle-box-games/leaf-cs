@@ -36,6 +36,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="ContainerTests.cs" />
     <Compile Include="IO\EndianAwareBinaryReaderTests.cs" />
     <Compile Include="IO\EndianAwareBinaryWriterTests.cs" />

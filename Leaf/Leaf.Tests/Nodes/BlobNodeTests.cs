@@ -56,14 +56,14 @@ namespace Leaf.Tests.Nodes
         private static IEnumerable<byte[]> RandomBlobs()
         {
             var randomizer = TestContext.CurrentContext.Random;
-            for (var i = 0; i < 5; ++i)
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
                 yield return randomizer.NextBytes();
         }
 
         private static IEnumerable<byte[][]> RandomBlobPairs()
         {
             var randomizer = TestContext.CurrentContext.Random;
-            for (var i = 0; i < 5; ++i)
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
                 yield return new[] {randomizer.NextBytes(), randomizer.NextBytes()};
         }
     }
