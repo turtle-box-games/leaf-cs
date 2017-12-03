@@ -42,14 +42,14 @@ namespace Leaf.Tests.Nodes
 
         private static IEnumerable<Guid> RandomGuids()
         {
-            var randomizer = new Randomizer();
+            var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < 5; ++i)
                 yield return randomizer.NextGuid();
         }
 
         private static IEnumerable<Guid[]> RandomGuidPairs()
         {
-            var randomizer = new Randomizer();
+            var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < 5; ++i)
                 yield return new[] {randomizer.NextGuid(), randomizer.NextGuid()};
         }

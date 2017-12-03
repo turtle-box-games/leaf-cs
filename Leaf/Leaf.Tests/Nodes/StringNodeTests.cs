@@ -59,14 +59,14 @@ namespace Leaf.Tests.Nodes
 
         private static IEnumerable<string> RandomStrings()
         {
-            var randomizer = new Randomizer();
+            var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < 5; ++i)
                 yield return randomizer.GetString();
         }
 
         private static IEnumerable<string[]> RandomStringPairs()
         {
-            var randomizer = new Randomizer();
+            var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < 5; ++i)
                 yield return new[] {randomizer.GetString(), randomizer.GetString()};
         }
