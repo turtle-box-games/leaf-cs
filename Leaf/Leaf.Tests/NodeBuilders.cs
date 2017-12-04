@@ -11,6 +11,19 @@ namespace Leaf.Tests
     public static class NodeBuilders
     {
         /// <summary>
+        /// Picks a random (valid) node type that can't have sub-nodes.
+        /// </summary>
+        /// <param name="randomizer">Testing randomizer.</param>
+        /// <returns>Random node type.</returns>
+        public static NodeType NextNonNestableNodeType(this Randomizer randomizer)
+        {
+            var type = NodeType.End;
+            while (type == NodeType.End || type == NodeType.List || type == NodeType.Composite)
+                type = randomizer.NextEnum<NodeType>();
+            return type;
+        }
+        
+        /// <summary>
         /// Picks a random (valid) node type.
         /// </summary>
         /// <param name="randomizer">Testing randomizer.</param>
@@ -213,7 +226,13 @@ namespace Leaf.Tests
             }
         }
 
-        private static IEnumerable<Node> GenerateMultipleOfType(Randomizer randomizer, NodeType type)
+        /// <summary>
+        /// Creates multiple nodes of the same type.
+        /// </summary>
+        /// <param name="randomizer">Testing randomizer.</param>
+        /// <param name="type">Type of nodes to create.</param>
+        /// <returns>Collection of generated nodes.</returns>
+        public static IEnumerable<Node> GenerateMultipleOfType(Randomizer randomizer, NodeType type)
         {
             var count   = randomizer.Next(5, 20);
             var builder = GetBuilderForType(type);

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Leaf.Nodes;
@@ -8,6 +10,8 @@ namespace Leaf.Tests.Nodes
     [TestFixture(TestOf = typeof(ListNode))]
     public class ListNodeTests
     {
+        private static readonly Node[] EmptyNodeSet = { };
+        
         [Test(Description = "Check that the reported node type is correct.")]
         public void TypeIdTest()
         {
@@ -23,17 +27,17 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that the reported node type is correct.")]
-        public void ElementTypeIdEmptyTest()
+        [TestCaseSource(nameof(RandomNodeTypes))]
+        public void ElementTypeIdEmptyTest(NodeType elementType)
         {
-            const NodeType elementType = NodeType.String;
             var node = new ListNode(elementType);
             Assert.That(node.ElementType, Is.EqualTo(elementType));
         }
 
         [Test(Description = "Check that the reported node type is correct.")]
-        public void ElementTypeIdContentsTest()
+        [TestCaseSource(nameof(RandomNodeTypes))]
+        public void ElementTypeIdContentsTest(NodeType elementType)
         {
-            const NodeType elementType = NodeType.String;
             var node = new ListNode(elementType, EmptyNodeSet);
             Assert.That(node.ElementType, Is.EqualTo(elementType));
         }
@@ -46,10 +50,11 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that the contents constructor adds the same nodes.")]
-        public void ContentsConstructorTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void ContentsConstructorTest(NodeType elementType, Node[] elements)
         {
-            var node = new ListNode(NodeSet.First().Type, NodeSet);
-            Assert.That(node, Is.EqualTo(NodeSet));
+            var node = new ListNode(elementType, elements);
+            Assert.That(node, Is.EqualTo(elements));
         }
 
         [Test(Description = "Check that an exception is thrown for a null set of nodes.")]
@@ -59,9 +64,10 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that an exception is thrown for mixed node types.")]
-        public void MixedContentsConstructorTest()
+        [TestCaseSource(nameof(RandomMixedNodesCollections))]
+        public void MixedContentsConstructorTest(NodeType elementType, Node[] elements)
         {
-            Assert.That(() => { new ListNode(MixedNodeSet.First().Type, MixedNodeSet); },
+            Assert.That(() => { new ListNode(elementType, elements); },
                 Throws.InstanceOf<ArrayTypeMismatchException>());
         }
 
@@ -441,20 +447,11 @@ namespace Leaf.Tests.Nodes
             Assert.That(() => { list[1] = node; }, Throws.InstanceOf<ArrayTypeMismatchException>());
         }
 
-        private static readonly Node[] EmptyNodeSet = { };
-
         private static readonly Node[] NodeSet =
         {
             new StringNode("foo"),
             new StringNode("bar"),
             new StringNode("baz")
-        };
-
-        private static readonly Node[] MixedNodeSet =
-        {
-            new Int32Node(12345),
-            new StringNode("foobar"),
-            new Int32Node(54321)
         };
 
         private static readonly Node[] NullNodeSet =
@@ -467,6 +464,41 @@ namespace Leaf.Tests.Nodes
         private static ListNode GenerateListNode()
         {
             return new ListNode(NodeSet[0].Type, NodeSet);
+        }
+
+        private static IEnumerable<NodeType> RandomNodeTypes()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+                yield return randomizer.NextNonNestableNodeType();
+        }
+
+        private static IEnumerable RandomNodeCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var elementType = randomizer.NextNonNestableNodeType();
+                var elements    = NodeBuilders.GenerateMultipleOfType(randomizer, elementType).ToArray();
+                yield return new object[] {elementType, elements};
+            }
+        }
+
+        private static IEnumerable RandomMixedNodesCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var elementType = randomizer.NextNonNestableNodeType();
+                var mixedInType = randomizer.NextNonNestableNodeType();
+                while (mixedInType == elementType)
+                    mixedInType = randomizer.NextNonNestableNodeType();
+                var elements  = NodeBuilders.GenerateMultipleOfType(randomizer, elementType).ToList();
+                var mixedNode = randomizer.NextNodeOfType(mixedInType);
+                var index     = randomizer.Next(0, elements.Count);
+                elements.Insert(index, mixedNode);
+                yield return new object[] {elementType, elements.ToArray()};
+            }
         }
     }
 }
