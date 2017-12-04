@@ -22,7 +22,8 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
         public void ValueGetterTest(
-            [Random(short.MinValue, short.MaxValue, Constants.RandomTestCount)] short value)
+            [Random(short.MinValue, short.MaxValue, Constants.RandomTestCount),
+            Values(0, short.MinValue, short.MaxValue)] short value)
         {
             var node = new Int16Node(value);
             Assert.That(node.Value, Is.EqualTo(value));
@@ -30,8 +31,10 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Value setter updates the value.")]
         public void ValueSetterTest(
-            [Random(short.MinValue, short.MaxValue, 1)] short oldValue,
-            [Random(short.MinValue, short.MaxValue, Constants.RandomTestCount)] short newValue)
+            [Random(short.MinValue, short.MaxValue, 1),
+             Values(0, short.MinValue, short.MaxValue)] short oldValue,
+            [Random(short.MinValue, short.MaxValue, Constants.RandomTestCount),
+             Values(0, short.MinValue, short.MaxValue)] short newValue)
         {
             var node = new Int16Node(oldValue);
             node.Value = newValue;

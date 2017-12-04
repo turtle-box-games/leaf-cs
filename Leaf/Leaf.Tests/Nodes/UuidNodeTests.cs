@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Leaf.Nodes;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Leaf.Tests.Nodes
 {
@@ -25,6 +25,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
         [TestCaseSource(nameof(RandomGuids))]
+        [TestCaseSource(nameof(SpecialGuids))]
         public void ValueGetterTest(Guid value)
         {
             var node = new UuidNode(value);
@@ -33,6 +34,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Value setter updates the value.")]
         [TestCaseSource(nameof(RandomGuidPairs))]
+        [TestCaseSource(nameof(SpecialGuidPairs))]
         public void ValueSetterTest(Guid oldValue, Guid newValue)
         {
             var node   = new UuidNode(oldValue);
@@ -47,11 +49,24 @@ namespace Leaf.Tests.Nodes
                 yield return randomizer.NextGuid();
         }
 
+        private static IEnumerable<Guid> SpecialGuids()
+        {
+            yield return Guid.Empty;
+        }
+
         private static IEnumerable<Guid[]> RandomGuidPairs()
         {
             var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < Constants.RandomTestCount; ++i)
                 yield return new[] {randomizer.NextGuid(), randomizer.NextGuid()};
+        }
+
+        private static IEnumerable<Guid[]> SpecialGuidPairs()
+        {
+            var all = RandomGuids().Union(SpecialGuids()).ToList();
+            foreach (var first in all)
+            foreach (var second in all)
+                yield return new[] {first, second};
         }
     }
 }

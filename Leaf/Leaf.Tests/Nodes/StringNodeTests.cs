@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Leaf.Nodes;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Leaf.Tests.Nodes
 {
@@ -30,6 +30,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Value getter returns the correct value.")]
         [TestCaseSource(nameof(RandomStrings))]
+        [TestCaseSource(nameof(SpecialStrings))]
         public void ValueGetterTest(string value)
         {
             var node = new StringNode(value);
@@ -38,6 +39,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Value setter updates the value.")]
         [TestCaseSource(nameof(RandomStringPairs))]
+        [TestCaseSource(nameof(SpecialStringPairs))]
         public void ValueSetterTest(string oldValue, string newValue)
         {
             var node   = new StringNode(oldValue);
@@ -64,11 +66,24 @@ namespace Leaf.Tests.Nodes
                 yield return randomizer.GetString();
         }
 
+        private static IEnumerable<string> SpecialStrings()
+        {
+            yield return string.Empty;
+        }
+
         private static IEnumerable<string[]> RandomStringPairs()
         {
             var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < Constants.RandomTestCount; ++i)
                 yield return new[] {randomizer.GetString(), randomizer.GetString()};
+        }
+
+        private static IEnumerable<string[]> SpecialStringPairs()
+        {
+            var all = RandomStrings().Union(SpecialStrings()).ToList();
+            foreach (var first in all)
+            foreach (var second in all)
+                yield return new[] {first, second};
         }
     }
 }

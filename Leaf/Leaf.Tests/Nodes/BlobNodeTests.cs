@@ -30,6 +30,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Bytes getter returns the correct value.")]
         [TestCaseSource(nameof(RandomBlobs))]
+        [TestCase(new byte[0])]
         public void BytesGetterTest(byte[] bytes)
         {
             var node = new BlobNode(bytes);
@@ -38,6 +39,8 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Verify that the Bytes setter updates the byte array.")]
         [TestCaseSource(nameof(RandomBlobPairs))]
+        [TestCase(new byte[0], new byte[] {1, 2, 3, 4, 5})]
+        [TestCase(new byte[] {1, 2, 3, 4, 5}, new byte[0])]
         public void BytesSetterTest(byte[] oldBytes, byte[] newBytes)
         {
             var node   = new BlobNode(oldBytes);
