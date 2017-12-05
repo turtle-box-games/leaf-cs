@@ -22,7 +22,7 @@ namespace Leaf.Tests.Nodes
         [Test(Description = "Check that the version is the expected value.")]
         public void VersionTest()
         {
-            var node = GenerateListNode();
+            var node = new ListNode(NodeType.String);
             Assert.That(node.Version, Is.EqualTo(1));
         }
 
@@ -199,292 +199,300 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that removing a node works as expected.")]
-        public void RemoveTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveTest(NodeType elementType, Node[] elements)
         {
-            var list     = GenerateListNode();
-            var node     = list[1];
-            var expected = NodeSet.ToList();
-            expected.RemoveAt(1);
+            var randomizer = TestContext.CurrentContext.Random;
+            var toRemove   = elements[randomizer.Next(elements.Length)];
+            var listNode   = new ListNode(elementType, elements);
+            var expected   = elements.ToList();
+            expected.Remove(toRemove);
             Assert.Multiple(() =>
             {
-                Assert.That(list.Remove(node), Is.True);
-                Assert.That(list, Does.Not.Contain(node));
-                Assert.That(list, Is.EqualTo(expected));
+                Assert.That(listNode.Remove(toRemove), Is.True);
+                Assert.That(listNode, Does.Not.Contain(toRemove));
+                Assert.That(listNode, Is.EqualTo(expected));
             });
         }
 
         [Test(Description = "Check that nothing happens when attempting to remove a non-existent node.")]
-        public void RemoveNonExistentTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveNonExistentTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("remove");
+            var randomizer = TestContext.CurrentContext.Random;
+            var node       = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
             Assert.Multiple(() =>
             {
-                Assert.That(list.Remove(node), Is.False);
-                Assert.That(list, Is.EqualTo(NodeSet));
+                Assert.That(listNode.Remove(node), Is.False);
+                Assert.That(listNode, Is.EqualTo(elements));
             });
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to remove null.")]
-        public void RemoveNullTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.Remove(null); }, Throws.ArgumentNullException);
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Remove(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that the count property returns the correct amount.")]
-        public void CountTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void CountTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(list, Has.Count.EqualTo(NodeSet.Length));
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(listNode, Has.Count.EqualTo(elements.Length));
         }
 
         [Test(Description = "Check that the read-only property returns the expected value.")]
         public void IsReadOnlyTest()
         {
-            var list = GenerateListNode();
-            Assert.That(list.IsReadOnly, Is.False);
+            var listNode = new ListNode(NodeType.String);
+            Assert.That(listNode.IsReadOnly, Is.False);
         }
 
         [Test(Description = "Check that an item can be found in the list.")]
-        public void IndexOfTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void IndexOfTest(NodeType elementType, Node[] elements)
         {
-            const int index = 1;
-            var list = GenerateListNode();
-            var node = list[index];
-            Assert.That(list.IndexOf(node), Is.EqualTo(index));
+            var randomizer = TestContext.CurrentContext.Random;
+            var index      = randomizer.Next(elements.Length);
+            var node       = elements[index];
+            var listNode   = new ListNode(elementType, elements);
+            Assert.That(listNode.IndexOf(node), Is.EqualTo(index));
         }
 
         [Test(Description = "Check that a negative index is returned for an item that can't be found in the list.")]
-        public void IndexOfNonExistentTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void IndexOfNonExistentTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("indexOf");
-            Assert.That(list.IndexOf(node), Is.EqualTo(-1));
+            var randomizer = TestContext.CurrentContext.Random;
+            var node       = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            Assert.That(listNode.IndexOf(node), Is.EqualTo(-1));
         }
 
         [Test(Description = "Check that an exception is thrown when looking for null.")]
-        public void IndexOfNullTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void IndexOfNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.IndexOf(null); }, Throws.ArgumentNullException);
-        }
-
-        [Test(Description = "Check that the insert method adds an item.")]
-        public void InsertTest()
-        {
-            var list = GenerateListNode();
-            var node = new StringNode("insert");
-            list.Insert(1, node);
-            Assert.That(list, Contains.Item(node));
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.IndexOf(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that the insert method works for non-end indices.")]
-        public void InsertMiddleTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void InsertTest(NodeType elementType, Node[] elements)
         {
-            var list     = GenerateListNode();
-            var node     = new StringNode("insert");
-            var expected = NodeSet.ToList();
-            expected.Insert(1, node);
-            list.Insert(1, node);
-            Assert.That(list, Is.EqualTo(expected));
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            listNode.Insert(1, newNode);
+            Assert.That(listNode, Contains.Item(newNode));
         }
 
         [Test(Description = "Check that inserting an item at the start of the list works as expected.")]
-        public void InsertFirstTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void InsertFirstTest(NodeType elementType, Node[] elements)
         {
-            var list     = GenerateListNode();
-            var node     = new StringNode("insert");
-            var expected = NodeSet.ToList();
-            expected.Insert(0, node);
-            list.Insert(0, node);
-            Assert.That(list, Is.EqualTo(expected));
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            listNode.Insert(0, newNode);
+            Assert.That(listNode, Contains.Item(newNode));
         }
 
         [Test(Description = "Check that inserting an item at the end of the list works as expected.")]
-        public void InsertLastTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void InsertLastTest(NodeType elementType, Node[] elements)
         {
-            var list     = GenerateListNode();
-            var node     = new StringNode("insert");
-            var expected = NodeSet.ToList();
-            expected.Insert(NodeSet.Length, node);
-            list.Insert(list.Count, node);
-            Assert.That(list, Is.EqualTo(expected));
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            listNode.Insert(elements.Length, newNode);
+            Assert.That(listNode, Contains.Item(newNode));
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to insert null.")]
-        public void InsertNullTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void InsertNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.Insert(1, null); }, Throws.ArgumentNullException);
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Insert(1, null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
-        public void InsertNegativeIndexTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void InsertNegativeIndexTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("insert");
-            Assert.That(() => { list.Insert(-1, node); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Insert(-1, newNode); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
-        public void InsertIndexTooLargeTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void InsertIndexTooLargeTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("insert");
-            Assert.That(() => { list.Insert(list.Count + 1, node); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Insert(listNode.Count + 1, newNode); },
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to insert a node of a different type.")]
-        public void InsertTypeMismatchTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void InsertTypeMismatchTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new Int32Node(12345);
-            Assert.That(() => { list.Insert(1, node); }, Throws.InstanceOf<ArrayTypeMismatchException>());
-        }
-
-        [Test(Description = "Check that removing an item at an index works as expected.")]
-        public void RemoveAtTest()
-        {
-            const int index = 1;
-            var list = GenerateListNode();
-            list.RemoveAt(index);
-            Assert.That(list, Does.Not.Contain(NodeSet[index]));
+            var randomizer = TestContext.CurrentContext.Random;
+            var mixedType  = randomizer.NextNonNestableNodeType();
+            while (mixedType == elementType)
+                mixedType = randomizer.NextNonNestableNodeType();
+            var mixedNode = randomizer.NextNodeOfType(mixedType);
+            var listNode  = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Insert(1, mixedNode); }, Throws.InstanceOf<ArrayTypeMismatchException>());
         }
 
         [Test(Description = "Check that removing an item at a middle index works as expected.")]
-        public void RemoveAtMiddleTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveAtTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var expected = NodeSet.ToList();
-            expected.RemoveAt(1);
-            list.RemoveAt(1);
-            Assert.That(list, Is.EqualTo(expected));
+            const int index = 1;
+            var listNode    = new ListNode(elementType, elements);
+            var expected    = elements.ToList();
+            expected.RemoveAt(index);
+            listNode.RemoveAt(index);
+            Assert.That(listNode, Is.EqualTo(expected));
         }
 
         [Test(Description = "Check that removing the first item in the list works as expected.")]
-        public void RemoveAtFirstTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveAtFirstTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var expected = NodeSet.ToList();
-            expected.RemoveAt(0);
-            list.RemoveAt(0);
-            Assert.That(list, Is.EqualTo(expected));
+            const int index = 0;
+            var listNode    = new ListNode(elementType, elements);
+            var expected    = elements.ToList();
+            expected.RemoveAt(index);
+            listNode.RemoveAt(index);
+            Assert.That(listNode, Is.EqualTo(expected));
         }
 
         [Test(Description = "Check that removing the last item in the list works as expected.")]
-        public void RemoveAtLastTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveAtLastTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var expected = NodeSet.ToList();
-            expected.RemoveAt(NodeSet.Length - 1);
-            list.RemoveAt(list.Count - 1);
-            Assert.That(list, Is.EqualTo(expected));
+            var index    = elements.Length - 1;
+            var listNode = new ListNode(elementType, elements);
+            var expected = elements.ToList();
+            expected.RemoveAt(index);
+            listNode.RemoveAt(index);
+            Assert.That(listNode, Is.EqualTo(expected));
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
-        public void RemoveAtNegativeIndexTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveAtNegativeIndexTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.RemoveAt(-1); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.RemoveAt(-1); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
-        public void RemoveAtIndexTooLargeTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void RemoveAtIndexTooLargeTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.RemoveAt(list.Count + 1); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.RemoveAt(elements.Length + 1); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description = "Check that the getter works as expected.")]
-        public void GetterTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void GetterTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(list[0], Is.EqualTo(NodeSet[0]));
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(listNode[0], Is.EqualTo(elements[0]));
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
-        public void GetterNegativeIndexTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void GetterNegativeIndexTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
+            var listNode = new ListNode(elementType, elements);
             Assert.That(() =>
             {
-                var _ = list[-1];
+                var _ = listNode[-1];
             }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
-        public void GetterIndexTooLargeTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void GetterIndexTooLargeTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
+            var listNode = new ListNode(elementType, elements);
             Assert.That(() =>
             {
-                var _ = list[list.Count + 1];
+                var _ = listNode[elements.Length + 1];
             }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description = "Check that the setter works as expected.")]
-        public void SetterTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void SetterTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("setter");
-            list[1]  = node;
-            Assert.That(list[1], Is.EqualTo(node));
+            var randomizer = TestContext.CurrentContext.Random;
+            var listNode   = new ListNode(elementType, elements);
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            listNode[1]    = newNode;
+            Assert.That(listNode[1], Is.EqualTo(newNode));
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to set an element to null.")]
-        public void SetterNullTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void SetterNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list[1] = null; }, Throws.ArgumentNullException);
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode[1] = null; }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a negative index.")]
-        public void SetterNegativeIndexTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void SetterNegativeIndexTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("setter");
-            Assert.That(() => { list[-1] = node; }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements); 
+            Assert.That(() => { listNode[-1] = newNode; }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when attempting to use an index outside the bounds of the list.")]
-        public void SetterIndexTooLargeTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void SetterIndexTooLargeTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("setter");
-            Assert.That(() => { list[list.Count + 1] = node; }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var randomizer = TestContext.CurrentContext.Random;
+            var newNode    = randomizer.NextNodeOfType(elementType);
+            var listNode   = new ListNode(elementType, elements);
+            Assert.That(() => { listNode[elements.Length + 1] = newNode; }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when attempting to set an element to a different node type.")]
-        public void SetterTypeMismatchTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void SetterTypeMismatchTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new Int32Node(12345);
-            Assert.That(() => { list[1] = node; }, Throws.InstanceOf<ArrayTypeMismatchException>());
-        }
-
-        private static readonly Node[] NodeSet =
-        {
-            new StringNode("foo"),
-            new StringNode("bar"),
-            new StringNode("baz")
-        };
-
-        private static readonly Node[] NullNodeSet =
-        {
-            new Int32Node(12345),
-            null,
-            new Int32Node(54321)
-        };
-
-        private static ListNode GenerateListNode()
-        {
-            return new ListNode(NodeSet[0].Type, NodeSet);
+            var randomizer = TestContext.CurrentContext.Random;
+            var mixedType  = randomizer.NextNonNestableNodeType();
+            while (mixedType == elementType)
+                mixedType = randomizer.NextNonNestableNodeType();
+            var mixedNode = randomizer.NextNodeOfType(mixedType);
+            var listNode  = new ListNode(elementType, elements);
+            Assert.That(() => { listNode[1] = mixedNode; }, Throws.InstanceOf<ArrayTypeMismatchException>());
         }
 
         private static IEnumerable AllTypesNodeCollections()
