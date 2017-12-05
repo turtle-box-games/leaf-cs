@@ -50,7 +50,7 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that the contents constructor adds the same nodes.")]
-        [TestCaseSource(nameof(RandomNodeCollections))]
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
         public void ContentsConstructorTest(NodeType elementType, Node[] elements)
         {
             var node = new ListNode(elementType, elements);
@@ -72,109 +72,130 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that an exception is thrown for null mixed in with nodes.")]
-        public void NullNodeContentsConstructorTest()
+        [TestCaseSource(nameof(RandomNodesWithNullCollections))]
+        public void NullNodeContentsConstructorTest(NodeType elementType, Node[] elements)
         {
-            Assert.That(() => { new ListNode(NullNodeSet.First().Type, NullNodeSet); }, Throws.ArgumentException);
+            Assert.That(() => { new ListNode(elementType, elements); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that appending a node works.")]
-        public void AddTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void AddTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("test");
-            list.Add(node);
-            var newList = NodeSet.Concat(new Node[] {node});
+            var listNode = new ListNode(elementType, elements);
+            var newNode  = TestContext.CurrentContext.Random.NextNodeOfType(elementType);
+            listNode.Add(newNode);
             Assert.Multiple(() =>
             {
-                Assert.That(list, Contains.Item(node));
-                Assert.That(list, Is.EqualTo(newList));
+                Assert.That(listNode, Contains.Item(newNode));
+                Assert.That(listNode, Is.EqualTo(elements.Union(new[] {newNode})));
             });
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to append null.")]
-        public void AddNullTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void AddNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.Add(null); }, Throws.ArgumentNullException);
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Add(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check  that an exception is thrown when attempting to append a node of a different type.")]
-        public void AddTypeMismatchTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void AddTypeMismatchTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.Add(new Int32Node(12345)); }, Throws.InstanceOf<ArrayTypeMismatchException>());
+            var listNode   = new ListNode(elementType, elements);
+            var randomizer = TestContext.CurrentContext.Random;
+            var mixedType  = randomizer.NextNonNestableNodeType();
+            while (mixedType == elementType)
+                mixedType = randomizer.NextNonNestableNodeType();
+            var mixedNode = randomizer.NextNodeOfType(mixedType);
+            Assert.That(() => { listNode.Add(mixedNode); }, Throws.InstanceOf<ArrayTypeMismatchException>());
         }
 
         [Test(Description = "Check that clearing the list empties it.")]
-        public void ClearTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void ClearTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            list.Clear();
-            Assert.That(list, Is.Empty);
+            var listNode = new ListNode(elementType, elements);
+            listNode.Clear();
+            Assert.That(listNode, Is.Empty);
         }
 
         [Test(Description = "Check that an item can be found in the list.")]
-        public void ContainsTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void ContainsTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = list[1];
-            Assert.That(list, Contains.Item(node));
+            var listNode   = new ListNode(elementType, elements);
+            var randomizer = TestContext.CurrentContext.Random;
+            var toFind     = elements[randomizer.Next(elements.Length)];
+            Assert.That(listNode, Contains.Item(toFind));
         }
 
         [Test(Description = "Check that false is returned when an item can't be found in the list.")]
-        public void NotContainsTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void NotContainsTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            var node = new StringNode("contains");
-            Assert.That(list, Does.Not.Contain(node));
+            var listNode   = new ListNode(elementType, elements);
+            var randomizer = TestContext.CurrentContext.Random;
+            var node       = randomizer.NextNodeOfType(elementType);
+            Assert.That(listNode, Does.Not.Contain(node));
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to look for null.")]
-        public void ContainsNullTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void ContainsNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.Contains(null); }, Throws.ArgumentNullException);
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.Contains(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that nodes in the list can be copied to an array.")]
-        public void CopyToTest()
+        [TestCaseSource(nameof(AllTypesNodeCollections))]
+        public void CopyToTest(NodeType elementType, Node[] elements)
         {
-            var list  = GenerateListNode();
-            var array = new Node[list.Count];
-            list.CopyTo(array, 0);
-            Assert.That(array, Is.EqualTo(list));
+            var listNode = new ListNode(elementType, elements);
+            var array    = new Node[elements.Length];
+            listNode.CopyTo(array, 0);
+            Assert.That(array, Is.EqualTo(elements));
         }
 
         [Test(Description = "Check that an exception is thrown when the destination array is null.")]
-        public void CopyToNullTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void CopyToNullTest(NodeType elementType, Node[] elements)
         {
-            var list = GenerateListNode();
-            Assert.That(() => { list.CopyTo(null, 0); }, Throws.ArgumentNullException);
+            var listNode = new ListNode(elementType, elements);
+            Assert.That(() => { listNode.CopyTo(null, 0); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when the starting index is negative.")]
-        public void CopyToNegativeIndexTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void CopyToNegativeIndexTest(NodeType elementType, Node[] elements)
         {
-            var list  = GenerateListNode();
-            var array = new Node[list.Count];
-            Assert.That(() => { list.CopyTo(array, -3); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var listNode = new ListNode(elementType, elements);
+            var array    = new Node[elements.Length];
+            Assert.That(() => { listNode.CopyTo(array, -3); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when the starting index is past the bounds of the array.")]
-        public void CopyToIndexTooLargeTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void CopyToIndexTooLargeTest(NodeType elementType, Node[] elements)
         {
-            var list  = GenerateListNode();
-            var array = new Node[list.Count];
-            Assert.That(() => { list.CopyTo(array, array.Length + 1); }, Throws.ArgumentException);
+            var listNode = new ListNode(elementType, elements);
+            var array    = new Node[elements.Length];
+            Assert.That(() => { listNode.CopyTo(array, array.Length + 1); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when the destination array is too small the list.")]
-        public void CopyToArrayTooSmallTest()
+        [TestCaseSource(nameof(RandomNodeCollections))]
+        public void CopyToArrayTooSmallTest(NodeType elementType, Node[] elements)
         {
-            var list  = GenerateListNode();
-            var array = new Node[list.Count - 1];
-            Assert.That(() => { list.CopyTo(array, 0); }, Throws.ArgumentException);
+            var randomizer = TestContext.CurrentContext.Random;
+            var trimLength = randomizer.Next(elements.Length) + 1;
+            var listNode   = new ListNode(elementType, elements);
+            var array      = new Node[elements.Length - trimLength];
+            Assert.That(() => { listNode.CopyTo(array, 0); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that removing a node works as expected.")]
@@ -466,6 +487,18 @@ namespace Leaf.Tests.Nodes
             return new ListNode(NodeSet[0].Type, NodeSet);
         }
 
+        private static IEnumerable AllTypesNodeCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            foreach (var elementType in Enum.GetValues(typeof(NodeType)).Cast<NodeType>())
+            {
+                if (elementType == NodeType.End || elementType == NodeType.List || elementType == NodeType.Composite)
+                    continue;
+                var elements = NodeBuilders.GenerateMultipleOfType(randomizer, elementType).ToArray();
+                yield return new object[] {elementType, elements};
+            }
+        }
+
         private static IEnumerable<NodeType> RandomNodeTypes()
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -497,6 +530,19 @@ namespace Leaf.Tests.Nodes
                 var mixedNode = randomizer.NextNodeOfType(mixedInType);
                 var index     = randomizer.Next(0, elements.Count);
                 elements.Insert(index, mixedNode);
+                yield return new object[] {elementType, elements.ToArray()};
+            }
+        }
+
+        private static IEnumerable RandomNodesWithNullCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var elementType = randomizer.NextNonNestableNodeType();
+                var elements  = NodeBuilders.GenerateMultipleOfType(randomizer, elementType).ToList();
+                var index     = randomizer.Next(0, elements.Count);
+                elements.Insert(index, null);
                 yield return new object[] {elementType, elements.ToArray()};
             }
         }
