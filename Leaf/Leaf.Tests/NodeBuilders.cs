@@ -215,7 +215,12 @@ namespace Leaf.Tests
             return new CompositeNode(pairs);
         }
 
-        private static IEnumerable<KeyValuePair<string, Node>> GenerateNamedNodes(Randomizer randomizer)
+        /// <summary>
+        /// Creates multiple named nodes of varying types.
+        /// </summary>
+        /// <param name="randomizer">Testing randomizer.</param>
+        /// <returns>Collection of named nodes.</returns>
+        public static IEnumerable<KeyValuePair<string, Node>> GenerateNamedNodes(Randomizer randomizer)
         {
             var count = randomizer.Next(5, 20);
             for (var i = 0; i < count; ++i)
