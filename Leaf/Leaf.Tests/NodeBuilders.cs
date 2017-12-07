@@ -188,7 +188,7 @@ namespace Leaf.Tests
         /// <returns>A <see cref="ListNode"/> with random contents.</returns>
         public static ListNode NextListNode(this Randomizer randomizer)
         {
-            var elementType = randomizer.NextNodeType();
+            var elementType = randomizer.NextNonNestableNodeType();
             return NextListNodeOfType(randomizer, elementType);
         }
 
@@ -221,7 +221,8 @@ namespace Leaf.Tests
             for (var i = 0; i < count; ++i)
             {
                 var name = randomizer.GetString();
-                var node = NextNode(randomizer);
+                var type = randomizer.NextNonNestableNodeType();
+                var node = NextNodeOfType(randomizer, type);
                 yield return new KeyValuePair<string, Node>(name, node);
             }
         }
