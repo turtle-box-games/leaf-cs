@@ -51,6 +51,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that the contents constructor adds the same nodes.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void ContentsConstructorTest(NodeType elementType, Node[] elements)
         {
             var node = new ListNode(elementType, elements);
@@ -80,6 +81,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that appending a node works.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void AddTest(NodeType elementType, Node[] elements)
         {
             var listNode = new ListNode(elementType, elements);
@@ -94,6 +96,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that an exception is thrown when attempting to append null.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void AddNullTest(NodeType elementType, Node[] elements)
         {
             var listNode = new ListNode(elementType, elements);
@@ -102,6 +105,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check  that an exception is thrown when attempting to append a node of a different type.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void AddTypeMismatchTest(NodeType elementType, Node[] elements)
         {
             var listNode   = new ListNode(elementType, elements);
@@ -124,6 +128,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that an item can be found in the list.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void ContainsTest(NodeType elementType, Node[] elements)
         {
             var listNode   = new ListNode(elementType, elements);
@@ -134,6 +139,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that false is returned when an item can't be found in the list.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void NotContainsTest(NodeType elementType, Node[] elements)
         {
             var listNode   = new ListNode(elementType, elements);
@@ -144,6 +150,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that an exception is thrown when attempting to look for null.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void ContainsNullTest(NodeType elementType, Node[] elements)
         {
             var listNode = new ListNode(elementType, elements);
@@ -152,6 +159,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that nodes in the list can be copied to an array.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void CopyToTest(NodeType elementType, Node[] elements)
         {
             var listNode = new ListNode(elementType, elements);
@@ -254,6 +262,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that an item can be found in the list.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void IndexOfTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -265,6 +274,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that a negative index is returned for an item that can't be found in the list.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void IndexOfNonExistentTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -283,6 +293,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that the insert method works for non-end indices.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void InsertTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -294,6 +305,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that inserting an item at the start of the list works as expected.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void InsertFirstTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -305,6 +317,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that inserting an item at the end of the list works as expected.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void InsertLastTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -412,6 +425,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that the getter works as expected.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void GetterTest(NodeType elementType, Node[] elements)
         {
             var listNode = new ListNode(elementType, elements);
@@ -443,6 +457,7 @@ namespace Leaf.Tests.Nodes
 
         [Test(Description = "Check that the setter works as expected.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void SetterTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -484,6 +499,7 @@ namespace Leaf.Tests.Nodes
         [Test(Description =
             "Check that an exception is thrown when attempting to set an element to a different node type.")]
         [TestCaseSource(nameof(AllTypesNodeCollections))]
+        [TestCaseSource(nameof(ListOfListCollections))]
         public void SetterTypeMismatchTest(NodeType elementType, Node[] elements)
         {
             var randomizer = TestContext.CurrentContext.Random;
@@ -504,6 +520,23 @@ namespace Leaf.Tests.Nodes
                     continue;
                 var elements = NodeBuilders.GenerateMultipleOfType(randomizer, elementType).ToArray();
                 yield return new object[] {elementType, elements};
+            }
+        }
+
+        private static IEnumerable ListOfListCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var listCount = randomizer.Next(5, 20);
+                var listNodes = new ListNode[listCount];
+                for (var j = 0; j < listCount; ++j)
+                {
+                    var elementType = randomizer.NextNonNestableNodeType();
+                    var elements    = NodeBuilders.GenerateMultipleOfType(randomizer, elementType);
+                    listNodes[j]    = new ListNode(elementType, elements);
+                }
+                yield return new object[] {NodeType.List, listNodes};
             }
         }
 
