@@ -565,7 +565,7 @@ namespace Leaf.Tests.Nodes
                 var compositeNodes = new CompositeNode[compositeCount];
                 for (var j = 0; j < compositeCount; ++j)
                 {
-                    var pairs = NodeBuilders.GenerateNamedNodes(randomizer);
+                    var pairs = NodeBuilders.GenerateMultipleNamedNodes(randomizer);
                     compositeNodes[j] = new CompositeNode(pairs);
                 }
                 yield return new object[] {NodeType.Composite, compositeNodes};

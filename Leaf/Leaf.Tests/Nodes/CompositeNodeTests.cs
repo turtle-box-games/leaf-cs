@@ -61,7 +61,7 @@ namespace Leaf.Tests.Nodes
         public void AddPairTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("add", new StringNode("pair"));
+            var pair          = NodeBuilders.GenerateNamedNode(TestContext.CurrentContext.Random);
             compositeNode.Add(pair);
             Assert.That(compositeNode, Contains.Item(pair));
         }
@@ -71,7 +71,7 @@ namespace Leaf.Tests.Nodes
         public void AddPairNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("add", null);
+            var pair          = new KeyValuePair<string, Node>("add", null);
             Assert.That(() => { compositeNode.Add(pair); }, Throws.ArgumentException);
         }
 
@@ -80,7 +80,8 @@ namespace Leaf.Tests.Nodes
         public void AddPairNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>(null, new StringNode("pair"));
+            var newNode       = TestContext.CurrentContext.Random.NextNode();
+            var pair          = new KeyValuePair<string, Node>(null, newNode);
             Assert.That(() => { compositeNode.Add(pair); }, Throws.ArgumentException);
         }
 
@@ -91,7 +92,7 @@ namespace Leaf.Tests.Nodes
         public void AddExistingPairTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = nodePairs[1];
+            var pair          = nodePairs[1];
             Assert.That(() => { compositeNode.Add(pair); }, Throws.ArgumentException);
         }
 
@@ -111,7 +112,7 @@ namespace Leaf.Tests.Nodes
         public void ContainsTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = nodePairs[1];
+            var pair          = nodePairs[1];
             Assert.That(compositeNode, Contains.Item(pair));
         }
 
@@ -122,7 +123,7 @@ namespace Leaf.Tests.Nodes
         public void ContainsFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("contains", new StringNode("false"));
+            var pair          = NodeBuilders.GenerateNamedNode(TestContext.CurrentContext.Random);
             Assert.That(compositeNode, Does.Not.Contain(pair));
         }
 
@@ -131,7 +132,7 @@ namespace Leaf.Tests.Nodes
         public void ContainsNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("contains", null);
+            var pair          = new KeyValuePair<string, Node>("contains", null);
             Assert.That(() => { compositeNode.Contains(pair); }, Throws.ArgumentException);
         }
 
@@ -140,7 +141,8 @@ namespace Leaf.Tests.Nodes
         public void ContainsNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>(null, new StringNode("contains"));
+            var newNode       = TestContext.CurrentContext.Random.NextNode();
+            var pair          = new KeyValuePair<string, Node>(null, newNode);
             Assert.That(() => { compositeNode.Contains(pair); }, Throws.ArgumentException);
         }
 
@@ -149,7 +151,7 @@ namespace Leaf.Tests.Nodes
         public void CopyToTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var array = new KeyValuePair<string, Node>[compositeNode.Count];
+            var array         = new KeyValuePair<string, Node>[compositeNode.Count];
             compositeNode.CopyTo(array, 0);
             Assert.That(array, Is.EquivalentTo(compositeNode));
         }
@@ -167,7 +169,7 @@ namespace Leaf.Tests.Nodes
         public void CopyToNegativeIndexTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var array = new KeyValuePair<string, Node>[compositeNode.Count];
+            var array         = new KeyValuePair<string, Node>[compositeNode.Count];
             Assert.That(() => { compositeNode.CopyTo(array, -3); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
@@ -177,7 +179,7 @@ namespace Leaf.Tests.Nodes
         public void CopyToIndexTooLargeTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var array = new KeyValuePair<string, Node>[compositeNode.Count];
+            var array         = new KeyValuePair<string, Node>[compositeNode.Count];
             Assert.That(() => { compositeNode.CopyTo(array, array.Length + 1); }, Throws.ArgumentException);
         }
 
@@ -186,7 +188,7 @@ namespace Leaf.Tests.Nodes
         public void CopyToArrayTooSmallTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var array = new KeyValuePair<string, Node>[compositeNode.Count - 1];
+            var array         = new KeyValuePair<string, Node>[compositeNode.Count - 1];
             Assert.That(() => { compositeNode.CopyTo(array, 0); }, Throws.ArgumentException);
         }
 
@@ -197,8 +199,8 @@ namespace Leaf.Tests.Nodes
         public void RemovePairTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var list = nodePairs.ToList();
-            var pair = list[1];
+            var list          = nodePairs.ToList();
+            var pair          = list[1];
             list.Remove(pair);
             Assert.Multiple(() =>
             {
@@ -215,7 +217,7 @@ namespace Leaf.Tests.Nodes
         public void RemovePairDifferentKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("different", nodePairs[1].Value);
+            var pair          = new KeyValuePair<string, Node>("different", nodePairs[1].Value);
             Assert.Multiple(() =>
             {
                 Assert.That(compositeNode.Remove(pair), Is.False);
@@ -231,7 +233,8 @@ namespace Leaf.Tests.Nodes
         public void RemovePairDifferentNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>(nodePairs[1].Key, new FlagNode(true));
+            var newNode       = TestContext.CurrentContext.Random.NextNode();
+            var pair          = new KeyValuePair<string, Node>(nodePairs[1].Key, newNode);
             Assert.Multiple(() =>
             {
                 Assert.That(compositeNode.Remove(pair), Is.False);
@@ -247,7 +250,7 @@ namespace Leaf.Tests.Nodes
         public void RemovePairFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("remove", new FlagNode(false));
+            var pair          = NodeBuilders.GenerateNamedNode(TestContext.CurrentContext.Random);
             Assert.Multiple(() =>
             {
                 Assert.That(compositeNode.Remove(pair), Is.False);
@@ -260,7 +263,7 @@ namespace Leaf.Tests.Nodes
         public void RemovePairNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>("remove", null);
+            var pair          = new KeyValuePair<string, Node>("remove", null);
             Assert.That(() => { compositeNode.Remove(pair); }, Throws.ArgumentException);
         }
 
@@ -269,7 +272,7 @@ namespace Leaf.Tests.Nodes
         public void RemovePairNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair = new KeyValuePair<string, Node>(null, new StringNode("remove"));
+            var pair          = new KeyValuePair<string, Node>(null, new StringNode("remove"));
             Assert.That(() => { compositeNode.Remove(pair); }, Throws.ArgumentException);
         }
 
@@ -295,7 +298,7 @@ namespace Leaf.Tests.Nodes
         public void ContainsKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var key = nodePairs[1].Key;
+            var key           = nodePairs[1].Key;
             Assert.That(compositeNode.ContainsKey(key), Is.True);
         }
 
@@ -304,7 +307,7 @@ namespace Leaf.Tests.Nodes
         public void ContainsKeyFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            const string key = "contains";
+            const string key  = "contains";
             Assert.That(compositeNode.ContainsKey(key), Is.False);
         }
 
@@ -323,8 +326,8 @@ namespace Leaf.Tests.Nodes
         public void AddTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var other = new KeyValuePair<string, Node>("Add", new StringNode("node"));
-            var list  = nodePairs.ToList();
+            var other         = NodeBuilders.GenerateNamedNode(TestContext.CurrentContext.Random);
+            var list          = nodePairs.ToList();
             list.Add(other);
             compositeNode.Add(other.Key, other.Value);
             Assert.That(compositeNode, Is.EquivalentTo(list));
@@ -337,7 +340,7 @@ namespace Leaf.Tests.Nodes
         public void AddExistingTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var existing = nodePairs[1];
+            var existing      = nodePairs[1];
             Assert.That(() => { compositeNode.Add(existing.Key, existing.Value); }, Throws.ArgumentException);
         }
 
@@ -346,7 +349,8 @@ namespace Leaf.Tests.Nodes
         public void AddNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            Assert.That(() => { compositeNode.Add(null, new FlagNode(false)); }, Throws.ArgumentNullException);
+            var newNode       = TestContext.CurrentContext.Random.NextNode();
+            Assert.That(() => { compositeNode.Add(null, newNode); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to add a null node.")]
@@ -364,8 +368,8 @@ namespace Leaf.Tests.Nodes
         public void RemoveTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var other = nodePairs[1];
-            var list  = nodePairs.ToList();
+            var other         = nodePairs[1];
+            var list          = nodePairs.ToList();
             list.Remove(other);
             Assert.Multiple(() =>
             {
@@ -403,9 +407,9 @@ namespace Leaf.Tests.Nodes
         public void TryGetValueTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair     = nodePairs[1];
-            var expected = pair.Value;
-            var key      = pair.Key;
+            var pair          = nodePairs[1];
+            var expected      = pair.Value;
+            var key           = pair.Key;
             Assert.Multiple(() =>
             {
                 Node result;
@@ -439,9 +443,9 @@ namespace Leaf.Tests.Nodes
         public void GetterTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var pair     = nodePairs.First();
-            var expected = pair.Value;
-            var key      = pair.Key;
+            var pair          = nodePairs.First();
+            var expected      = pair.Value;
+            var key           = pair.Key;
             Assert.That(compositeNode[key], Is.EqualTo(expected));
         }
 
@@ -474,10 +478,10 @@ namespace Leaf.Tests.Nodes
         public void SetterTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var list    = nodePairs.ToList();
-            var key     = nodePairs[1].Key;
-            var newNode = new StringNode("setter");
-            list[1]     = new KeyValuePair<string, Node>(key, newNode);
+            var list          = nodePairs.ToList();
+            var key           = nodePairs[1].Key;
+            var newNode       = TestContext.CurrentContext.Random.NextNode();
+            list[1]           = new KeyValuePair<string, Node>(key, newNode);
             compositeNode[key] = newNode;
             Assert.Multiple(() =>
             {
@@ -492,10 +496,11 @@ namespace Leaf.Tests.Nodes
         [TestCaseSource(nameof(PairsOfCompositeNodes))]
         public void SetterNewTest(KeyValuePair<string, Node>[] nodePairs)
         {
+            var randomizer    = TestContext.CurrentContext.Random;
             var compositeNode = new CompositeNode(nodePairs);
-            var list = nodePairs.ToList();
-            const string key = "new";
-            var newNode = new StringNode("setter");
+            var list          = nodePairs.ToList();
+            var key           = randomizer.GetString();
+            var newNode       = randomizer.NextNode();
             list.Add(new KeyValuePair<string, Node>(key, newNode));
             compositeNode[key] = newNode;
             Assert.Multiple(() =>
@@ -510,7 +515,8 @@ namespace Leaf.Tests.Nodes
         public void SetterNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            Assert.That(() => { compositeNode[null] = new StringNode("setter"); }, Throws.ArgumentNullException);
+            var newNode       = TestContext.CurrentContext.Random.NextNode();
+            Assert.That(() => { compositeNode[null] = newNode; }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null node.")]
@@ -528,7 +534,7 @@ namespace Leaf.Tests.Nodes
         public void KeysTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var keys = nodePairs.Select(pair => pair.Key);
+            var keys          = nodePairs.Select(pair => pair.Key);
             Assert.That(compositeNode.Keys, Is.EquivalentTo(keys));
         }
 
@@ -539,7 +545,7 @@ namespace Leaf.Tests.Nodes
         public void ValuesTest(KeyValuePair<string, Node>[] nodePairs)
         {
             var compositeNode = new CompositeNode(nodePairs);
-            var values = nodePairs.Select(pair => pair.Value);
+            var values        = nodePairs.Select(pair => pair.Value);
             Assert.That(compositeNode.Values, Is.EquivalentTo(values));
         }
         
@@ -548,7 +554,7 @@ namespace Leaf.Tests.Nodes
             var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < Constants.RandomTestCount; ++i)
             {
-                var nodePairs = NodeBuilders.GenerateNamedNodes(randomizer);
+                var nodePairs = NodeBuilders.GenerateMultipleNamedNodes(randomizer);
                 yield return nodePairs.ToArray();
             }
         }
@@ -602,7 +608,7 @@ namespace Leaf.Tests.Nodes
             var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < Constants.RandomTestCount; ++i)
             {
-                var nodePairs     = NodeBuilders.GenerateNamedNodes(randomizer).ToList();
+                var nodePairs     = NodeBuilders.GenerateMultipleNamedNodes(randomizer).ToList();
                 var index         = randomizer.Next(nodePairs.Count);
                 var newNode       = randomizer.NextNode();
                 var malformedPair = new KeyValuePair<string, Node>(null, newNode);
@@ -616,7 +622,7 @@ namespace Leaf.Tests.Nodes
             var randomizer = TestContext.CurrentContext.Random;
             for (var i = 0; i < Constants.RandomTestCount; ++i)
             {
-                var nodePairs     = NodeBuilders.GenerateNamedNodes(randomizer).ToList();
+                var nodePairs     = NodeBuilders.GenerateMultipleNamedNodes(randomizer).ToList();
                 var index         = randomizer.Next(nodePairs.Count);
                 var name          = randomizer.GetString();
                 var malformedPair = new KeyValuePair<string, Node>(name, null);

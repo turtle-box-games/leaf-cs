@@ -211,7 +211,7 @@ namespace Leaf.Tests
         /// <returns>A <see cref="CompositeNode"/> with random contents.</returns>
         public static CompositeNode NextCompositeNode(this Randomizer randomizer)
         {
-            var pairs = GenerateNamedNodes(randomizer);
+            var pairs = GenerateMultipleNamedNodes(randomizer);
             return new CompositeNode(pairs);
         }
 
@@ -220,16 +220,24 @@ namespace Leaf.Tests
         /// </summary>
         /// <param name="randomizer">Testing randomizer.</param>
         /// <returns>Collection of named nodes.</returns>
-        public static IEnumerable<KeyValuePair<string, Node>> GenerateNamedNodes(Randomizer randomizer)
+        public static IEnumerable<KeyValuePair<string, Node>> GenerateMultipleNamedNodes(Randomizer randomizer)
         {
             var count = randomizer.Next(5, 20);
             for (var i = 0; i < count; ++i)
-            {
-                var name = randomizer.GetString();
-                var type = randomizer.NextNonNestableNodeType();
-                var node = NextNodeOfType(randomizer, type);
-                yield return new KeyValuePair<string, Node>(name, node);
-            }
+                yield return GenerateNamedNode(randomizer);
+        }
+        
+        /// <summary>
+        /// Creates a random node with a random name.
+        /// </summary>
+        /// <param name="randomizer">Testing randomizer.</param>
+        /// <returns>Node and its name.</returns>
+        public static KeyValuePair<string, Node> GenerateNamedNode(Randomizer randomizer)
+        {
+            var name = randomizer.GetString();
+            var type = randomizer.NextNonNestableNodeType();
+            var node = NextNodeOfType(randomizer, type);
+            return new KeyValuePair<string, Node>(name, node);
         }
 
         /// <summary>
