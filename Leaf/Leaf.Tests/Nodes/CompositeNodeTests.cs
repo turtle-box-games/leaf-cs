@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using Leaf.Nodes;
+using NUnit.Framework;
 
 namespace Leaf.Tests.Nodes
 {
@@ -19,7 +19,7 @@ namespace Leaf.Tests.Nodes
         [Test(Description = "Check that the version is the expected value.")]
         public void VersionTest()
         {
-            var node = GenerateCompositeNode();
+            var node = new CompositeNode();
             Assert.That(node.Version, Is.EqualTo(1));
         }
 
@@ -31,10 +31,13 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that the contents constructor adds the same nodes.")]
-        public void ContentsConstructorTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void ContentsConstructorTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = new CompositeNode(NodeSet);
-            Assert.That(node, Is.EquivalentTo(NodeSet));
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(compositeNode, Is.EquivalentTo(nodePairs));
         }
 
         [Test(Description = "Check that an exception is thrown for a null set of nodes.")]
@@ -44,449 +47,582 @@ namespace Leaf.Tests.Nodes
         }
 
         [Test(Description = "Check that an exception is thrown for null mixed in with nodes.")]
-        public void NullNodeContentsConstructorTest()
+        [TestCaseSource(nameof(NodePairsWithNullValue))]
+        [TestCaseSource(nameof(NodePairsWithNullName))]
+        public void NullNodeContentsConstructorTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            Assert.That(() => { new CompositeNode(NullNodeSet); }, Throws.ArgumentException);
-        }
-
-        [Test(Description = "Check that an exception is thrown for null as a key.")]
-        public void NullKeyContentsConstructorTest()
-        {
-            Assert.That(() => { new CompositeNode(NullStringSet); }, Throws.ArgumentException);
+            Assert.That(() => { new CompositeNode(nodePairs); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that adding a key-value pair works as expected.")]
-        public void AddPairTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void AddPairTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>("add", new StringNode("pair"));
-            node.Add(pair);
-            Assert.That(node, Contains.Item(pair));
+            compositeNode.Add(pair);
+            Assert.That(compositeNode, Contains.Item(pair));
         }
 
         [Test(Description = "Check that an exception is thrown when adding a null node in a key-value pair.")]
-        public void AddPairNullNodeTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void AddPairNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>("add", null);
-            Assert.That(() => { node.Add(pair); }, Throws.ArgumentException);
+            Assert.That(() => { compositeNode.Add(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when adding a null key in a key-value pair.")]
-        public void AddPairNullKeyTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void AddPairNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>(null, new StringNode("pair"));
-            Assert.That(() => { node.Add(pair); }, Throws.ArgumentException);
+            Assert.That(() => { compositeNode.Add(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when adding an existing key-value pair.")]
-        public void AddExistingPairTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void AddExistingPairTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var pair = NodeSet[1];
-            Assert.That(() => { node.Add(pair); }, Throws.ArgumentException);
+            var compositeNode = new CompositeNode(nodePairs);
+            var pair = nodePairs[1];
+            Assert.That(() => { compositeNode.Add(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that the set is empty after clearing it.")]
-        public void ClearTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void ClearTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            node.Clear();
-            Assert.That(node, Is.Empty);
+            var compositeNode = new CompositeNode(nodePairs);
+            compositeNode.Clear();
+            Assert.That(compositeNode, Is.Empty);
         }
 
         [Test(Description = "Check that a key-value pair can be found in the set.")]
-        public void ContainsTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void ContainsTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var pair = NodeSet[1];
-            Assert.That(node, Contains.Item(pair));
+            var compositeNode = new CompositeNode(nodePairs);
+            var pair = nodePairs[1];
+            Assert.That(compositeNode, Contains.Item(pair));
         }
 
         [Test(Description = "Check that false is returned when a key-value pair can't be found in the set.")]
-        public void ContainsFalseTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void ContainsFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>("contains", new StringNode("false"));
-            Assert.That(node, Does.Not.Contain(pair));
+            Assert.That(compositeNode, Does.Not.Contain(pair));
         }
 
         [Test(Description = "Check that an exception is thrown when checking for a null node.")]
-        public void ContainsNullNodeTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void ContainsNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>("contains", null);
-            Assert.That(() => { node.Contains(pair); }, Throws.ArgumentException);
+            Assert.That(() => { compositeNode.Contains(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when checking for a null key.")]
-        public void ContainsNullKeyTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void ContainsNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>(null, new StringNode("contains"));
-            Assert.That(() => { node.Contains(pair); }, Throws.ArgumentException);
+            Assert.That(() => { compositeNode.Contains(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that nodes in the set can be copied to an array.")]
-        public void CopyToTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        public void CopyToTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var set   = GenerateCompositeNode();
-            var array = new KeyValuePair<string, Node>[set.Count];
-            set.CopyTo(array, 0);
-            Assert.That(array, Is.EquivalentTo(set));
+            var compositeNode = new CompositeNode(nodePairs);
+            var array = new KeyValuePair<string, Node>[compositeNode.Count];
+            compositeNode.CopyTo(array, 0);
+            Assert.That(array, Is.EquivalentTo(compositeNode));
         }
 
         [Test(Description = "Check that an exception is thrown when the destination array is null.")]
-        public void CopyToNullTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void CopyToNullTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var set = GenerateCompositeNode();
-            Assert.That(() => { set.CopyTo(null, 0); }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode.CopyTo(null, 0); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when the starting index is negative.")]
-        public void CopyToNegativeIndexTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void CopyToNegativeIndexTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var set = GenerateCompositeNode();
-            var array = new KeyValuePair<string, Node>[set.Count];
-            Assert.That(() => { set.CopyTo(array, -3); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
+            var compositeNode = new CompositeNode(nodePairs);
+            var array = new KeyValuePair<string, Node>[compositeNode.Count];
+            Assert.That(() => { compositeNode.CopyTo(array, -3); }, Throws.InstanceOf<ArgumentOutOfRangeException>());
         }
 
         [Test(Description =
             "Check that an exception is thrown when the starting index is past the bounds of the array.")]
-        public void CopyToIndexTooLargeTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void CopyToIndexTooLargeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var set   = GenerateCompositeNode();
-            var array = new KeyValuePair<string, Node>[set.Count];
-            Assert.That(() => { set.CopyTo(array, array.Length + 1); }, Throws.ArgumentException);
+            var compositeNode = new CompositeNode(nodePairs);
+            var array = new KeyValuePair<string, Node>[compositeNode.Count];
+            Assert.That(() => { compositeNode.CopyTo(array, array.Length + 1); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when the destination array is too small for the set.")]
-        public void CopyToArrayTooSmallTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void CopyToArrayTooSmallTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var set   = GenerateCompositeNode();
-            var array = new KeyValuePair<string, Node>[set.Count - 1];
-            Assert.That(() => { set.CopyTo(array, 0); }, Throws.ArgumentException);
+            var compositeNode = new CompositeNode(nodePairs);
+            var array = new KeyValuePair<string, Node>[compositeNode.Count - 1];
+            Assert.That(() => { compositeNode.CopyTo(array, 0); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that removing a key-value pair works as expected.")]
-        public void RemovePairTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void RemovePairTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var list = NodeSet.ToList();
+            var compositeNode = new CompositeNode(nodePairs);
+            var list = nodePairs.ToList();
             var pair = list[1];
             list.Remove(pair);
             Assert.Multiple(() =>
             {
-                Assert.That(node.Remove(pair), Is.True);
-                Assert.That(node, Is.EquivalentTo(list));
+                Assert.That(compositeNode.Remove(pair), Is.True);
+                Assert.That(compositeNode, Is.EquivalentTo(list));
             });
         }
 
         [Test(Description =
             "Check that attempting to remove a key-value pair with a different key doesn't remove anything.")]
-        public void RemovePairDifferentKeyTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void RemovePairDifferentKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var pair = new KeyValuePair<string, Node>("different", NodeSet[1].Value);
+            var compositeNode = new CompositeNode(nodePairs);
+            var pair = new KeyValuePair<string, Node>("different", nodePairs[1].Value);
             Assert.Multiple(() =>
             {
-                Assert.That(node.Remove(pair), Is.False);
-                Assert.That(node, Is.EquivalentTo(NodeSet));
+                Assert.That(compositeNode.Remove(pair), Is.False);
+                Assert.That(compositeNode, Is.EquivalentTo(nodePairs));
             });
         }
 
         [Test(Description =
             "Check that attempting to remove a key-value pair with a different node doesn't remove anything.")]
-        public void RemovePairDifferentNodeTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void RemovePairDifferentNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var pair = new KeyValuePair<string, Node>(NodeSet[1].Key, new FlagNode(true));
+            var compositeNode = new CompositeNode(nodePairs);
+            var pair = new KeyValuePair<string, Node>(nodePairs[1].Key, new FlagNode(true));
             Assert.Multiple(() =>
             {
-                Assert.That(node.Remove(pair), Is.False);
-                Assert.That(node, Is.EquivalentTo(NodeSet));
+                Assert.That(compositeNode.Remove(pair), Is.False);
+                Assert.That(compositeNode, Is.EquivalentTo(nodePairs));
             });
         }
 
         [Test(Description =
             "Check that attempting to remove an entirely different key-value pair doesn't remove anything.")]
-        public void RemovePairFalseTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void RemovePairFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>("remove", new FlagNode(false));
             Assert.Multiple(() =>
             {
-                Assert.That(node.Remove(pair), Is.False);
-                Assert.That(node, Is.EquivalentTo(NodeSet));
+                Assert.That(compositeNode.Remove(pair), Is.False);
+                Assert.That(compositeNode, Is.EquivalentTo(nodePairs));
             });
         }
 
         [Test(Description = "Check that an exception is thrown when the node is null.")]
-        public void RemovePairNullNodeTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void RemovePairNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>("remove", null);
-            Assert.That(() => { node.Remove(pair); }, Throws.ArgumentException);
+            Assert.That(() => { compositeNode.Remove(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when the key is null.")]
-        public void RemovePairNullKeyTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void RemovePairNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var pair = new KeyValuePair<string, Node>(null, new StringNode("remove"));
-            Assert.That(() => { node.Remove(pair); }, Throws.ArgumentException);
+            Assert.That(() => { compositeNode.Remove(pair); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that the count is the expected amount.")]
-        public void CountTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void CountTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(node.Count, Is.EqualTo(NodeSet.Length));
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(compositeNode.Count, Is.EqualTo(nodePairs.Length));
         }
 
         [Test(Description = "Check that the read-only property returns the expected value.")]
         public void IsReadOnlyTest()
         {
-            var node = GenerateCompositeNode();
-            Assert.That(node.IsReadOnly, Is.False);
+            var compositeNode = new CompositeNode();
+            Assert.That(compositeNode.IsReadOnly, Is.False);
         }
 
         [Test(Description = "Check that an existing key is found in the set.")]
-        public void ContainsKeyTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void ContainsKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var key = NodeSet[1].Key;
-            Assert.That(node.ContainsKey(key), Is.True);
+            var compositeNode = new CompositeNode(nodePairs);
+            var key = nodePairs[1].Key;
+            Assert.That(compositeNode.ContainsKey(key), Is.True);
         }
 
         [Test(Description = "Check that a non-existent key is not found in the set.")]
-        public void ContainsKeyFalseTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void ContainsKeyFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             const string key = "contains";
-            Assert.That(node.ContainsKey(key), Is.False);
+            Assert.That(compositeNode.ContainsKey(key), Is.False);
         }
 
         [Test(Description = "Check that an exception is thrown when looking for a null key.")]
-        public void ContainsKeyNullTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void ContainsKeyNullTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(() => { node.ContainsKey(null); }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode.ContainsKey(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that adding a new node works as expected.")]
-        public void AddTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void AddTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node  = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             var other = new KeyValuePair<string, Node>("Add", new StringNode("node"));
-            var list  = NodeSet.ToList();
+            var list  = nodePairs.ToList();
             list.Add(other);
-            node.Add(other.Key, other.Value);
-            Assert.That(node, Is.EquivalentTo(list));
+            compositeNode.Add(other.Key, other.Value);
+            Assert.That(compositeNode, Is.EquivalentTo(list));
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to add a node with an existing key.")]
-        public void AddExistingTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void AddExistingTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node     = GenerateCompositeNode();
-            var existing = NodeSet[1];
-            Assert.That(() => { node.Add(existing.Key, existing.Value); }, Throws.ArgumentException);
+            var compositeNode = new CompositeNode(nodePairs);
+            var existing = nodePairs[1];
+            Assert.That(() => { compositeNode.Add(existing.Key, existing.Value); }, Throws.ArgumentException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
-        public void AddNullKeyTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void AddNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(() => { node.Add(null, new FlagNode(false)); }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode.Add(null, new FlagNode(false)); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to add a null node.")]
-        public void AddNullNodeTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void AddNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(() => { node.Add("Add", null); }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode.Add("Add", null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that removing a node by its key works as expected.")]
-        public void RemoveTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void RemoveTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node  = GenerateCompositeNode();
-            var other = NodeSet[1];
-            var list  = NodeSet.ToList();
+            var compositeNode = new CompositeNode(nodePairs);
+            var other = nodePairs[1];
+            var list  = nodePairs.ToList();
             list.Remove(other);
             Assert.Multiple(() =>
             {
-                Assert.That(node.Remove(other.Key), Is.True);
-                Assert.That(node, Is.EquivalentTo(list));
+                Assert.That(compositeNode.Remove(other.Key), Is.True);
+                Assert.That(compositeNode, Is.EquivalentTo(list));
             });
         }
 
         [Test(Description = "Check that removing a non-existent node doesn't modify the set.")]
-        public void RemoveFalseTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void RemoveFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             Assert.Multiple(() =>
             {
-                Assert.That(node.Remove("Remove"), Is.False);
-                Assert.That(node, Is.EquivalentTo(NodeSet));
+                Assert.That(compositeNode.Remove("Remove"), Is.False);
+                Assert.That(compositeNode, Is.EquivalentTo(nodePairs));
             });
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
-        public void RemoveNullTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void RemoveNullTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(() => { node.Remove(null); }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode.Remove(null); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that a node can be found by its key.")]
-        public void TryGetValueTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void TryGetValueTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node     = GenerateCompositeNode();
-            var pair     = NodeSet[1];
+            var compositeNode = new CompositeNode(nodePairs);
+            var pair     = nodePairs[1];
             var expected = pair.Value;
             var key      = pair.Key;
             Assert.Multiple(() =>
             {
                 Node result;
-                Assert.That(node.TryGetValue(key, out result), Is.True);
+                Assert.That(compositeNode.TryGetValue(key, out result), Is.True);
                 Assert.That(result, Is.EqualTo(expected));
             });
         }
 
         [Test(Description = "Check that false is returned when a node can't be found.")]
-        public void TryGetValueFalseTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void TryGetValueFalseTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             Node result;
-            Assert.That(node.TryGetValue("TryGetValue", out result), Is.False);
+            Assert.That(compositeNode.TryGetValue("TryGetValue", out result), Is.False);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
-        public void TryGetValueNullTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void TryGetValueNullTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             Node result;
-            Assert.That(() => { node.TryGetValue(null, out result); }, Throws.ArgumentNullException);
+            Assert.That(() => { compositeNode.TryGetValue(null, out result); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that a node can be retrieved.")]
-        public void GetterTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void GetterTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node     = GenerateCompositeNode();
-            var pair     = NodeSet.First();
+            var compositeNode = new CompositeNode(nodePairs);
+            var pair     = nodePairs.First();
             var expected = pair.Value;
             var key      = pair.Key;
-            Assert.That(node[key], Is.EqualTo(expected));
+            Assert.That(compositeNode[key], Is.EqualTo(expected));
         }
 
         [Test(Description = "Check that an exception is thrown when a key doesn't exist.")]
-        public void GetterNotFoundTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void GetterNotFoundTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             Assert.That(() =>
             {
-                var _ = node["404"];
+                var _ = compositeNode["404"];
             }, Throws.InstanceOf<KeyNotFoundException>());
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
-        public void GetterNullTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void GetterNullTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
+            var compositeNode = new CompositeNode(nodePairs);
             Assert.That(() =>
             {
-                var _ = node[null];
+                var _ = compositeNode[null];
             }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that updating an existing key works as expected.")]
-        public void SetterTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void SetterTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node    = GenerateCompositeNode();
-            var list    = NodeSet.ToList();
-            var key     = NodeSet[1].Key;
+            var compositeNode = new CompositeNode(nodePairs);
+            var list    = nodePairs.ToList();
+            var key     = nodePairs[1].Key;
             var newNode = new StringNode("setter");
             list[1]     = new KeyValuePair<string, Node>(key, newNode);
-            node[key]   = newNode;
+            compositeNode[key] = newNode;
             Assert.Multiple(() =>
             {
-                Assert.That(node[key], Is.EqualTo(newNode));
-                Assert.That(node, Is.EquivalentTo(list));
+                Assert.That(compositeNode[key], Is.EqualTo(newNode));
+                Assert.That(compositeNode, Is.EquivalentTo(list));
             });
         }
 
         [Test(Description = "Check that setting a new key and node works as expected.")]
-        public void SetterNewTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void SetterNewTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var list = NodeSet.ToList();
+            var compositeNode = new CompositeNode(nodePairs);
+            var list = nodePairs.ToList();
             const string key = "new";
             var newNode = new StringNode("setter");
             list.Add(new KeyValuePair<string, Node>(key, newNode));
-            node[key] = newNode;
+            compositeNode[key] = newNode;
             Assert.Multiple(() =>
             {
-                Assert.That(node[key], Is.EqualTo(newNode));
-                Assert.That(node, Is.EquivalentTo(list));
+                Assert.That(compositeNode[key], Is.EqualTo(newNode));
+                Assert.That(compositeNode, Is.EquivalentTo(list));
             });
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null key.")]
-        public void SetterNullKeyTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void SetterNullKeyTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(() => { node[null] = new StringNode("setter"); }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode[null] = new StringNode("setter"); }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an exception is thrown when attempting to use a null node.")]
-        public void SetterNullNodeTest()
+        [TestCaseSource(nameof(RandomNodesCollections))]
+        public void SetterNullNodeTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            Assert.That(() => { node["foo"] = null; }, Throws.ArgumentNullException);
+            var compositeNode = new CompositeNode(nodePairs);
+            Assert.That(() => { compositeNode["foo"] = null; }, Throws.ArgumentNullException);
         }
 
         [Test(Description = "Check that an expected set of keys is returned.")]
-        public void KeysTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void KeysTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node = GenerateCompositeNode();
-            var keys = NodeSet.Select(pair => pair.Key);
-            Assert.That(node.Keys, Is.EquivalentTo(keys));
+            var compositeNode = new CompositeNode(nodePairs);
+            var keys = nodePairs.Select(pair => pair.Key);
+            Assert.That(compositeNode.Keys, Is.EquivalentTo(keys));
         }
 
         [Test(Description = "Check that an expected set of nodes is returned.")]
-        public void ValuesTest()
+        [TestCaseSource(nameof(AllNodesCollections))]
+        [TestCaseSource(nameof(PairsOfListNodes))]
+        [TestCaseSource(nameof(PairsOfCompositeNodes))]
+        public void ValuesTest(KeyValuePair<string, Node>[] nodePairs)
         {
-            var node   = GenerateCompositeNode();
-            var values = NodeSet.Select(pair => pair.Value);
-            Assert.That(node.Values, Is.EquivalentTo(values));
+            var compositeNode = new CompositeNode(nodePairs);
+            var values = nodePairs.Select(pair => pair.Value);
+            Assert.That(compositeNode.Values, Is.EquivalentTo(values));
+        }
+        
+        private static IEnumerable<KeyValuePair<string, Node>[]> RandomNodesCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var nodePairs = NodeBuilders.GenerateNamedNodes(randomizer);
+                yield return nodePairs.ToArray();
+            }
+        }
+        
+        private static IEnumerable<KeyValuePair<string, Node>[]> AllNodesCollections()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            foreach (var elementType in Enum.GetValues(typeof(NodeType)).Cast<NodeType>())
+            {
+                if (elementType == NodeType.End || elementType == NodeType.List || elementType == NodeType.Composite)
+                    continue;
+                var nodes = NodeBuilders.GenerateMultipleOfType(randomizer, elementType).ToArray();
+                yield return nodes.Select((node) =>
+                {
+                    var name = randomizer.GetString();
+                    return new KeyValuePair<string, Node>(name, node);
+                }).ToArray();
+            }
         }
 
-        private static readonly KeyValuePair<string, Node>[] NodeSet =
+        private static IEnumerable<KeyValuePair<string, Node>[]> PairsOfListNodes()
         {
-            new KeyValuePair<string, Node>("foo", new StringNode("bar")),
-            new KeyValuePair<string, Node>("num", new Int32Node(12345)),
-            new KeyValuePair<string, Node>("dec", new Float32Node(1.23f))
-        };
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var nodes = NodeBuilders.GenerateMultipleOfType(randomizer, NodeType.List).ToArray();
+                yield return nodes.Select((node) =>
+                {
+                    var name = randomizer.GetString();
+                    return new KeyValuePair<string, Node>(name, node);
+                }).ToArray();
+            }
+        }
 
-        private static readonly KeyValuePair<string, Node>[] NullNodeSet =
+        private static IEnumerable<KeyValuePair<string, Node>[]> PairsOfCompositeNodes()
         {
-            new KeyValuePair<string, Node>("foo", new StringNode("bar")),
-            new KeyValuePair<string, Node>("num", null),
-            new KeyValuePair<string, Node>("dec", new Float32Node(1.23f))
-        };
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var nodes = NodeBuilders.GenerateMultipleOfType(randomizer, NodeType.Composite).ToArray();
+                yield return nodes.Select((node) =>
+                {
+                    var name = randomizer.GetString();
+                    return new KeyValuePair<string, Node>(name, node);
+                }).ToArray();
+            }
+        }
 
-        private static readonly KeyValuePair<string, Node>[] NullStringSet =
+        private static IEnumerable<KeyValuePair<string, Node>[]> NodePairsWithNullName()
         {
-            new KeyValuePair<string, Node>("foo", new StringNode("bar")),
-            new KeyValuePair<string, Node>(null, new Int32Node(12345)),
-            new KeyValuePair<string, Node>("dec", new Float32Node(1.23f))
-        };
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var nodePairs     = NodeBuilders.GenerateNamedNodes(randomizer).ToList();
+                var index         = randomizer.Next(nodePairs.Count);
+                var newNode       = randomizer.NextNode();
+                var malformedPair = new KeyValuePair<string, Node>(null, newNode);
+                nodePairs.Insert(index, malformedPair);
+                yield return nodePairs.ToArray();
+            }
+        }
 
-        private static CompositeNode GenerateCompositeNode()
+        private static IEnumerable<KeyValuePair<string, Node>[]> NodePairsWithNullValue()
         {
-            return new CompositeNode(NodeSet);
+            var randomizer = TestContext.CurrentContext.Random;
+            for (var i = 0; i < Constants.RandomTestCount; ++i)
+            {
+                var nodePairs     = NodeBuilders.GenerateNamedNodes(randomizer).ToList();
+                var index         = randomizer.Next(nodePairs.Count);
+                var name          = randomizer.GetString();
+                var malformedPair = new KeyValuePair<string, Node>(name, null);
+                nodePairs.Insert(index, malformedPair);
+                yield return nodePairs.ToArray();
+            }
         }
     }
 }
