@@ -1,38 +1,18 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Leaf.IO;
 using NUnit.Framework;
+using System.Linq;
+using static System.Linq.Enumerable;
 
 namespace Leaf.Tests.IO
 {
     [TestFixture(TestOf = typeof(EndianAwareBinaryReader))]
     public class EndianAwareBinaryReaderTests
     {
-        private static byte[] GetDecimalBytes(decimal value)
-        {
-            var ints = decimal.GetBits(value);
-            var bytes = new byte[sizeof(int) * ints.Length];
-            for (int i = 0, j = 0; i < ints.Length && j < bytes.Length; ++i)
-            {
-                var intBytes = BitConverter.GetBytes(ints[i]);
-                for (var k = 0; k < intBytes.Length; ++k, ++j)
-                    bytes[j] = intBytes[k];
-            }
-            return bytes;
-        }
-
-        private static void FlipByteArray(byte[] bytes)
-        {
-            var mid = bytes.Length / 2;
-            for (int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)
-            {
-                var b = bytes[i];
-                bytes[i] = bytes[j];
-                bytes[j] = b;
-            }
-        }
-
         [Test(Description = "Verify that the constructor throws an exception when the stream is null.")]
         public void NullStreamTest()
         {
@@ -148,19 +128,6 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadDecimal(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 16 bytes after reading a decimal.")]
-        public void ReadDecimalNoFlipPositionTest()
-        {
-            const decimal value = 1234567890m;
-            var bytes = GetDecimalBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadDecimal();
-                Assert.That(input.Position, Is.EqualTo(sizeof(decimal)));
-            }
-        }
-
         [Test(Description =
             "Check that a decimal value can be read when the stream is in the opposite endian as the system's.")]
         public void ReadDecimalFlipTest()
@@ -173,20 +140,6 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadDecimal(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 16 bytes after reading a decimal.")]
-        public void ReadDecimalFlipPositionTest()
-        {
-            const decimal value = 1234567890m;
-            var bytes = GetDecimalBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadDecimal();
-                Assert.That(input.Position, Is.EqualTo(sizeof(decimal)));
-            }
-        }
-
         [Test(Description =
             "Check that a single-precision floating-point value can be read when the stream is the same endian as the system's.")]
         public void ReadSingleNoFlipTest()
@@ -196,20 +149,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadSingle(), Is.EqualTo(value));
-        }
-
-        [Test(Description =
-            "Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.")]
-        public void ReadSingleNoFlipPositionTest()
-        {
-            const float value = 123456.789f;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadSingle();
-                Assert.That(input.Position, Is.EqualTo(sizeof(float)));
-            }
         }
 
         [Test(Description =
@@ -225,21 +164,6 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description =
-            "Check that the stream is advanced 4 bytes after reading a single-precision floating-point value.")]
-        public void ReadSingleFlipPositionTest()
-        {
-            const float value = 123456.789f;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadSingle();
-                Assert.That(input.Position, Is.EqualTo(sizeof(float)));
-            }
-        }
-
-        [Test(Description =
             "Check that a double-precision floating-point value can be read when the stream is the same endian as the system's.")]
         public void ReadDoubleNoFlipTest()
         {
@@ -248,20 +172,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadDouble(), Is.EqualTo(value));
-        }
-
-        [Test(Description =
-            "Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.")]
-        public void ReadDoubleNoFlipPositionTest()
-        {
-            const double value = 123456.789d;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadDouble();
-                Assert.That(input.Position, Is.EqualTo(sizeof(double)));
-            }
         }
 
         [Test(Description =
@@ -277,21 +187,6 @@ namespace Leaf.Tests.IO
         }
 
         [Test(Description =
-            "Check that the stream is advanced 8 bytes after reading a double-precision floating-point value.")]
-        public void ReadDoubleFlipPositionTest()
-        {
-            const double value = 123456.789d;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadDouble();
-                Assert.That(input.Position, Is.EqualTo(sizeof(double)));
-            }
-        }
-
-        [Test(Description =
             "Check that a 16-bit integer can be read when the stream is the same endian as the system's.")]
         public void ReadInt16NoFlipTest()
         {
@@ -300,19 +195,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadInt16(), Is.EqualTo(value));
-        }
-
-        [Test(Description = "Check that the stream is advanced 2 bytes after reading a 16-bit integer.")]
-        public void ReadInt16NoFlipPositionTest()
-        {
-            const short value = -12345;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadInt16();
-                Assert.That(input.Position, Is.EqualTo(sizeof(short)));
-            }
         }
 
         [Test(Description =
@@ -327,20 +209,6 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadInt16(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 2 bytes after reading a 16-bit integer.")]
-        public void ReadInt16FlipPositionTest()
-        {
-            const short value = -12345;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadInt16();
-                Assert.That(input.Position, Is.EqualTo(sizeof(short)));
-            }
-        }
-
         [Test(Description =
             "Check that a 32-bit integer can be read when the stream is the same endian as the system's.")]
         public void ReadInt32NoFlipTest()
@@ -350,19 +218,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadInt32(), Is.EqualTo(value));
-        }
-
-        [Test(Description = "Check that the stream is advanced 4 bytes after reading a 32-bit integer.")]
-        public void ReadInt32NoFlipPositionTest()
-        {
-            const int value = -1234567890;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadInt32();
-                Assert.That(input.Position, Is.EqualTo(sizeof(int)));
-            }
         }
 
         [Test(Description =
@@ -377,20 +232,6 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadInt32(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 4 bytes after reading a 32-bit integer.")]
-        public void ReadInt32FlipPositionTest()
-        {
-            const int value = -1234567890;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadInt32();
-                Assert.That(input.Position, Is.EqualTo(sizeof(int)));
-            }
-        }
-
         [Test(Description =
             "Check that a 64-bit integer can be read when the stream is the same endian as the system's.")]
         public void ReadInt64NoFlipTest()
@@ -400,19 +241,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadInt64(), Is.EqualTo(value));
-        }
-
-        [Test(Description = "Check that the stream is advanced 8 bytes after reading a 64-bit integer.")]
-        public void ReadInt64NoFlipPositionTest()
-        {
-            const long value = -1234567890123456789;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadInt64();
-                Assert.That(input.Position, Is.EqualTo(sizeof(long)));
-            }
         }
 
         [Test(Description =
@@ -427,20 +255,6 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadInt64(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 8 bytes after reading a 64-bit integer.")]
-        public void ReadInt64FlipPositionTest()
-        {
-            const long value = -1234567890123456789;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadInt64();
-                Assert.That(input.Position, Is.EqualTo(sizeof(long)));
-            }
-        }
-
         [Test(Description =
             "Check that an unsigned 16-bit integer can be read when the stream is the same endian as the system's.")]
         public void ReadUInt16NoFlipTest()
@@ -450,19 +264,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadUInt16(), Is.EqualTo(value));
-        }
-
-        [Test(Description = "Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.")]
-        public void ReadUInt16NoFlipPositionTest()
-        {
-            const ushort value = 12345;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadUInt16();
-                Assert.That(input.Position, Is.EqualTo(sizeof(ushort)));
-            }
         }
 
         [Test(Description =
@@ -477,20 +278,6 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadUInt16(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 2 bytes after reading an unsigned 16-bit integer.")]
-        public void ReadUInt16FlipPositionTest()
-        {
-            const ushort value = 12345;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadUInt16();
-                Assert.That(input.Position, Is.EqualTo(sizeof(ushort)));
-            }
-        }
-
         [Test(Description =
             "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         public void ReadUInt32NoFlipTest()
@@ -500,19 +287,6 @@ namespace Leaf.Tests.IO
             using (var input = new MemoryStream(bytes, false))
             using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
                 Assert.That(reader.ReadUInt32(), Is.EqualTo(value));
-        }
-
-        [Test(Description = "Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.")]
-        public void ReadUInt32NoFlipPositionTest()
-        {
-            const uint value = 1234567890;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
-            {
-                reader.ReadUInt32();
-                Assert.That(input.Position, Is.EqualTo(sizeof(uint)));
-            }
         }
 
         [Test(Description =
@@ -527,67 +301,76 @@ namespace Leaf.Tests.IO
                 Assert.That(reader.ReadUInt32(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 4 bytes after reading an unsigned 32-bit integer.")]
-        public void ReadUInt32FlipPositionTest()
+        [Test(Description =
+            "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
+        [TestCaseSource(nameof(UInt64TestCases))]
+        public void ReadUInt64NoFlipTest(ulong value, byte[] bytes)
         {
-            const uint value = 1234567890;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-            {
-                reader.ReadUInt32();
-                Assert.That(input.Position, Is.EqualTo(sizeof(uint)));
-            }
+            using (var reader = PrepareReader(bytes))
+                Assert.That(reader.ReadUInt64(), Is.EqualTo(value));
         }
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void ReadUInt64NoFlipTest()
+        [TestCaseSource(nameof(UInt64FlipTestCases))]
+        public void ReadUInt64FlipTest(ulong value, byte[] bytes)
         {
-            const ulong value = 12345678901234567890;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
+            using (var reader = PrepareReader(bytes, true))
                 Assert.That(reader.ReadUInt64(), Is.EqualTo(value));
         }
 
-        [Test(Description = "Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.")]
-        public void ReadUInt64NoFlipPositionTest()
+        private static EndianAwareBinaryReader PrepareReader(byte[] bytes, bool flip = false)
         {
-            const ulong value = 12345678901234567890;
-            var bytes = BitConverter.GetBytes(value);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, !BitConverter.IsLittleEndian))
+            var bigEndian = BitConverter.IsLittleEndian ? flip : !flip;
+            var input     = new MemoryStream(bytes, false);
+            return new EndianAwareBinaryReader(input, bigEndian);
+        }
+        
+        private static readonly ulong[] SpecialUInt64Values = {0, ulong.MinValue, ulong.MaxValue};
+
+        private static IEnumerable UInt64TestCases()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            var values = Range(0, Constants.RandomTestCount)
+                .Select(_ => randomizer.NextULong())
+                .Union(SpecialUInt64Values);
+            foreach (var value in values)
             {
-                reader.ReadUInt64();
-                Assert.That(input.Position, Is.EqualTo(sizeof(ulong)));
+                var bytes = BitConverter.GetBytes(value);
+                yield return new object[] {value, bytes};
             }
         }
 
-        [Test(Description =
-            "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
-        public void ReadUInt64FlipTest()
+        private static IEnumerable UInt64FlipTestCases()
         {
-            const ulong value = 12345678901234567890;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
-                Assert.That(reader.ReadUInt64(), Is.EqualTo(value));
+            foreach (object[] args in UInt64TestCases())
+            {
+                FlipByteArray((byte[])args[1]);
+                yield return args;
+            }
+        }
+        
+        private static byte[] GetDecimalBytes(decimal value)
+        {
+            var ints = decimal.GetBits(value);
+            var bytes = new byte[sizeof(int) * ints.Length];
+            for (int i = 0, j = 0; i < ints.Length && j < bytes.Length; ++i)
+            {
+                var intBytes = BitConverter.GetBytes(ints[i]);
+                for (var k = 0; k < intBytes.Length; ++k, ++j)
+                    bytes[j] = intBytes[k];
+            }
+            return bytes;
         }
 
-        [Test(Description = "Check that the stream is advanced 8 bytes after reading an unsigned 64-bit integer.")]
-        public void ReadUInt64FlipPositionTest()
+        private static void FlipByteArray(byte[] bytes)
         {
-            const ulong value = 12345678901234567890;
-            var bytes = BitConverter.GetBytes(value);
-            FlipByteArray(bytes);
-            using (var input = new MemoryStream(bytes, false))
-            using (var reader = new EndianAwareBinaryReader(input, BitConverter.IsLittleEndian))
+            var mid = bytes.Length / 2;
+            for (int i = 0, j = bytes.Length - 1; i < mid; ++i, --j)
             {
-                reader.ReadUInt64();
-                Assert.That(input.Position, Is.EqualTo(sizeof(ulong)));
+                var b = bytes[i];
+                bytes[i] = bytes[j];
+                bytes[j] = b;
             }
         }
     }
