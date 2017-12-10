@@ -72,63 +72,63 @@ namespace Leaf.Tests.IO
             return WriteRead(writer => writer.Write(value), reader => reader.ReadUInt64());
         }
         
-        [Test(Description = "Check that the same decimal value is read after being written")]
+        [Test(Description = "Check that the same decimal value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(DecimalTestValues))]
         public decimal WriteReadDecimalFlipTest(decimal value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadDecimal(), true);
         }
 
-        [Test(Description = "Check that the same 32-bit floating-point value is read after being written")]
+        [Test(Description = "Check that the same 32-bit floating-point value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(SingleTestValues))]
         public float WriteReadSingleFlipTest(float value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadSingle(), true);
         }
 
-        [Test(Description = "Check that the same 64-bit floating-point value is read after being written")]
+        [Test(Description = "Check that the same 64-bit floating-point value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(DoubleTestValues))]
         public double WriteReadDoubleFlipTest(double value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadDouble(), true);
         }
 
-        [Test(Description = "Check that the same 16-bit integer value is read after being written")]
+        [Test(Description = "Check that the same 16-bit integer value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(Int16TestValues))]
         public short WriteReadInt16FlipTest(short value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadInt16(), true);
         }
 
-        [Test(Description = "Check that the same 32-bit integer value is read after being written")]
+        [Test(Description = "Check that the same 32-bit integer value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(Int32TestValues))]
         public int WriteReadInt32FlipTest(int value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadInt32(), true);
         }
 
-        [Test(Description = "Check that the same 64-bit integer value is read after being written")]
+        [Test(Description = "Check that the same 64-bit integer value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(Int64TestValues))]
         public long WriteReadInt64FlipTest(long value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadInt64(), true);
         }
 
-        [Test(Description = "Check that the same unsigned 16-bit integer value is read after being written")]
+        [Test(Description = "Check that the same unsigned 16-bit integer value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(UInt16TestValues))]
         public ushort WriteReadUInt16FlipTest(ushort value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadUInt16(), true);
         }
 
-        [Test(Description = "Check that the same unsigned 32-bit integer value is read after being written")]
+        [Test(Description = "Check that the same unsigned 32-bit integer value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(UInt32TestValues))]
         public uint WriteReadUInt32FlipTest(uint value)
         {
             return WriteRead(writer => writer.Write(value), reader => reader.ReadUInt32(), true);
         }
 
-        [Test(Description = "Check that the same unsigned 64-bit integer value is read after being written")]
+        [Test(Description = "Check that the same unsigned 64-bit integer value is read after being written with flipped byte-order")]
         [TestCaseSource(nameof(UInt64TestValues))]
         public ulong WriteReadUInt64FlipTest(ulong value)
         {
