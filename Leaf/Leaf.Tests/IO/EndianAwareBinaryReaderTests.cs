@@ -284,17 +284,14 @@ namespace Leaf.Tests.IO
             return new EndianAwareBinaryReader(input, bigEndian);
         }
 
-        private static readonly decimal[] SpecialDecimalValues =
-        {
-            decimal.Zero, decimal.One, decimal.MinusOne, decimal.MinValue, decimal.MaxValue
-        };
-
         private static IEnumerable<TestCaseData> DecimalTestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextDecimal())
-                .Union(SpecialDecimalValues);
+                .Union(new[] {
+                    decimal.Zero, decimal.One, decimal.MinusOne, decimal.MinValue, decimal.MaxValue
+                });
             foreach (var value in values)
             {
                 var bytes = GetDecimalBytes(value);
@@ -307,18 +304,15 @@ namespace Leaf.Tests.IO
             return FlipTestCaseBytes(DecimalTestCases());
         }
 
-        private static readonly float[] SpecialSingleValues =
-        {
-            0f, float.MinValue, float.MaxValue, float.Epsilon,
-            float.NaN, float.NegativeInfinity, float.PositiveInfinity
-        };
-
         private static IEnumerable<TestCaseData> SingleTestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextFloat())
-                .Union(SpecialSingleValues);
+                .Union(new[] {
+                    0f, float.MinValue, float.MaxValue, float.Epsilon,
+                    float.NaN, float.NegativeInfinity, float.PositiveInfinity
+                });
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -331,18 +325,15 @@ namespace Leaf.Tests.IO
             return FlipTestCaseBytes(SingleTestCases());
         }
 
-        private static readonly double[] SpecialDoubleValues =
-        {
-            0d, double.MinValue, double.MaxValue, double.Epsilon,
-            double.NaN, double.NegativeInfinity, double.PositiveInfinity
-        };
-
         private static IEnumerable<TestCaseData> DoubleTestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextDouble())
-                .Union(SpecialDoubleValues);
+                .Union(new[] {
+                    0d, double.MinValue, double.MaxValue, double.Epsilon,
+                    double.NaN, double.NegativeInfinity, double.PositiveInfinity
+                });
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -354,15 +345,13 @@ namespace Leaf.Tests.IO
         {
             return FlipTestCaseBytes(DoubleTestCases());
         }
-        
-        private static readonly short[] SpecialInt16Values = {0, short.MinValue, short.MaxValue};
 
         private static IEnumerable<TestCaseData> Int16TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextShort())
-                .Union(SpecialInt16Values);
+                .Union(new short[] {0, short.MinValue, short.MaxValue});
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -374,15 +363,13 @@ namespace Leaf.Tests.IO
         {
             return FlipTestCaseBytes(Int16TestCases());
         }
-        
-        private static readonly int[] SpecialInt32Values = {0, int.MinValue, int.MaxValue};
 
         private static IEnumerable<TestCaseData> Int32TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.Next())
-                .Union(SpecialInt32Values);
+                .Union(new[] {0, int.MinValue, int.MaxValue});
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -394,15 +381,13 @@ namespace Leaf.Tests.IO
         {
             return FlipTestCaseBytes(Int32TestCases());
         }
-        
-        private static readonly long[] SpecialInt64Values = {0, long.MinValue, long.MaxValue};
 
         private static IEnumerable<TestCaseData> Int64TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextLong())
-                .Union(SpecialInt64Values);
+                .Union(new[] {0, long.MinValue, long.MaxValue});
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -414,15 +399,13 @@ namespace Leaf.Tests.IO
         {
             return FlipTestCaseBytes(Int64TestCases());
         }
-        
-        private static readonly ushort[] SpecialUInt16Values = {0, ushort.MinValue, ushort.MaxValue};
 
         private static IEnumerable<TestCaseData> UInt16TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextUShort())
-                .Union(SpecialUInt16Values);
+                .Union(new ushort[] {0, ushort.MinValue, ushort.MaxValue});
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -434,15 +417,13 @@ namespace Leaf.Tests.IO
         {
             return FlipTestCaseBytes(UInt16TestCases());
         }
-        
-        private static readonly uint[] SpecialUInt32Values = {0, uint.MinValue, uint.MaxValue};
 
         private static IEnumerable<TestCaseData> UInt32TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextUInt())
-                .Union(SpecialUInt32Values);
+                .Union(new uint[] {0, uint.MinValue, uint.MaxValue});
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
@@ -454,15 +435,13 @@ namespace Leaf.Tests.IO
         {
             return FlipTestCaseBytes(UInt32TestCases());
         }
-        
-        private static readonly ulong[] SpecialUInt64Values = {0, ulong.MinValue, ulong.MaxValue};
 
         private static IEnumerable<TestCaseData> UInt64TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
                 .Select(_ => randomizer.NextULong())
-                .Union(SpecialUInt64Values);
+                .Union(new ulong[] {0, ulong.MinValue, ulong.MaxValue});
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
