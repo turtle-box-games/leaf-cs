@@ -67,7 +67,7 @@ namespace Leaf.IO
             var bytes = new byte[sizeof(decimal)];
             for (var i = 0; i < bits.Length; ++i)
             {
-                var bitBytes = BitConverter.GetBytes(bits[i]);
+                var bitBytes = BitConverter.GetBytes(bits[bits.Length - i - 1]);
                 for (var j = 0; j < bitBytes.Length; ++j)
                     bytes[i * sizeof(int) + j] = bitBytes[sizeof(int) - j - 1];
             }
