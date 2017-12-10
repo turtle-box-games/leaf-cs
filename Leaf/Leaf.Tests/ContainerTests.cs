@@ -1,4 +1,7 @@
-﻿using Leaf.Nodes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Leaf.Nodes;
 using NUnit.Framework;
 
 namespace Leaf.Tests
@@ -13,11 +16,23 @@ namespace Leaf.Tests
         }
 
         [Test(Description = "Verify that the root node property is set properly.")]
-        public void RootNodeTest()
+        [TestCaseSource(nameof(AllNodes))]
+        public Node RootNodeTest(Node root)
         {
-            var root = new Int32Node(50);
             var container = new Container(root);
-            Assert.That(container.Root, Is.EqualTo(root));
+            return container.Root;
+        }
+
+        private static IEnumerable<TestCaseData> AllNodes()
+        {
+            var randomizer = TestContext.CurrentContext.Random;
+            foreach (var type in Enum.GetValues(typeof(NodeType)).Cast<NodeType>())
+            {
+                if (type == NodeType.End)
+                    continue;
+                var node = randomizer.NextNodeOfType(type);
+                yield return new TestCaseData(node).Returns(node);
+            }
         }
     }
 }
