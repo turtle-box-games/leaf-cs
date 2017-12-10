@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Leaf.Tests.IO
 {
     [TestFixture(Description = "Test that different types of values can be written and read")]
-    public class EndianAwareBinaryReadWriteTests
+    public class EndianAwareBinaryWriteReadTests
     {
         [Test(Description = "Check that the same decimal value is read after being written")]
         [TestCaseSource(nameof(DecimalTestValues))]
