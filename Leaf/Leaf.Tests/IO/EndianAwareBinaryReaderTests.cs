@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Leaf.IO;
 using NUnit.Framework;
-using System.Linq;
 using static System.Linq.Enumerable;
 
 namespace Leaf.Tests.IO
@@ -119,163 +118,163 @@ namespace Leaf.Tests.IO
         [Test(Description =
             "Check that a decimal value can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(DecimalTestCases))]
-        public void ReadDecimalNoFlipTest(decimal value, byte[] bytes)
+        public decimal ReadDecimalNoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadDecimal(), Is.EqualTo(value));
+                return reader.ReadDecimal();
         }
 
         [Test(Description =
             "Check that a decimal value can be read when the stream is in the opposite endian as the system's.")]
         [TestCaseSource(nameof(DecimalFlipTestCases))]
-        public void ReadDecimalFlipTest(decimal value, byte[] bytes)
+        public decimal ReadDecimalFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadDecimal(), Is.EqualTo(value));
+                return reader.ReadDecimal();
         }
 
         [Test(Description =
             "Check that a single-precision floating-point value can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(SingleTestCases))]
-        public void ReadSingleNoFlipTest(float value, byte[] bytes)
+        public float ReadSingleNoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadSingle(), Is.EqualTo(value));
+                return reader.ReadSingle();
         }
 
         [Test(Description =
             "Check that a single-precision floating-point value can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(SingleFlipTestCases))]
-        public void ReadSingleFlipTest(float value, byte[] bytes)
+        public float ReadSingleFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadSingle(), Is.EqualTo(value));
+                return reader.ReadSingle();
         }
 
         [Test(Description =
             "Check that a double-precision floating-point value can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(DoubleTestCases))]
-        public void ReadDoubleNoFlipTest(double value, byte[] bytes)
+        public double ReadDoubleNoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadDouble(), Is.EqualTo(value));
+                return reader.ReadDouble();
         }
 
         [Test(Description =
             "Check that a double-precision floating-point value can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(DoubleFlipTestCases))]
-        public void ReadDoubleFlipTest(double value, byte[] bytes)
+        public double ReadDoubleFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadDouble(), Is.EqualTo(value));
+                return reader.ReadDouble();
         }
 
         [Test(Description =
             "Check that a 16-bit integer can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(Int16TestCases))]
-        public void ReadInt16NoFlipTest(short value, byte[] bytes)
+        public short ReadInt16NoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadInt16(), Is.EqualTo(value));
+                return reader.ReadInt16();
         }
 
         [Test(Description =
             "Check that a 16-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(Int16FlipTestCases))]
-        public void ReadInt16FlipTest(short value, byte[] bytes)
+        public short ReadInt16FlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadInt16(), Is.EqualTo(value));
+                return reader.ReadInt16();
         }
 
         [Test(Description =
             "Check that a 32-bit integer can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(Int32TestCases))]
-        public void ReadInt32NoFlipTest(int value, byte[] bytes)
+        public int ReadInt32NoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadInt32(), Is.EqualTo(value));
+                return reader.ReadInt32();
         }
 
         [Test(Description =
             "Check that a 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(Int32FlipTestCases))]
-        public void ReadInt32FlipTest(int value, byte[] bytes)
+        public int ReadInt32FlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadInt32(), Is.EqualTo(value));
+                return reader.ReadInt32();
         }
 
         [Test(Description =
             "Check that a 64-bit integer can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(Int64TestCases))]
-        public void ReadInt64NoFlipTest(long value, byte[] bytes)
+        public long ReadInt64NoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadInt64(), Is.EqualTo(value));
+                return reader.ReadInt64();
         }
 
         [Test(Description =
             "Check that a 64-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(Int64FlipTestCases))]
-        public void ReadInt64FlipTest(long value, byte[] bytes)
+        public long ReadInt64FlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadInt64(), Is.EqualTo(value));
+                return reader.ReadInt64();
         }
 
         [Test(Description =
             "Check that an unsigned 16-bit integer can be read when the stream is the same endian as the system's.")]
         [TestCaseSource(nameof(UInt16TestCases))]
-        public void ReadUInt16NoFlipTest(ushort value, byte[] bytes)
+        public ushort ReadUInt16NoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadUInt16(), Is.EqualTo(value));
+                return reader.ReadUInt16();
         }
 
         [Test(Description =
             "Check that an unsigned 16-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(UInt16FlipTestCases))]
-        public void ReadUInt16FlipTest(ushort value, byte[] bytes)
+        public ushort ReadUInt16FlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadUInt16(), Is.EqualTo(value));
+                return reader.ReadUInt16();
         }
 
         [Test(Description =
             "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(UInt32TestCases))]
-        public void ReadUInt32NoFlipTest(uint value, byte[] bytes)
+        public uint ReadUInt32NoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadUInt32(), Is.EqualTo(value));
+                return reader.ReadUInt32();
         }
 
         [Test(Description =
             "Check that an unsigned 32-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(UInt32FlipTestCases))]
-        public void ReadUInt32FlipTest(uint value, byte[] bytes)
+        public uint ReadUInt32FlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadUInt32(), Is.EqualTo(value));
+                return reader.ReadUInt32();
         }
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(UInt64TestCases))]
-        public void ReadUInt64NoFlipTest(ulong value, byte[] bytes)
+        public ulong ReadUInt64NoFlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes))
-                Assert.That(reader.ReadUInt64(), Is.EqualTo(value));
+                return reader.ReadUInt64();
         }
 
         [Test(Description =
             "Check that an unsigned 64-bit integer can be read when the stream is the opposite endian as the system's.")]
         [TestCaseSource(nameof(UInt64FlipTestCases))]
-        public void ReadUInt64FlipTest(ulong value, byte[] bytes)
+        public ulong ReadUInt64FlipTest(byte[] bytes)
         {
             using (var reader = PrepareReader(bytes, true))
-                Assert.That(reader.ReadUInt64(), Is.EqualTo(value));
+                return reader.ReadUInt64();
         }
 
         private static EndianAwareBinaryReader PrepareReader(byte[] bytes, bool flip = false)
@@ -290,7 +289,7 @@ namespace Leaf.Tests.IO
             decimal.Zero, decimal.One, decimal.MinusOne, decimal.MinValue, decimal.MaxValue
         };
 
-        private static IEnumerable DecimalTestCases()
+        private static IEnumerable<TestCaseData> DecimalTestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -299,11 +298,11 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = GetDecimalBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable DecimalFlipTestCases()
+        private static IEnumerable<TestCaseData> DecimalFlipTestCases()
         {
             return FlipTestCaseBytes(DecimalTestCases());
         }
@@ -314,7 +313,7 @@ namespace Leaf.Tests.IO
             float.NaN, float.NegativeInfinity, float.PositiveInfinity
         };
 
-        private static IEnumerable SingleTestCases()
+        private static IEnumerable<TestCaseData> SingleTestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -323,11 +322,11 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable SingleFlipTestCases()
+        private static IEnumerable<TestCaseData> SingleFlipTestCases()
         {
             return FlipTestCaseBytes(SingleTestCases());
         }
@@ -338,7 +337,7 @@ namespace Leaf.Tests.IO
             double.NaN, double.NegativeInfinity, double.PositiveInfinity
         };
 
-        private static IEnumerable DoubleTestCases()
+        private static IEnumerable<TestCaseData> DoubleTestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -347,18 +346,18 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable DoubleFlipTestCases()
+        private static IEnumerable<TestCaseData> DoubleFlipTestCases()
         {
             return FlipTestCaseBytes(DoubleTestCases());
         }
         
         private static readonly short[] SpecialInt16Values = {0, short.MinValue, short.MaxValue};
 
-        private static IEnumerable Int16TestCases()
+        private static IEnumerable<TestCaseData> Int16TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -367,18 +366,18 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable Int16FlipTestCases()
+        private static IEnumerable<TestCaseData> Int16FlipTestCases()
         {
             return FlipTestCaseBytes(Int16TestCases());
         }
         
         private static readonly int[] SpecialInt32Values = {0, int.MinValue, int.MaxValue};
 
-        private static IEnumerable Int32TestCases()
+        private static IEnumerable<TestCaseData> Int32TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -387,18 +386,18 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable Int32FlipTestCases()
+        private static IEnumerable<TestCaseData> Int32FlipTestCases()
         {
             return FlipTestCaseBytes(Int32TestCases());
         }
         
         private static readonly long[] SpecialInt64Values = {0, long.MinValue, long.MaxValue};
 
-        private static IEnumerable Int64TestCases()
+        private static IEnumerable<TestCaseData> Int64TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -407,18 +406,18 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable Int64FlipTestCases()
+        private static IEnumerable<TestCaseData> Int64FlipTestCases()
         {
             return FlipTestCaseBytes(Int64TestCases());
         }
         
         private static readonly ushort[] SpecialUInt16Values = {0, ushort.MinValue, ushort.MaxValue};
 
-        private static IEnumerable UInt16TestCases()
+        private static IEnumerable<TestCaseData> UInt16TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -427,18 +426,18 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable UInt16FlipTestCases()
+        private static IEnumerable<TestCaseData> UInt16FlipTestCases()
         {
             return FlipTestCaseBytes(UInt16TestCases());
         }
         
         private static readonly uint[] SpecialUInt32Values = {0, uint.MinValue, uint.MaxValue};
 
-        private static IEnumerable UInt32TestCases()
+        private static IEnumerable<TestCaseData> UInt32TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -447,18 +446,18 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable UInt32FlipTestCases()
+        private static IEnumerable<TestCaseData> UInt32FlipTestCases()
         {
             return FlipTestCaseBytes(UInt32TestCases());
         }
         
         private static readonly ulong[] SpecialUInt64Values = {0, ulong.MinValue, ulong.MaxValue};
 
-        private static IEnumerable UInt64TestCases()
+        private static IEnumerable<TestCaseData> UInt64TestCases()
         {
             var randomizer = TestContext.CurrentContext.Random;
             var values = Range(0, Constants.RandomTestCount)
@@ -467,21 +466,21 @@ namespace Leaf.Tests.IO
             foreach (var value in values)
             {
                 var bytes = BitConverter.GetBytes(value);
-                yield return new object[] {value, bytes};
+                yield return new TestCaseData(bytes).Returns(value);
             }
         }
 
-        private static IEnumerable UInt64FlipTestCases()
+        private static IEnumerable<TestCaseData> UInt64FlipTestCases()
         {
             return FlipTestCaseBytes(UInt64TestCases());
         }
 
-        private static IEnumerable FlipTestCaseBytes(IEnumerable sets)
+        private static IEnumerable<TestCaseData> FlipTestCaseBytes(IEnumerable<TestCaseData> sets)
         {
-            foreach (object[] args in sets)
+            foreach (var caseData in sets)
             {
-                FlipByteArray((byte[])args[1]);
-                yield return args;
+                FlipByteArray((byte[])caseData.Arguments[0]);
+                yield return caseData;
             }
         }
         
