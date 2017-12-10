@@ -73,7 +73,7 @@ namespace Leaf.Serialization
             // ReSharper disable once LoopCanBeConvertedToQuery - avoid dependency on LINQ library.
             for(var i = 0; i < bytes.Length; ++i)
                 if(bytes[i] != Signature[i])
-                    throw new Exception("Invalid signature");
+                    throw new FormatException("Invalid signature");
         }
     }
 }
