@@ -250,9 +250,7 @@ namespace Leaf.Tests.IO
             return UseWriter(writer => writer.Write(value), true);
         }
 
-        private delegate void WriterDelegate(EndianAwareBinaryWriter writer);
-
-        private static byte[] UseWriter(WriterDelegate action, bool flip = false)
+        private static byte[] UseWriter(Action<EndianAwareBinaryWriter> action, bool flip = false)
         {
             var bigEndian = BitConverter.IsLittleEndian ? flip : !flip;
             using (var output = new MemoryStream())
