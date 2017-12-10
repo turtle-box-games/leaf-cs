@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Leaf.Tests.Serialization
 {
     [TestFixture(TestOf = typeof(BinaryFormatSerializer))]
-    public partial class BinaryFormatSerializerTests
+    public class BinaryFormatSerializerWriteTests
     {
         private const int HeaderSize = 8;
 
