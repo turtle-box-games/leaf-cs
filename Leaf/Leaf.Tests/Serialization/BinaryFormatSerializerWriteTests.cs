@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Leaf.Nodes;
@@ -13,11 +12,6 @@ namespace Leaf.Tests.Serialization
     public class BinaryFormatSerializerWriteTests
     {
         private const int HeaderSize = 8;
-
-        #region Serialized node data
-
-        private static readonly byte[] Flag = {0x01};
-        #endregion
 
         [Test(Description = "Check that data is actually written.")]
         public void SerializeTest()
@@ -182,7 +176,7 @@ namespace Leaf.Tests.Serialization
         [Test(Description = "Check that the data serialized from a list of CompositeNodes is correct.")]
         public void SerializeListOfCompositeTest()
         {
-            var pairs = new KeyValuePair<string, Node>[]
+            var pairs = new[]
             {
                 new KeyValuePair<string, Node>("flag", new FlagNode(true)),
                 new KeyValuePair<string, Node>("float", new Float32Node(123.45f)),
@@ -352,12 +346,6 @@ namespace Leaf.Tests.Serialization
         {
             var keyBytes = SerializeString(key);
             return ConcatByteSet(new[] {(byte) NodeType.Composite}, keyBytes, nodeBytes);
-        }
-
-        private static Container GenerateContainer()
-        {
-            var node = GenerateRootNode();
-            return new Container(node);
         }
 
         private static Node GenerateRootNode()
