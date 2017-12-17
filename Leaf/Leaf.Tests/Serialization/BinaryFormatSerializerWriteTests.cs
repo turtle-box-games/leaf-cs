@@ -26,17 +26,6 @@ namespace Leaf.Tests.Serialization
             Assert.That(result, Is.Not.Empty);
         }
 
-        [Test(Description = "Check that the stream is left open after serializing.")]
-        public void SerializeLeaveStreamOpenTest()
-        {
-            var container = GenerateContainer();
-            using(var stream = new MemoryStream())
-            {
-                new BinaryFormatSerializer().Serialize(container, stream);
-                Assert.That(stream.Length, Is.GreaterThan(0));
-            }
-        }
-
         [Test(Description = "Check that the header contains the signature.")]
         public void SerializeHeaderSignatureTest()
         {
@@ -306,11 +295,7 @@ namespace Leaf.Tests.Serialization
         private static byte[] Serialize(Node root = null)
         {
             var container = new Container(root ?? GenerateRootNode());
-            using(var stream = new MemoryStream())
-            {
-                new BinaryFormatSerializer().Serialize(container, stream);
-                return stream.ToArray();
-            }
+            return new BinaryFormatSerializer().Serialize(container);
         }
 
         private static byte[] SerializeNode(Node node)
