@@ -1,25 +1,23 @@
-﻿using System.IO;
-
-namespace Leaf.Serialization
+﻿namespace Leaf.Serialization
 {
     /// <summary>
     /// Responsible for serializing and deserializing node data to a persistent format.
     /// </summary>
-    public interface IFormatSerializer
+    /// <typeparam name="TFormat">Serialized format type.</typeparam>
+    public interface IFormatSerializer<TFormat>
     {
         /// <summary>
-        /// Write node data to a stream.
+        /// Generate output containing the nodes in a container.
         /// </summary>
-        /// <param name="container">Container holding the root node and associated data
-        /// to be written to the stream.</param>
-        /// <param name="output">Output stream to write data to.</param>
-        void Serialize(Container container, Stream output);
+        /// <param name="container">Container holding the root node and associated data to be serialized.</param>
+        /// <returns>Output containing the serialized node data.</returns>
+        TFormat Serialize(Container container);
 
         /// <summary>
-        /// Read node data from a stream.
+        /// Create a container from serialized node data.
         /// </summary>
-        /// <param name="input">Input stream to read data from.</param>
-        /// <returns>Container holding the root node and associated data read from the stream.</returns>
-        Container Deserialize(Stream input);
+        /// <param name="input">Serialized node data to create a container from.</param>
+        /// <returns>Container holding the root node and associated data pull from the input.</returns>
+        Container Deserialize(TFormat input);
     }
 }
