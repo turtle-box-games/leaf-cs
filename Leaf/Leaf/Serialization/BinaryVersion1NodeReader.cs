@@ -6,180 +6,21 @@ using Leaf.Nodes;
 namespace Leaf.Serialization
 {
     /// <summary>
-    /// Serialize and deserialize version 1 nodes to binary format.
+    /// Reader that can deserialize nodes from a compact binary format.
     /// </summary>
-    internal class BinaryNodeSerializer : INodeSerializer
+    internal class BinaryVersion1NodeReader : IVersion1NodeReader
     {
-        private const long TicksPerSecond = 10000000;
-        private const long MicroSecond = 1000000;
-        private const long TicksPerMicro = TicksPerSecond / MicroSecond;
-
-        private readonly BinaryWriter _writer;
         private readonly BinaryReader _reader;
-
+        
         /// <summary>
-        /// Creates the serializer in write-mode.
-        /// </summary>
-        /// <param name="writer">Writer used to put node data to a stream.</param>
-        public BinaryNodeSerializer(BinaryWriter writer)
-        {
-            _writer = writer;
-        }
-
-        /// <summary>
-        /// Creates the serializer in read-mode.
+        /// Creates a node reader.
         /// </summary>
         /// <param name="reader">Reader used to get node data from a stream.</param>
-        public BinaryNodeSerializer(BinaryReader reader)
+        public BinaryVersion1NodeReader(BinaryReader reader)
         {
             _reader = reader;
         }
-
-        /// <summary>
-        /// Serialize a flag node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(FlagNode node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a integer-8 node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(Int8Node node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a integer-16 node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(Int16Node node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a integer-32 node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(Int32Node node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a integer-64 node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(Int64Node node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a float-32 node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(Float32Node node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a float-64 node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(Float64Node node)
-        {
-            _writer.Write(node.Value);
-        }
-
-        /// <summary>
-        /// Serialize a string node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(StringNode node)
-        {
-            var bytes  = Encoding.UTF8.GetBytes(node.Value);
-            var length = bytes.Length;
-            _writer.Write((short)length);
-            _writer.Write(bytes);
-        }
-
-        /// <summary>
-        /// Serialize a time node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(TimeNode node)
-        {
-            var ticks = node.Value.Ticks;
-            var micro = ticks / TicksPerMicro;
-            _writer.Write(micro);
-        }
-
-        /// <summary>
-        /// Serialize a UUID node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(UuidNode node)
-        {
-            var guid  = node.Value;
-            var bytes = guid.ToByteArray();
-            var data1 = BitConverter.ToInt32(bytes, 0);
-            var data2 = BitConverter.ToInt16(bytes, 4);
-            var data3 = BitConverter.ToInt16(bytes, 6);
-            _writer.Write(data1);
-            _writer.Write(data2);
-            _writer.Write(data3);
-            _writer.Write(bytes, 8, 8);
-        }
-
-        /// <summary>
-        /// Serialize a blob node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(BlobNode node)
-        {
-            var bytes  = node.Bytes;
-            var length = bytes.Length;
-            _writer.Write(length);
-            _writer.Write(bytes);
-        }
-
-        /// <summary>
-        /// Serialize a list node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(ListNode node)
-        {
-            _writer.Write(node.Count);
-            _writer.Write((byte)node.ElementType);
-            foreach(var child in node)
-                child.Serialize(this);
-        }
-
-        /// <summary>
-        /// Serialize a composite node.
-        /// </summary>
-        /// <param name="node">Node to serialize.</param>
-        public void Write(CompositeNode node)
-        {
-            foreach(var pair in node)
-            {
-                var bytes  = Encoding.UTF8.GetBytes(pair.Key);
-                var length = bytes.Length;
-                _writer.Write((byte)pair.Value.Type);
-                _writer.Write((byte)length);
-                _writer.Write(bytes);
-                pair.Value.Serialize(this);
-            }
-            _writer.Write((byte)NodeType.End);
-        }
-
+        
         /// <summary>
         /// Deserialize a flag node.
         /// </summary>
@@ -268,7 +109,7 @@ namespace Leaf.Serialization
         public TimeNode ReadTimeNode()
         {
             var micro = _reader.ReadInt64();
-            var ticks = micro * TicksPerMicro;
+            var ticks = micro * BinaryFormatSerialization.TicksPerMicro;
             var time  = new DateTime(ticks);
             return new TimeNode(time);
         }

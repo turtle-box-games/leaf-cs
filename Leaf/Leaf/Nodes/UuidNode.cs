@@ -42,12 +42,11 @@ namespace Leaf.Nodes
 
         /// <summary>
         /// Calls the correct method to serialize the node.
-        /// Uses the strategy algorithm.
         /// </summary>
-        /// <param name="serializer">Instance that handles serializing node data.</param>
-        internal override void Serialize(INodeSerializer serializer)
+        /// <param name="nodeWriter">Instance that handles serializing node data.</param>
+        internal override void Serialize(INodeWriter nodeWriter)
         {
-            serializer.Write(this);
+            nodeWriter.Write(this);
         }
     }
 }

@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Leaf.Tests.Serialization
 {
-    [TestFixture(TestOf = typeof(BinaryFormatSerializer))]
+    [TestFixture(TestOf = typeof(BinaryFormatWriter))]
     public class BinaryFormatSerializerWriteTests
     {
         private const int HeaderSize = 8;
@@ -289,7 +289,7 @@ namespace Leaf.Tests.Serialization
         private static byte[] Serialize(Node root = null)
         {
             var container = new Container(root ?? GenerateRootNode());
-            return new BinaryFormatSerializer().Serialize(container);
+            return new BinaryFormatWriter(container).WriteToByteArray();
         }
 
         private static byte[] SerializeNode(Node node)

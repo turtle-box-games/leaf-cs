@@ -7,13 +7,12 @@ namespace Leaf.Serialization
     /// This interface is used so that nodes can reference this interface instead of the latest,
     /// which would change every time there's a new version.
     /// </summary>
-    internal interface INodeSerializer : IVersion1NodeSerializer
+    internal interface INodeWriter : IVersion1NodeWriter
     {
         /// <summary>
-        /// Reads a node given its type.
+        /// Redirects to the correct serialization method.
         /// </summary>
-        /// <param name="type">Node type to read.</param>
-        /// <returns>Read node type.</returns>
-        Node ReadNode(NodeType type);
+        /// <param name="node">Node type to serialize.</param>
+        void WriteNode(Node node);
     }
 }

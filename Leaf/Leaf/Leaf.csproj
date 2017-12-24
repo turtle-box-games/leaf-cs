@@ -61,11 +61,15 @@
     <Compile Include="Nodes\UuidNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\BinaryFormatHeader.cs" />
-    <Compile Include="Serialization\BinaryFormatSerializer.cs" />
-    <Compile Include="Serialization\INodeSerializer.cs" />
-    <Compile Include="Serialization\IFormatSerializer.cs" />
-    <Compile Include="Serialization\IVersion1NodeSerializer.cs" />
-    <Compile Include="Serialization\BinaryNodeSerializer.cs" />
+    <Compile Include="Serialization\BinaryFormatReader.cs" />
+    <Compile Include="Serialization\BinaryFormatSerialization.cs" />
+    <Compile Include="Serialization\BinaryFormatWriter.cs" />
+    <Compile Include="Serialization\BinaryVersion1NodeReader.cs" />
+    <Compile Include="Serialization\BinaryVersion1NodeWriter.cs" />
+    <Compile Include="Serialization\INodeWriter.cs" />
+    <Compile Include="Serialization\IVersion1NodeWriter.cs" />
+    <Compile Include="Serialization\INodeReader.cs" />
+    <Compile Include="Serialization\IVersion1NodeReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
